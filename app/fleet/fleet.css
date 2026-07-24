@@ -1,0 +1,2545 @@
+/* AUTO-GENERATED from flycraft-fleet-next/app/globals.css — scoped under
+   .fleet-site so the fleet mini-site CSS cannot leak into the main site.
+   Page-level backgrounds changed to transparent (the site sky gradient
+   shows through) — the only intentional visual change. */
+
+/* ============================================================
+   CRAFT FLEET — Global Stylesheet
+   ============================================================ */
+
+@font-face {
+  font-family: 'RAFSTD';
+  src: url('/assets/rafstd.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.fleet-site *, .fleet-site *::before, .fleet-site *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fleet-site {
+  animation: page-enter 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.fleet-site {
+  --white:      #f6f6f6;
+  --navy:       #0c1d3d;            /* deep navy — sections & key text    */
+  --navy-light: #edf1f8;            /* light navy tint — subtle highlights */
+  --ink:        #0c1d3d;            /* primary text                        */
+  --ink-2:      rgba(12, 29, 61, 0.58);
+  --ink-3:      rgba(12, 29, 61, 0.38);
+  --border:     rgba(12, 29, 61, 0.12);
+  --border-2:   rgba(12, 29, 61, 0.06);
+  --font:       'Inter', sans-serif;
+  --pad-x:      80px;
+}
+
+
+
+.fleet-site {
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font);
+  font-weight: 300;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+
+.fleet-site .nav {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  z-index: 200;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(12, 29, 61, 0.10);
+  border-radius: 100px;
+  box-shadow: 0 4px 32px rgba(12, 29, 61, 0.08);
+}
+
+.fleet-site .nav-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  width: 120px;
+}
+
+.fleet-site .nav-logo img {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  filter: invert(1) sepia(1) saturate(5) hue-rotate(190deg) brightness(0.3);
+}
+
+.fleet-site .nav-logo-text {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  color: var(--navy);
+  margin-left: 10px;
+}
+
+/* Fleet Dropdown */
+.fleet-site .nav-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.fleet-site .nav-menu-link {
+  color: var(--navy);
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px 0;
+  transition: opacity 0.2s;
+}
+
+.fleet-site .nav-menu-link:hover {
+  opacity: 0.55;
+}
+
+.fleet-site .fleet-dropdown {
+  position: relative;
+}
+
+.fleet-site .fleet-btn {
+  background: none;
+  border: none;
+  color: var(--navy);
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  transition: opacity 0.2s;
+}
+
+.fleet-site .fleet-btn:hover {
+  opacity: 0.55;
+}
+
+.fleet-site .fleet-btn .arrow {
+  display: inline-block;
+  width: 10px;
+  height: 6px;
+  position: relative;
+  transition: transform 0.25s ease;
+}
+
+.fleet-site .fleet-btn .arrow::before, .fleet-site .fleet-btn .arrow::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 6px;
+  height: 1px;
+  background: var(--navy);
+}
+
+.fleet-site .fleet-btn .arrow::before {
+  left: 0;
+  transform: rotate(35deg) translateY(-50%);
+}
+
+.fleet-site .fleet-btn .arrow::after {
+  right: 0;
+  transform: rotate(-35deg) translateY(-50%);
+}
+
+.fleet-site .fleet-dropdown.open .fleet-btn .arrow {
+  transform: rotate(180deg);
+}
+
+.fleet-site .dropdown-menu {
+  position: absolute;
+  top: calc(100% + 18px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  min-width: 240px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  box-shadow: 0 12px 40px rgba(12, 29, 61, 0.10);
+}
+
+.fleet-site .fleet-dropdown.open .dropdown-menu, .fleet-site .fleet-dropdown:focus-within .dropdown-menu {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+
+.fleet-site .dropdown-item {
+  display: block;
+  padding: 15px 24px;
+  color: var(--ink-2);
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: color 0.15s, background 0.15s;
+  border-bottom: 1px solid var(--border-2);
+}
+
+.fleet-site .dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.fleet-site .dropdown-item:hover {
+  color: var(--navy);
+  background: var(--navy-light);
+}
+
+.fleet-site .dropdown-item.active {
+  color: var(--navy);
+  font-weight: 500;
+}
+
+.fleet-site .nav-right {
+  width: 120px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.fleet-site .nav-back {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--ink-3);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.fleet-site .nav-back:hover {
+  color: var(--navy);
+}
+
+/* ============================================================
+   PAGE INTRO ANIMATION
+   ============================================================ */
+
+.fleet-site .fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.fleet-site .fade-up:nth-child(2) { animation-delay: 0.1s; }
+.fleet-site .fade-up:nth-child(3) { animation-delay: 0.2s; }
+.fleet-site .fade-up:nth-child(4) { animation-delay: 0.3s; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   AIRCRAFT PAGE — HERO
+   ============================================================ */
+
+.fleet-site .hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 170px var(--pad-x) 60px;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+.fleet-site .hero-bg {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  z-index: 0;
+}
+
+/* Soft navy-tinted gradient in top-right */
+.fleet-site .hero-bg::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 55%;
+  height: 100%;
+  background: radial-gradient(ellipse at 75% 20%, var(--navy-light) 0%, transparent 65%);
+}
+
+.fleet-site .hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.fleet-site .hero-eyebrow {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.35em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.fleet-site .hero-title {
+  font-size: clamp(64px, 9vw, 130px);
+  font-weight: 200;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  color: var(--navy);
+  text-transform: uppercase;
+}
+
+.fleet-site .hero-model-number {
+  font-size: clamp(64px, 9vw, 130px);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  display: block;
+  color: var(--navy);
+}
+
+.fleet-site .hero-tagline {
+  margin-top: 36px;
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--ink-2);
+  letter-spacing: 0.05em;
+}
+
+.fleet-site .hero-logo {
+  display: flex;
+  justify-content: center;
+  padding: 32px var(--pad-x) 24px;
+}
+
+.fleet-site .hero-logo-img {
+  height: 48px;
+  width: auto;
+}
+
+/* ============================================================
+   STATS BAR  —  navy background
+   ============================================================ */
+
+.fleet-site .stats {
+  display: flex;
+  align-items: stretch;
+  background: var(--navy);
+}
+
+.fleet-site .stat {
+  flex: 1;
+  padding: 60px 0;
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  transition: background 0.2s;
+}
+
+.fleet-site .stat:last-child {
+  border-right: none;
+}
+
+.fleet-site .stat:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.fleet-site .stat-value {
+  font-family: var(--font);
+  font-size: clamp(32px, 3.5vw, 56px);
+  font-weight: normal;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  margin-bottom: 12px;
+  color: var(--white);
+}
+
+.fleet-site .stat-label {
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   AIRCRAFT IMAGE / GALLERY
+   ============================================================ */
+
+.fleet-site .aircraft-visual {
+  padding: 80px var(--pad-x);
+  border-bottom: 1px solid var(--border);
+}
+
+.fleet-site .image-slot {
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  background: var(--navy-light);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--ink-3);
+}
+
+.fleet-site .image-slot-label {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.fleet-site .image-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ============================================================
+   SECTION SHARED
+   ============================================================ */
+
+.fleet-site .section-label {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--navy);
+  text-transform: uppercase;
+  margin-bottom: 48px;
+}
+
+/* ============================================================
+   ABOUT / DESCRIPTION
+   ============================================================ */
+
+.fleet-site .section-about {
+  padding: 100px var(--pad-x);
+  border-bottom: 1px solid var(--border);
+  max-width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fleet-site .section-about .about-text {
+  max-width: 800px;
+}
+
+.fleet-site .about-text {
+  font-size: clamp(18px, 1.8vw, 24px);
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--ink-2);
+}
+
+/* ============================================================
+   LUGGAGE  —  navy background
+   ============================================================ */
+
+.fleet-site .section-luggage {
+  padding: 100px var(--pad-x);
+  border-bottom: 1px solid var(--border);
+  background: var(--navy);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fleet-site .section-luggage .section-label {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.fleet-site .luggage-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+}
+
+.fleet-site .luggage-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.fleet-site .luggage-count {
+  font-size: clamp(64px, 7vw, 100px);
+  font-weight: 200;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--white);
+}
+
+.fleet-site .luggage-type {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+.fleet-site .luggage-sep {
+  font-size: 48px;
+  font-weight: 200;
+  color: rgba(255, 255, 255, 0.20);
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.fleet-site .luggage-img {
+  height: 240px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.85;
+  margin: 0 40px;
+}
+
+/* ============================================================
+   AMENITIES  —  light navy tint background
+   ============================================================ */
+
+.fleet-site .section-amenities {
+  padding: 100px var(--pad-x);
+  border-bottom: 1px solid var(--border);
+  background: var(--navy-light);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fleet-site .amenities-list {
+  display: flex;
+  gap: 0;
+  justify-content: center;
+}
+
+.fleet-site .amenity {
+  flex: 0 0 auto;
+  padding: 0 60px 0 0;
+  margin-right: 60px;
+  border-right: 1px solid var(--border);
+}
+
+.fleet-site .amenity:last-child {
+  border-right: none;
+  padding-right: 0;
+  margin-right: 0;
+}
+
+.fleet-site .amenity-icon {
+  width: 36px;
+  height: 144px;
+  margin-bottom: 20px;
+  opacity: 0.50;
+  color: var(--navy);
+}
+
+.fleet-site .amenity-icon-img {
+  width: auto;
+  max-width: 320px;
+  height: 144px;
+  object-fit: contain;
+  opacity: 0.65;
+}
+
+.fleet-site .amenity-name {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
+  color: var(--navy);
+}
+
+.fleet-site .amenity-detail {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   FOOTER  —  navy background
+   ============================================================ */
+
+/* ============================================================
+   MENU PAGE
+   ============================================================ */
+
+.fleet-site .menu-page {
+  padding: 110px 40px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: stretch;
+}
+
+.fleet-site .menu-page-left {
+  display: flex;
+}
+
+.fleet-site .menu-page-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 16px;
+}
+
+.fleet-site .snack-grid-bg {
+  background: transparent;
+  border-radius: 28px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.fleet-site .snack-grid-intro {
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(0, 0, 0, 0.55);
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 0 8px;
+}
+
+.fleet-site .menu-page-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-content: start;
+}
+
+.fleet-site .snack-card {
+  background: #f6f6f6;
+  color: #000000;
+  border-radius: 24px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.fleet-site .snack-card-img {
+  width: 100px;
+  height: 120px;
+  object-fit: contain;
+  display: block;
+}
+
+.fleet-site .snack-card-title {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+.fleet-site .snack-card-desc {
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.fleet-site .snack-card-img {
+  cursor: zoom-in;
+}
+
+.fleet-site .snack-card-kosher {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 100px;
+  padding: 3px 10px;
+  margin-top: 4px;
+}
+
+/* Snack zoom overlay */
+.snack-zoom-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 29, 61, 0);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  transition: background 0.3s ease, backdrop-filter 0.3s ease, -webkit-backdrop-filter 0.3s ease;
+}
+
+.snack-zoom-overlay--visible {
+  background: rgba(12, 29, 61, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.snack-zoom-img {
+  width: 400px;
+  height: 480px;
+  object-fit: contain;
+  transform: scale(0.75);
+  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.snack-zoom-overlay--visible .snack-zoom-img {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.fleet-site .footer {
+  padding: 50px var(--pad-x);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--navy);
+}
+
+.fleet-site .footer--light {
+  background: #85b5d8;
+}
+
+.fleet-site .footer--white {
+  background: transparent;
+}
+
+.fleet-site .footer--white .footer-logo {
+  color: var(--navy);
+}
+
+.fleet-site .footer--white .footer-copy {
+  color: var(--ink-3);
+}
+
+.fleet-site .footer--light .footer-logo {
+  color: var(--white);
+}
+
+.fleet-site .footer--light .footer-copy {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.fleet-site .footer-logo {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.fleet-site .footer-logo img {
+  height: 22px;
+  width: auto;
+  opacity: 0.8;
+  filter: brightness(0) invert(1);
+}
+
+.fleet-site .footer--white .footer-logo-img, .fleet-site .footer--light .footer-logo-img {
+  filter: none;
+  opacity: 0.75;
+  height: 28px;
+}
+
+.fleet-site .footer-copy {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.40);
+  letter-spacing: 0.06em;
+}
+
+.fleet-site .footer-copy-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fleet-site .footer-links {
+  display: flex;
+  gap: 20px;
+}
+
+.fleet-site .footer-link {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.2s ease;
+}
+
+.fleet-site .footer-link:hover {
+  color: var(--white);
+}
+
+.fleet-site .footer--white .footer-link {
+  color: var(--ink-3);
+}
+
+.fleet-site .footer--white .footer-link:hover {
+  color: var(--navy);
+}
+
+.fleet-site .footer--light .footer-link {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.fleet-site .footer--light .footer-link:hover {
+  color: var(--white);
+}
+
+/* ============================================================
+   FLEET INDEX PAGE
+   ============================================================ */
+
+.fleet-site .fleet-hero {
+  min-height: 52vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 var(--pad-x) 80px;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+
+.fleet-site .fleet-hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.fleet-site .fleet-hero-title {
+  font-size: clamp(56px, 8vw, 110px);
+  font-weight: 200;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  color: var(--navy);
+}
+
+.fleet-site .fleet-list {
+  border-bottom: 1px solid var(--border);
+}
+
+.fleet-site .fleet-row {
+  display: flex;
+  align-items: center;
+  padding: 40px var(--pad-x);
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--ink);
+  transition: background 0.2s;
+  gap: 60px;
+}
+
+.fleet-site .fleet-row:last-child {
+  border-bottom: none;
+}
+
+.fleet-site .fleet-row:hover {
+  background: var(--navy-light);
+}
+
+.fleet-site .fleet-row:hover .fleet-row-arrow {
+  transform: translateX(6px);
+  opacity: 1;
+}
+
+.fleet-site .fleet-row-pod {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.fleet-site .fleet-row-tail {
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  flex: 0 0 180px;
+  color: var(--navy);
+}
+
+.fleet-site .fleet-row-model {
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--ink-2);
+  flex: 1;
+}
+
+.fleet-site .fleet-row-status {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  flex: 0 0 120px;
+  text-align: right;
+}
+
+.fleet-site .fleet-row-arrow {
+  font-size: 18px;
+  color: var(--navy);
+  transition: transform 0.2s, opacity 0.2s;
+  opacity: 0.35;
+  margin-left: auto;
+}
+
+/* ── Orbit scene (index page) ────────────────────────────── */
+.fleet-site .orbit-scene {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fleet-site .orbit-clouds-left {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 35%;
+  pointer-events: none;
+  animation: clouds-drift-left 13s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes clouds-drift-left {
+  0%   { transform: translateY(-50%) translateX(0)    translateY(0); }
+  12%  { transform: translateY(calc(-50% + 12px)) translateX(16px); }
+  27%  { transform: translateY(calc(-50% - 8px))  translateX(6px); }
+  43%  { transform: translateY(calc(-50% + 18px)) translateX(20px); }
+  58%  { transform: translateY(calc(-50% - 4px))  translateX(8px); }
+  74%  { transform: translateY(calc(-50% + 14px)) translateX(18px); }
+  88%  { transform: translateY(calc(-50% - 10px)) translateX(4px); }
+  100% { transform: translateY(-50%) translateX(0); }
+}
+
+@keyframes clouds-sway-reverse {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(-18px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes clouds-drift-right {
+  0%   { transform: translateX(0)     translateY(0); }
+  18%  { transform: translateX(-12px) translateY(-14px); }
+  33%  { transform: translateX(-20px) translateY(-6px); }
+  50%  { transform: translateX(-8px)  translateY(-18px); }
+  65%  { transform: translateX(-16px) translateY(-8px); }
+  80%  { transform: translateX(-4px)  translateY(-12px); }
+  92%  { transform: translateX(-18px) translateY(-4px); }
+  100% { transform: translateX(0)     translateY(0); }
+}
+
+@keyframes clouds-drift {
+  0%   { transform: translateX(0)    translateY(0); }
+  15%  { transform: translateX(-14px) translateY(10px); }
+  30%  { transform: translateX(-22px) translateY(4px); }
+  45%  { transform: translateX(-10px) translateY(16px); }
+  60%  { transform: translateX(-18px) translateY(6px); }
+  75%  { transform: translateX(-6px)  translateY(14px); }
+  90%  { transform: translateX(-20px) translateY(2px); }
+  100% { transform: translateX(0)    translateY(0); }
+}
+
+.fleet-site .orbit-clouds-topright {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  width: 26%;
+  pointer-events: none;
+  animation: clouds-drift 11s ease-in-out infinite;
+  z-index: 1;
+}
+
+.fleet-site .orbit-clouds {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 35%;
+  pointer-events: none;
+  animation: clouds-drift-right 10s ease-in-out infinite;
+  transform-origin: bottom right;
+  z-index: 1;
+}
+
+@keyframes clouds-bob {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-18px); }
+  100% { transform: translateY(0); }
+}
+
+.fleet-site .orbit-path {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed rgba(12, 29, 61, 0.13);
+  pointer-events: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.fleet-site .orbit-center {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.fleet-site .orbit-logo {
+  height: 84px;
+  width: auto;
+}
+
+.fleet-site .orbit-center-label {
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.fleet-site .orbit-card {
+  position: absolute;
+  width: 168px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(12, 29, 61, 0.10), 0 2px 8px rgba(12, 29, 61, 0.06);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--navy);
+  z-index: 3;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  will-change: left, top;
+}
+
+.fleet-site .orbit-card:hover {
+  box-shadow: 0 20px 56px rgba(12, 29, 61, 0.18), 0 4px 12px rgba(12, 29, 61, 0.08);
+  transform: translate(-50%, -50%) scale(1.06) !important;
+}
+
+.fleet-site .orbit-card-photo {
+  width: 100%;
+  height: 108px;
+  background: #b8c8df center/cover no-repeat;
+}
+
+.fleet-site .orbit-card-photo--n971mc { background-image: url('/assets/N971MC%20photos/Upper%20gallery/_DSC3381.jpg'); }
+.fleet-site .orbit-card-photo--n150mb { background-image: url('/assets/N150MB%20Photos/Upper%20gallery/_DSC3575.jpg'); }
+.fleet-site .orbit-card-photo--n7pg { background-image: url('/assets/_DSC3254.jpg'); }
+.fleet-site .orbit-card-photo--n251ft { background-image: url('/assets/_DSC1201.jpg'); }
+.fleet-site .orbit-card-photo--n395pd { background-image: url('/assets/Fleet/_DSC2068.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; }
+
+.fleet-site .orbit-card-info {
+  padding: 7px 12px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.fleet-site .orbit-card-pod {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.fleet-site .orbit-card-info-sep {
+  font-size: 9px;
+  color: var(--ink-3);
+  opacity: 0.4;
+}
+
+.fleet-site .orbit-card-tail {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--navy);
+}
+
+.fleet-site .orbit-card-model {
+  display: none;
+}
+
+/* ── Fleet grid (index page) ─────────────────────────────── */
+.fleet-site .fleet-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding: 120px var(--pad-x) 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.fleet-site .fleet-card {
+  display: block;
+  text-decoration: none;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #779fbe;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.fleet-site .fleet-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(12,29,61,0.12);
+}
+
+.fleet-site .fleet-card-photo {
+  width: 100%;
+  height: 240px;
+  background: #b8c8df center/cover no-repeat;
+}
+
+.fleet-site .fleet-card-photo--n971mc { background-image: url('/assets/N971MC%20photos/Upper%20gallery/_DSC3381.jpg'); }
+.fleet-site .fleet-card-photo--n150mb { background-image: url('/assets/N150MB%20Photos/Upper%20gallery/_DSC3575.jpg'); }
+.fleet-site .fleet-card-photo--n7pg { background-image: url('/assets/_DSC3254.jpg'); background-size: cover; background-position: center; }
+.fleet-site .fleet-card-photo--n251ft { background-image: url('/assets/_DSC1201.jpg'); background-size: cover; background-position: center; }
+.fleet-site .fleet-card-photo--n395pd { background-image: url('/assets/Fleet/N395PD.png'); background-size: contain; background-position: center; background-repeat: no-repeat; }
+
+.fleet-site .fleet-card-title {
+  padding: 20px 24px 4px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-align: center;
+}
+
+.fleet-site .fleet-card-model {
+  padding: 0 24px 20px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+}
+
+/* ============================================================
+   PHOTO GALLERY
+   ============================================================ */
+
+.fleet-site .section-gallery {
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  display: block;
+}
+
+/* ============================================================
+   PHOTO CAROUSEL
+   ============================================================ */
+
+.fleet-site .section-carousel {
+  overflow: hidden;
+  width: 100%;
+  padding: 0;
+  position: relative;
+}
+
+.fleet-site .section-carousel::before, .fleet-site .section-carousel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.fleet-site .section-carousel::before {
+  left: 0;
+  background: linear-gradient(to right, var(--white) 0%, transparent 100%);
+}
+
+.fleet-site .section-carousel::after {
+  right: 0;
+  background: linear-gradient(to left, var(--white) 0%, transparent 100%);
+}
+
+.fleet-site .carousel-track {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  will-change: transform;
+  cursor: grab;
+}
+
+.fleet-site .carousel-track.is-dragging {
+  cursor: grabbing;
+}
+
+.fleet-site .carousel-slide {
+  flex-shrink: 0;
+  height: 480px;
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+.fleet-site .carousel-slide img {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.fleet-site .gallery-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2px;
+  height: 72vh;
+  min-height: 480px;
+  max-height: 800px;
+}
+
+.fleet-site .gallery-side {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.fleet-site .gallery-slot {
+  overflow: hidden;
+  background: var(--navy-light);
+  position: relative;
+}
+
+.fleet-site .gallery-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fleet-site .gallery-slot:hover img {
+  transform: scale(1.03);
+}
+
+.fleet-site .gallery-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-3);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   AIRCRAFT DETAILS (YOM / REFURBISHED)
+   ============================================================ */
+
+.fleet-site .section-aircraft-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px var(--pad-x);
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+  gap: 48px;
+  text-align: center;
+}
+
+.fleet-site .aircraft-years {
+  display: flex;
+  gap: 100px;
+  justify-content: center;
+}
+
+.fleet-site .aircraft-year {
+  display: flex;
+  flex-direction: column;
+}
+
+.fleet-site .aircraft-year-value {
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 200;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--navy);
+}
+
+.fleet-site .aircraft-year-label {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+.fleet-site .tour-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 32px;
+  background: #85b5d8;
+  color: var(--white);
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  transition: background 0.2s;
+  flex-shrink: 0;
+  border: 1px solid #85b5d8;
+  border-radius: 28px;
+}
+
+.fleet-site .tour-btn:hover {
+  background: #6ea3cc;
+  border-color: #6ea3cc;
+}
+
+.fleet-site .tour-btn-icon {
+  width: 18px;
+  height: 18px;
+  opacity: 0.7;
+}
+
+.fleet-site .tour-btn-icon path {
+  stroke: var(--white);
+}
+
+/* ============================================================
+   CABIN CONFIGURATION  —  light navy tint
+   ============================================================ */
+
+.fleet-site .section-config {
+  padding: 100px var(--pad-x);
+  border-bottom: 1px solid var(--border);
+  background: var(--navy-light);
+}
+
+.fleet-site .section-config .section-label {
+  text-align: center;
+  font-size: 20px;
+  letter-spacing: 0.2em;
+  margin-bottom: 60px;
+}
+
+.fleet-site .config-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+
+.fleet-site .config-card {
+  padding: 48px 48px 48px 0;
+  border-right: 1px solid var(--border);
+}
+
+.fleet-site .config-card:last-child {
+  border-right: none;
+  padding-left: 48px;
+  padding-right: 0;
+}
+
+.fleet-site .config-type {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.fleet-site .config-value {
+  font-size: clamp(22px, 2.5vw, 34px);
+  font-weight: 200;
+  letter-spacing: 0.01em;
+  margin-bottom: 32px;
+  color: var(--navy);
+}
+
+.fleet-site .config-diagram {
+  width: 100%;
+  max-width: 340px;
+  height: 100px;
+  background: var(--border-2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-3);
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.fleet-site .config-diagram-img {
+  width: auto;
+  max-width: 554px;
+  height: auto;
+  max-height: 185px;
+  display: block;
+  opacity: 0.85;
+}
+
+/* ============================================================
+   MENU SECTION
+   ============================================================ */
+
+.fleet-site .section-menu {
+  padding: 100px var(--pad-x);
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fleet-site .section-menu .section-label {
+  margin-bottom: 60px;
+}
+
+.fleet-site .menu-image-wrap {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  width: 100%;
+  max-width: 900px;
+}
+
+.fleet-site .menu-image-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fleet-site .menu-image-wrap:hover img {
+  transform: scale(1.02);
+}
+
+/* ============================================================
+   COMING SOON STATE
+   ============================================================ */
+
+.fleet-site .coming-soon-section {
+  padding: 160px var(--pad-x);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: var(--white);
+}
+
+.fleet-site .coming-soon-label {
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.fleet-site .coming-soon-text {
+  font-size: clamp(24px, 3vw, 40px);
+  font-weight: 200;
+  color: var(--ink-2);
+  letter-spacing: 0.01em;
+}
+
+/* ============================================================
+   CARD GRID LAYOUT
+   ============================================================ */
+
+.fleet-site .cards-section-bg {
+  background: linear-gradient(to bottom, #85b5d8 0%, #bfd8eb 100%);
+  border-radius: 28px;
+  margin: 32px var(--pad-x);
+}
+
+
+.fleet-site .cards-section-bg > .cards-wrapper {
+  background: transparent;
+  padding: 40px 40px;
+}
+
+.fleet-site .cards-wrapper {
+  background: var(--navy-light);
+  padding: 40px var(--pad-x);
+}
+
+.fleet-site .card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.fleet-site .card {
+  border-radius: 24px;
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.fleet-site .card--white {
+  background: var(--white);
+}
+
+.fleet-site .card--navy {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.fleet-site .card--tint {
+  background: #779fbe;
+  color: #fdfeff;
+}
+
+.fleet-site .card--light {
+  background: radial-gradient(ellipse at center, #7fa3bc 0%, #d4e8f5 100%);
+  color: #000000;
+}
+
+.fleet-site .card--full {
+  grid-column: 1 / -1;
+}
+
+/* Card label (replaces section-label inside cards) */
+.fleet-site .card-label {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+.fleet-site .card--navy .card-label {
+  color: rgba(255,255,255,0.5);
+}
+
+.fleet-site .card--white .card-label {
+  color: var(--navy);
+}
+
+.fleet-site .card--tint .card-label {
+  color: #fdfeff;
+}
+
+.fleet-site .card--light .card-label {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Lower gallery cards — match upper section */
+.fleet-site .cards-section-bg--lower > .cards-wrapper {
+  background: transparent;
+  padding: 40px 40px;
+}
+
+.fleet-site .cards-section-bg--lower .card--light {
+  background: #779fbe;
+  color: #ffffff;
+}
+
+.fleet-site .cards-section-bg--lower .card--light .card-label {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.fleet-site .cards-section-bg--lower .card--light .card-amenity-name {
+  color: #ffffff;
+}
+
+.fleet-site .cards-section-bg--lower .card--light .card-amenity-detail {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.fleet-site .cards-section-bg--lower .card--light .range-disclaimer {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.fleet-site .cards-section-bg--lower .card--light .card-luggage-sep {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Stats inside card */
+.fleet-site .card-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px 16px;
+}
+
+.fleet-site .card-stat-value {
+  font-size: clamp(28px, 3vw, 48px);
+  font-weight: 200;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 8px;
+  color: inherit;
+}
+
+.fleet-site .card-stat-label {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  color: inherit;
+  text-transform: uppercase;
+}
+
+/* About text inside card */
+.fleet-site .card-text {
+  font-size: clamp(15px, 1.4vw, 18px);
+  font-weight: 300;
+  line-height: 1.75;
+  color: inherit;
+}
+
+/* Aircraft details inside card */
+.fleet-site .card-years {
+  display: flex;
+  gap: 60px;
+  margin-bottom: 40px;
+  justify-content: center;
+}
+
+.fleet-site .card-year-value {
+  font-size: clamp(36px, 4vw, 60px);
+  font-weight: 200;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: inherit;
+}
+
+.fleet-site .card-year-label {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: inherit;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+/* Luggage inside card */
+.fleet-site .card-luggage-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.fleet-site .card-luggage-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: -24px;
+}
+
+.fleet-site .card-luggage-count {
+  font-size: clamp(48px, 5vw, 80px);
+  font-weight: 200;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: inherit;
+}
+
+.fleet-site .card-luggage-type {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: inherit;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+.fleet-site .card-luggage-sep {
+  font-size: 36px;
+  font-weight: 200;
+  color: inherit;
+  opacity: 0.5;
+  margin-bottom: 20px;
+}
+
+.fleet-site .card-luggage-img {
+  height: 90px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.85;
+  margin: 0 16px;
+}
+
+.fleet-site .card-luggage-img--small {
+  height: 67px;
+  margin-right: 32px;
+}
+
+.fleet-site .card-luggage-img--large {
+}
+
+.fleet-site .card-luggage-group--inline {
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.fleet-site .card-luggage-group--inline .card-luggage-count, .fleet-site .card-luggage-group--inline .card-luggage-type {
+  text-align: center;
+}
+
+.fleet-site .card-luggage-group--inline-reverse {
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 16px;
+}
+
+.fleet-site .card-luggage-group--inline-reverse .card-luggage-count, .fleet-site .card-luggage-group--inline-reverse .card-luggage-type {
+  text-align: center;
+}
+
+.fleet-site .card-luggage-img--large {
+  margin-left: 32px;
+}
+
+/* Amenities inside card */
+.fleet-site .card-amenities {
+  display: flex;
+  gap: 0;
+  justify-content: center;
+}
+
+.fleet-site .card-amenity {
+  flex: 0 0 auto;
+  padding: 0 40px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.fleet-site .card-amenity:first-child {
+  padding-left: 0;
+}
+
+.fleet-site .card-amenity:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.fleet-site .card-amenity-icon {
+  height: 60px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  opacity: 0.6;
+  margin-bottom: 16px;
+}
+
+.fleet-site .card-amenity-icon--starlink {
+  height: 72px;
+  margin-top: -8px;
+}
+
+.fleet-site .card-amenity-icon-svg {
+  width: 36px;
+  height: 60px;
+  opacity: 0.7;
+  color: #fdfeff;
+  margin-bottom: 16px;
+}
+
+.fleet-site .card-amenity-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: inherit;
+  margin-bottom: 4px;
+}
+
+.fleet-site .card-amenity-detail {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: inherit;
+  text-transform: uppercase;
+}
+
+/* Cabin config inside card */
+.fleet-site .card-config-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  text-align: center;
+  justify-items: center;
+}
+
+.fleet-site .card-config-type {
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  color: inherit;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.fleet-site .card-config-value {
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 200;
+  color: inherit;
+  margin-bottom: 20px;
+}
+
+.fleet-site .card-config-img {
+  width: 100%;
+  height: auto;
+  max-height: 120px;
+  object-fit: contain;
+  opacity: 0.85;
+}
+
+/* Menu inside card */
+.fleet-site .card--menu {
+  padding: 0;
+  overflow: hidden;
+}
+
+.fleet-site .card-menu-img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.fleet-site .card-photo-img {
+  transform: scale(1.1);
+  transform-origin: center center;
+}
+
+/* ============================================================
+   CABIN CONFIG TOGGLE
+   ============================================================ */
+
+.fleet-site .config-toggle {
+  display: inline-flex;
+  background: rgba(12, 29, 61, 0.10);
+  border-radius: 100px;
+  padding: 4px;
+  margin-bottom: 32px;
+}
+
+.fleet-site .config-toggle-btn {
+  background: none;
+  border: none;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #fdfeff;
+  padding: 10px 28px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.fleet-site .config-toggle-btn.active {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.fleet-site .config-panel {
+  transition: opacity 0.25s ease;
+  opacity: 1;
+}
+
+.fleet-site .config-panel--hidden {
+  display: none;
+}
+
+/* ── Range Map ───────────────────────────────────────────── */
+.fleet-site .range-toggle {
+  display: inline-flex;
+  background: rgba(12, 29, 61, 0.10);
+  border-radius: 100px;
+  padding: 4px;
+  margin-bottom: 32px;
+}
+
+.fleet-site .range-toggle-btn {
+  background: none;
+  border: none;
+  font-family: var(--font);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fdfeff;
+  padding: 8px 20px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.fleet-site .range-toggle-btn.active {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.fleet-site .range-panel {
+  width: 100%;
+}
+
+.fleet-site .range-panel--hidden {
+  display: none;
+}
+
+.fleet-site .range-map-placeholder {
+  width: 100%;
+  height: 400px;
+  border-radius: 16px;
+  background: #b8c8df;
+}
+
+.fleet-site .range-map-img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  display: block;
+}
+
+.fleet-site .range-disclaimer {
+  margin-top: 16px;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  max-width: 600px;
+}
+
+/* Hero shortened */
+.fleet-site .hero--short {
+  min-height: 70vh;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 900px) {
+  .fleet-site { --pad-x: 32px; }
+
+
+  .fleet-site .stats { flex-wrap: wrap; }
+
+
+  .fleet-site .stat {
+    flex: 0 0 50%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+
+  .fleet-site .stat:nth-child(even) { border-right: none; }
+
+
+  .fleet-site .amenities-list {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+
+  .fleet-site .amenity {
+    border-right: none;
+    padding-right: 0;
+    margin-right: 0;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 40px;
+  }
+
+
+  .fleet-site .amenity:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+
+  .fleet-site .fleet-row { gap: 24px; flex-wrap: wrap; }
+
+  .fleet-site .fleet-row-model { flex: 0 0 100%; order: 3; }
+
+  .fleet-site .nav { padding: 0 32px; }
+
+
+  .fleet-site .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fleet-site .card--full {
+    grid-column: 1;
+  }
+
+  .fleet-site .cards-wrapper {
+    padding: 24px 32px;
+  }
+
+  .fleet-site .cards-section-bg {
+    margin: 0 24px;
+    border-radius: 20px;
+  }
+
+  .fleet-site .cards-section-bg > .cards-wrapper {
+    padding: 24px 24px;
+  }
+
+}
+
+@media (max-width: 600px) {
+  .fleet-site .stats { flex-direction: column; }
+
+  .fleet-site .stat { flex: 0 0 auto; border-right: none; }
+
+  .fleet-site .luggage-row { gap: 24px; }
+
+}
+
+/* ============================================================
+   MOBILE — 768px and below
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .fleet-site { --pad-x: 20px; }
+
+
+  /* ── Nav ── */
+  .fleet-site .nav {
+    width: calc(100% - 24px);
+    padding: 0 16px;
+    height: 50px;
+  }
+
+
+  .fleet-site .nav-center {
+    gap: 20px;
+  }
+
+
+  .fleet-site .nav-menu-link, .fleet-site .fleet-btn {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+  }
+
+
+  .fleet-site .nav-logo {
+    width: 80px;
+  }
+
+
+  .fleet-site .nav-logo-text {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+  }
+
+
+  .fleet-site .nav-right {
+    width: 80px;
+  }
+
+
+  /* Dropdown should open below nav properly */
+  .fleet-site .dropdown-menu {
+    min-width: 200px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+  }
+
+
+  /* ── Orbit / Home ── */
+  .fleet-site .orbit-scene {
+    height: 100svh;
+  }
+
+
+  .fleet-site .orbit-path {
+    display: none; /* hide circular ring — orbit is now an ellipse on mobile */
+  }
+
+
+  .fleet-site .orbit-logo {
+    height: 56px;
+  }
+
+
+  .fleet-site .orbit-clouds {
+    width: 55%;
+  }
+
+
+  .fleet-site .orbit-clouds-left {
+    width: 50%;
+  }
+
+
+  .fleet-site .orbit-clouds-topright {
+    width: 38%;
+    top: 6%;
+    right: 4%;
+  }
+
+
+  /* ── Hero (aircraft pages) ── */
+  .fleet-site .hero {
+    padding: 120px 20px 48px;
+    min-height: 60vh;
+  }
+
+
+  .fleet-site .hero--short {
+    min-height: 50vh;
+  }
+
+
+  .fleet-site .hero-tagline {
+    font-size: 13px;
+    margin-top: 24px;
+  }
+
+
+  .fleet-site .hero-logo {
+    padding: 24px 20px 16px;
+  }
+
+
+  .fleet-site .hero-logo-img {
+    height: 36px;
+  }
+
+
+  /* ── Carousel ── */
+  .fleet-site .carousel-slide {
+    height: 300px;
+  }
+
+
+  /* ── Gallery grid (lower photos) ── */
+  .fleet-site .gallery-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: unset;
+    max-height: unset;
+  }
+
+
+  .fleet-site .gallery-side {
+    grid-template-rows: unset;
+    grid-template-columns: 1fr 1fr;
+    height: 200px;
+  }
+
+
+  .fleet-site .gallery-slot:first-child {
+    height: 280px;
+  }
+
+
+  /* ── Cards section ── */
+  .fleet-site .cards-section-bg {
+    margin: 16px 12px;
+    border-radius: 16px;
+  }
+
+
+  .fleet-site .cards-section-bg > .cards-wrapper {
+    padding: 20px 16px;
+  }
+
+
+  .fleet-site .cards-section-bg--lower > .cards-wrapper {
+    padding: 20px 16px;
+  }
+
+
+  .fleet-site .card {
+    padding: 32px 24px;
+    border-radius: 18px;
+  }
+
+
+  .fleet-site .card-label {
+    font-size: 15px;
+    letter-spacing: 0.15em;
+    margin-bottom: 28px;
+  }
+
+
+  /* Stats grid: 2 columns instead of 3 */
+  .fleet-site .card-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 12px;
+  }
+
+
+  /* Years */
+  .fleet-site .card-years {
+    gap: 32px;
+  }
+
+
+  /* Amenities: stack vertically */
+  .fleet-site .card-amenities {
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+  }
+
+
+  .fleet-site .card-amenity {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0 0 24px;
+    width: 100%;
+  }
+
+
+  .fleet-site .card-amenity:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+
+  /* Luggage: numbers on top row, images on bottom row */
+  .fleet-site .card-luggage-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas: "left sep right";
+    align-items: start;
+    gap: 0 8px;
+    flex-direction: unset;
+  }
+
+
+  .fleet-site .card-luggage-group--inline-reverse {
+    grid-area: left;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+    gap: 8px;
+  }
+
+
+  .fleet-site .card-luggage-sep {
+    grid-area: sep;
+    margin-bottom: 0;
+    align-self: start;
+    padding-top: 4px;
+  }
+
+
+  .fleet-site .card-luggage-group--inline {
+    grid-area: right;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+    gap: 8px;
+  }
+
+
+  /* Within each group: numbers first, label second, image third */
+  .fleet-site .card-luggage-group--inline-reverse > div, .fleet-site .card-luggage-group--inline > div {
+    order: 1;
+  }
+
+
+  .fleet-site .card-luggage-img {
+    order: 2;
+    margin: 0;
+  }
+
+
+  .fleet-site .card-luggage-img--small {
+    margin-right: 0;
+  }
+
+
+  .fleet-site .card-luggage-img--large {
+    margin-left: 0;
+  }
+
+
+  /* Range map toggle: wrap buttons */
+  .fleet-site .range-toggle, .fleet-site .config-toggle {
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 20px;
+  }
+
+
+  /* ── Menu page ── */
+  .fleet-site .menu-page {
+    grid-template-columns: 1fr;
+    padding: 90px 16px 60px;
+    gap: 24px;
+  }
+
+
+  .fleet-site .menu-page-left {
+    height: auto;
+    width: 100%;
+    display: block;
+  }
+
+
+  .fleet-site .menu-page-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 16px;
+    display: block;
+  }
+
+
+  .fleet-site .menu-page-right {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+
+  .fleet-site .snack-card {
+    padding: 20px 16px;
+    gap: 10px;
+    border-radius: 18px;
+  }
+
+
+  .fleet-site .snack-card-img {
+    width: 72px;
+    height: 88px;
+  }
+
+
+  .fleet-site .snack-card-title {
+    font-size: 10px;
+  }
+
+
+  .fleet-site .snack-card-desc {
+    font-size: 10px;
+  }
+
+
+  /* ── Footer ── */
+  .fleet-site .footer {
+    flex-direction: column-reverse;
+    gap: 16px;
+    padding: 32px 20px;
+    text-align: center;
+  }
+
+
+  .fleet-site .footer-logo img {
+    height: 20px;
+  }
+
+
+  .fleet-site .footer--white .footer-logo-img, .fleet-site .footer--light .footer-logo-img {
+    height: 22px;
+  }
+
+}
+
+/* ============================================================
+   MOBILE — 480px and below (small phones)
+   ============================================================ */
+
+@media (max-width: 480px) {
+  /* ── Nav: hide "Home" and "Menu" text, keep just Fleet ── */
+  .fleet-site .nav-center {
+    gap: 14px;
+  }
+
+
+  .fleet-site .nav-menu-link, .fleet-site .fleet-btn {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+  }
+
+
+  .fleet-site .nav {
+    padding: 0 14px;
+    height: 46px;
+  }
+
+
+  /* ── Orbit cards smaller ── */
+  /* JS handles sizing, but ensure labels still readable */
+  .fleet-site .orbit-card-pod, .fleet-site .orbit-card-tail {
+    font-size: 10px;
+  }
+
+
+  /* ── Carousel shorter ── */
+  .fleet-site .carousel-slide {
+    height: 220px;
+  }
+
+
+  /* ── Cards ── */
+  .fleet-site .card {
+    padding: 24px 16px;
+    border-radius: 14px;
+  }
+
+
+  .fleet-site .cards-section-bg {
+    margin: 12px 8px;
+    border-radius: 14px;
+  }
+
+
+  .fleet-site .cards-section-bg > .cards-wrapper, .fleet-site .cards-section-bg--lower > .cards-wrapper {
+    padding: 16px 12px;
+  }
+
+
+  .fleet-site .card-label {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+
+  /* ── Stats: keep 2 col ── */
+  .fleet-site .card-stat-value {
+    font-size: 28px;
+  }
+
+
+  /* ── Amenities ── */
+  .fleet-site .card-amenity-icon {
+    height: 44px;
+  }
+
+
+  .fleet-site .card-amenity-icon--starlink {
+    height: 54px;
+  }
+
+
+  /* ── Years ── */
+  .fleet-site .card-year-value {
+    font-size: 36px;
+  }
+
+
+  /* ── Luggage ── */
+  .fleet-site .card-luggage-count {
+    font-size: 48px;
+  }
+
+
+  /* ── Menu snack grid: 1 column ── */
+  .fleet-site .menu-page-right {
+    grid-template-columns: 1fr;
+  }
+
+
+  .fleet-site .menu-page-left {
+    height: auto;
+  }
+
+
+  /* ── Gallery ── */
+  .fleet-site .gallery-side {
+    height: 160px;
+  }
+
+
+  .fleet-site .gallery-slot:first-child {
+    height: 220px;
+  }
+
+
+  /* ── Hero ── */
+  .fleet-site .hero {
+    padding: 100px 16px 40px;
+  }
+
+
+  /* ── Range toggle buttons ── */
+  .fleet-site .range-toggle-btn {
+    font-size: 10px;
+    padding: 7px 14px;
+  }
+
+
+  .fleet-site .config-toggle-btn {
+    font-size: 10px;
+    padding: 8px 18px;
+  }
+
+
+  /* ── Footer ── */
+  .fleet-site .footer {
+    padding: 28px 16px;
+  }
+
+}

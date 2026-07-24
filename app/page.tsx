@@ -1,65 +1,163 @@
-import Image from "next/image";
+import Link from "next/link";
+import HeroFlight from "@/components/HeroFlight";
+import { siteConfig } from "@/lib/site-config";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div>
+      <HeroFlight />
+
+      <section className="grid grid-cols-1 items-center gap-12 px-6 pt-8 pb-24 sm:px-20 lg:grid-cols-2 lg:gap-20">
+        {/* text reads first on mobile; image leads on desktop */}
+        <div className="mx-auto w-full max-w-xl max-lg:order-last">
+          <img
+            src="/about-hangar.jpg"
+            alt="CRAFT Challenger 300 N971MC parked under the hangar canopy"
+            className="w-full rounded-3xl object-cover shadow-[0_24px_80px_rgba(12,29,61,0.18)]"
+          />
+        </div>
+
+        <div className="mx-auto flex max-w-xl flex-col items-start gap-6">
+          <p className="text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase">
+            Our Story
           </p>
+          <h2 className="text-[clamp(28px,4vw,44px)] leading-tight font-extralight text-navy">
+            Built in 2020.
+            <br />
+            <span className="font-medium">Flown like family ever since.</span>
+          </h2>
+          <p className="text-[15px] font-light leading-relaxed text-ink-2">
+            CRAFT was founded in 2020 and has built a strong track record in
+            the charter industry — flight after flight, year after year.
+          </p>
+          <p className="text-[15px] font-light leading-relaxed text-ink-2">
+            We hold ourselves to the highest safety standards in the business,
+            and we pair that discipline with something rarer: a warm,
+            family-like service where our team knows you, your preferences,
+            and what it takes to make every trip feel effortless.
+          </p>
+          <Link
+            href="/about"
+            className="mt-2 text-[11px] font-medium tracking-[0.3em] text-navy uppercase underline underline-offset-4 transition-opacity hover:opacity-60"
+          >
+            Meet the Team →
+          </Link>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+      </section>
+
+      <section className="grid grid-cols-1 items-center gap-12 px-6 py-24 sm:px-20 lg:grid-cols-2 lg:gap-20">
+        <div className="mx-auto flex max-w-xl flex-col items-start gap-6">
+          <p className="text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase">
+            The Fleet
+          </p>
+          <h2 className="text-[clamp(28px,4vw,44px)] leading-tight font-extralight text-navy">
+            Meet our
+            <br />
+            <span className="font-medium">Challenger Fleet</span>
+          </h2>
+          <p className="text-[15px] font-light leading-relaxed text-ink-2">
+            We operate Challenger 300 and 350 aircraft, all equipped with
+            Starlink internet, Live TV, and Bluetooth speakers.
+          </p>
+          <p className="text-[15px] font-light leading-relaxed text-ink-2">
+            The Challenger fleet is the perfect charter aircraft for North
+            America — perfect range, a flat floor, and the ability to land at
+            almost any airport.
+          </p>
+          <Link
+            href="/fleet"
+            className="mt-2 text-[11px] font-medium tracking-[0.3em] text-navy uppercase underline underline-offset-4 transition-opacity hover:opacity-60"
+          >
+            Explore the Fleet →
+          </Link>
+        </div>
+
+        <div className="mx-auto w-full max-w-xl">
+          <img
+            src="/fleet-window.jpg"
+            alt="Sunset view of the CRAFT Challenger fleet on the ramp"
+            className="w-full rounded-3xl object-cover shadow-[0_24px_80px_rgba(12,29,61,0.18)]"
+          />
+        </div>
+      </section>
+
+      <section className="grid grid-cols-1 items-center gap-12 px-6 py-24 sm:px-20 lg:grid-cols-2 lg:gap-20">
+        {/* text reads first on mobile; image leads on desktop */}
+        <div className="mx-auto w-full max-w-xl max-lg:order-last">
+          <img
+            src="/safety-cockpit.jpg"
+            alt="CRAFT flight crew in the cockpit during a flight"
+            className="w-full rounded-3xl object-cover shadow-[0_24px_80px_rgba(12,29,61,0.18)]"
+          />
+        </div>
+
+        <div className="mx-auto flex max-w-xl flex-col items-start gap-6">
+          <p className="text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase">
+            Safety
+          </p>
+          <h2 className="text-[clamp(28px,4vw,44px)] leading-tight font-extralight text-navy">
+            Safety is
+            <br />
+            <span className="font-medium">Our Priority</span>
+          </h2>
+          <p className="text-[15px] font-light leading-relaxed text-ink-2">
+            CRAFT proudly holds both ARGUS Platinum and Wyvern ratings, and
+            has maintained a clean safety record for six years running.
+          </p>
+          <p className="text-[15px] font-light leading-relaxed text-ink-2">
+            We run a risk assessment before every trip and debrief anything
+            that didn&apos;t go according to plan — a habit many of our
+            pilots carry over from flying in the Air Force. It&apos;s part
+            of an open discussion culture that puts safety first, and gives
+            us full faith in our crews to fly every trip as safely as
+            possible.
+          </p>
+          <Link
+            href="/safety"
+            className="mt-2 text-[11px] font-medium tracking-[0.3em] text-navy uppercase underline underline-offset-4 transition-opacity hover:opacity-60"
+          >
+            Our Safety Standards →
+          </Link>
+        </div>
+      </section>
+
+      <section className="grid grid-cols-1 items-center gap-12 px-6 py-24 sm:px-20 lg:grid-cols-2 lg:gap-20">
+        <div className="mx-auto flex max-w-xl flex-col items-start gap-6">
+          <p className="text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase">
+            Key Program
+          </p>
+          <h2 className="text-[clamp(28px,4vw,44px)] leading-tight font-extralight text-navy">
+            Meet
+            <br />
+            <span className="font-medium">Glidepath</span>
+          </h2>
+          <p className="text-[15px] font-light leading-relaxed text-ink-2">
+            Glidepath is a revolutionary way to access aircraft ownership
+            while diversifying a concentrated stock position — by joining
+            the CRAFT Exchange Fund.
+          </p>
+          <p className="text-[15px] font-light leading-relaxed text-ink-2">
+            It&apos;s a first-of-its-kind solution in the private aviation
+            space, and it has already attracted a lot of interest.
+          </p>
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href={siteConfig.glidepathUrl}
             target="_blank"
             rel="noopener noreferrer"
+            className="mt-2 text-[11px] font-medium tracking-[0.3em] text-navy uppercase underline underline-offset-4 transition-opacity hover:opacity-60"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
+            Visit Glidepath ↗
           </a>
         </div>
-      </main>
+
+        <div className="mx-auto w-full max-w-xl">
+          <img
+            src="/glidepath-exchange.jpg"
+            alt="Glidepath Exchange Fund — diversify without selling"
+            className="w-full rounded-3xl object-cover shadow-[0_24px_80px_rgba(12,29,61,0.18)]"
+          />
+        </div>
+      </section>
     </div>
   );
 }

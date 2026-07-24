@@ -1,0 +1,85 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Menu | Craft Fleet',
+  description: "Craft's in-flight menu and snacks.",
+};
+
+export default function MenuPage() {
+  return (
+    <>
+      {/* ── MENU CONTENT ──────────────────────────────────────── */}
+      <div className="menu-page">
+
+        {/* Left: menu image */}
+        <div className="menu-page-left">
+          <img src="/assets/menu-snacks.jpg" alt="Craft in-flight menu" className="menu-page-img" />
+        </div>
+
+        {/* Right: snack grid */}
+        <div className="snack-grid-bg">
+          <p className="snack-grid-intro">Partnering with Luxury Gourmet Sweets, we&apos;ve developed bespoke snack offerings tailored exclusively for our clients, elevating the in-flight experience with thoughtfully curated, premium treats.</p>
+        <div className="menu-page-right">
+
+          <div className="snack-card">
+            <div className="snack-card-title">Classic Gummy Bears</div>
+            <img src="/assets/Snacks/Gummy.png" alt="Classic Gummy Bears" className="snack-card-img" />
+            <p className="snack-card-desc">Soft, fruity, and colorful — a timeless treat served in a generous 110g jar.</p>
+          </div>
+
+          <div className="snack-card">
+            <div className="snack-card-title">Peanut M&amp;M&apos;s</div>
+            <img src="/assets/Snacks/MNM.png" alt="Peanut M&M's" className="snack-card-img" />
+            <p className="snack-card-desc">Crunchy whole peanuts wrapped in smooth milk chocolate and a crisp candy shell.</p>
+            <span className="snack-card-kosher">Kosher</span>
+          </div>
+
+          <div className="snack-card">
+            <div className="snack-card-title">Honey Mustard Pretzels</div>
+            <img src="/assets/Snacks/Mustard.png" alt="Honey Mustard Pretzels" className="snack-card-img" />
+            <p className="snack-card-desc">Golden pretzels glazed with a perfectly balanced sweet and tangy honey mustard coating.</p>
+            <span className="snack-card-kosher">Kosher</span>
+          </div>
+
+          <div className="snack-card">
+            <div className="snack-card-title">Premium Nut Blend</div>
+            <img src="/assets/Snacks/Nuts.png" alt="Premium Nut Blend" className="snack-card-img" />
+            <p className="snack-card-desc">A curated mix of roasted cashews, almonds, and pistachios for a satisfying savory bite.</p>
+            <span className="snack-card-kosher">Kosher</span>
+          </div>
+
+          <div className="snack-card">
+            <div className="snack-card-title">Sweet Peach Slices</div>
+            <img src="/assets/Snacks/Peach" alt="Sweet Peach Slices" className="snack-card-img" />
+            <p className="snack-card-desc">Sweet and chewy peach-flavored rings with a soft, sugar-dusted fruity center.</p>
+          </div>
+
+          <div className="snack-card">
+            <div className="snack-card-title">Crisp Plantain Bites</div>
+            <img src="/assets/Snacks/Plantain.png" alt="Crisp Plantain Bites" className="snack-card-img" />
+            <p className="snack-card-desc">Light and crispy plantain bites with a naturally sweet, tropical flavor in every crunch.</p>
+            <span className="snack-card-kosher">Kosher</span>
+          </div>
+
+        </div>
+        </div>
+      </div>
+
+      {/* ── FOOTER ─────────────────────────────────────────────── */}
+      <footer className="footer footer--white">
+        <div className="footer-copy-group">
+          <div className="footer-copy">&copy; 2026 CRAFT. All rights reserved.</div>
+          <div className="footer-links">
+            <Link href="/faq" className="footer-link">FAQ</Link>
+            <Link href="/legal" className="footer-link">Legal</Link>
+            <Link href="/reviews" className="footer-link">Reviews</Link>
+          </div>
+        </div>
+        <div className="footer-logo">
+          <img src="/assets/Logo No.png" alt="Craft" className="footer-logo-img" />
+        </div>
+      </footer>
+    </>
+  );
+}
