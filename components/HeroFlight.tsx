@@ -14,7 +14,11 @@ function arcPath(a: [number, number], b: [number, number]): string {
   const mx = (a[0] + b[0]) / 2;
   const lift = Math.hypot(b[0] - a[0], b[1] - a[1]) * 0.22;
   const my = (a[1] + b[1]) / 2 - lift;
-  return `M ${a[0]} ${a[1]} Q ${mx} ${my} ${b[0]} ${b[1]}`;
+  // Round the control point: Math.hypot isn't required to be correctly
+  // rounded, so Node and the browser can disagree in the last bit and
+  // React reports a hydration mismatch on every arc.
+  const r = (n: number) => Math.round(n * 100) / 100;
+  return `M ${a[0]} ${a[1]} Q ${r(mx)} ${r(my)} ${b[0]} ${b[1]}`;
 }
 
 // Legs to airports beyond the map frame (Europe, South America…) still count
