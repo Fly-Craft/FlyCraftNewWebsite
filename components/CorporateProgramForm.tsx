@@ -58,7 +58,7 @@ export default function CorporateProgramForm() {
   if (status === "sent") {
     return (
       <div className="grid grid-cols-1 items-stretch gap-12 lg:grid-cols-2 lg:gap-20">
-        <div className="flex max-w-xl flex-col items-center justify-center gap-5 rounded-3xl border border-navy/10 bg-white px-8 py-20 text-center shadow-[0_24px_80px_rgba(12,29,61,0.1)]">
+        <div className="flex max-w-xl flex-col items-center justify-center gap-5 rounded-3xl glass px-8 py-20 text-center">
           <span className="flex h-14 w-14 items-center justify-center rounded-full bg-navy text-[20px] text-white">
             ✓
           </span>
@@ -95,7 +95,7 @@ export default function CorporateProgramForm() {
     <div className="grid grid-cols-1 items-stretch gap-12 lg:grid-cols-2 lg:gap-20">
     <form
       onSubmit={handleSubmit}
-      className="flex max-w-xl flex-col gap-6 rounded-3xl border border-navy/10 bg-white/90 p-8 shadow-[0_24px_80px_rgba(12,29,61,0.1)] backdrop-blur sm:p-12"
+      className="flex max-w-xl flex-col gap-6 rounded-3xl glass p-8 sm:p-12"
     >
       <div>
         <label className={microLabel}>Company Name</label>
@@ -161,7 +161,7 @@ export default function CorporateProgramForm() {
 
       <div className="border-t border-border pt-6">
         <div className="mb-6">
-          <label className={microLabel}>Full Name</label>
+          <label className={microLabel}>Name</label>
           <input
             type="text"
             value={name}
@@ -197,7 +197,7 @@ export default function CorporateProgramForm() {
       <button
         type="submit"
         disabled={!canSubmit || status === "sending"}
-        className="mt-2 rounded-full bg-navy px-8 py-4 text-[11px] font-medium tracking-[0.3em] text-white uppercase transition-opacity hover:opacity-85 disabled:opacity-40"
+        className="mt-2 glass-selected rounded-full px-8 py-4 text-[11px] font-medium tracking-[0.3em] text-white uppercase transition-opacity hover:opacity-85 disabled:opacity-40"
       >
         {status === "sending" ? "Sending…" : "Request a Program"}
       </button>

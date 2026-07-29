@@ -9,7 +9,7 @@
   --border: rgba(12, 29, 61, 0.12);
   --border-2: rgba(12, 29, 61, 0.06);
   --accent: #85b5d8;
-  --sky-gradient: linear-gradient(180deg, #f5fafd 0%, #e5f0f8 40%, #c9e5f2 100%);
+  --sky-gradient: linear-gradient(180deg, #fdfeff 0%, #f6fafc 45%, #edf4f9 100%);
   --background: #f6f6f6;
   --foreground: #0c1d3d;
 }
@@ -25,6 +25,101 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
+}
+
+/* ============================================================
+   LIQUID GLASS — Apple-inspired translucent material.
+   Frosted blur + saturation pulls the sky gradient through the
+   surface; the inset highlights read as light refracting off the
+   top edge of the pane.
+   ============================================================ */
+.glass {
+  background: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.78) 0%,
+    rgba(255, 255, 255, 0.52) 55%,
+    rgba(255, 255, 255, 0.66) 100%
+  );
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+  backdrop-filter: blur(28px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    inset 0 -14px 28px rgba(133, 181, 216, 0.08),
+    0 0 0 1px rgba(12, 29, 61, 0.04),
+    0 24px 80px rgba(12, 29, 61, 0.12);
+}
+
+/* Brighter glass lozenge — the active-tab capsule. More opaque than the
+   nav pane beneath it, with a crisp edge and lift shadow so the current
+   tab reads at a glance. */
+.glass-capsule {
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(255, 255, 255, 0.72) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 1),
+    0 0 0 1px rgba(12, 29, 61, 0.06),
+    0 6px 18px rgba(12, 29, 61, 0.16);
+}
+
+/* Selected state — a navy-tinted pane of the same glass. Darker than the
+   surrounding surface so the choice is unmistakable, but still translucent
+   rather than a flat fill. */
+.glass-selected {
+  background: linear-gradient(
+    160deg,
+    rgba(12, 29, 61, 0.82) 0%,
+    rgba(12, 29, 61, 0.68) 55%,
+    rgba(12, 29, 61, 0.78) 100%
+  );
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.22),
+    0 4px 14px rgba(12, 29, 61, 0.24);
+}
+
+/* Dark glass — for panes that sit as a deep accent (the Glidepath CTA
+   card). Translucent navy with light type over it. */
+.glass-dark {
+  background: linear-gradient(
+    150deg,
+    rgba(12, 29, 61, 0.82) 0%,
+    rgba(12, 29, 61, 0.68) 55%,
+    rgba(12, 29, 61, 0.78) 100%
+  );
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  backdrop-filter: blur(28px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.22),
+    0 24px 80px rgba(12, 29, 61, 0.28);
+}
+
+/* Interactive glass — the capsule material as a button, with a lift on
+   hover so it responds like a physical control. */
+.glass-btn {
+  transition:
+    transform 0.25s cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 0.25s cubic-bezier(0.32, 0.72, 0, 1),
+    background 0.25s ease;
+}
+.glass-btn:hover {
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.84) 100%
+  );
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 1),
+    0 0 0 1px rgba(12, 29, 61, 0.08),
+    0 10px 26px rgba(12, 29, 61, 0.2);
 }
 
 /* Soft cross-page fade — app/template.tsx remounts this per navigation */
@@ -64,8 +159,13 @@ body {
    HERO FLIGHT — scroll-driven plane + map reveal
    ============================================================ */
 
+/* 420vh total, down from 560vh. Scroll distance is height − 100vh, so the
+   intro (plane + map reveal) keeps its original ~2.1 screens while the
+   trips draw-in drops from ~2.2 screens to ~1 — scrolling the whole year
+   at the old rate dragged. Phase boundaries live in HeroFlight.tsx as
+   fractions of this height, so the two must be changed together. */
 .hf-section {
-  height: 560vh;
+  height: 420vh;
   position: relative;
 }
 
@@ -92,6 +192,80 @@ body {
   white-space: nowrap;
 }
 
+/* Flight tally, parked below the map. The count is the thing people
+   actually watch climb, so it gets the display size and its own glass
+   card rather than riding along as a caption under the title. */
+.hf-trips-counter {
+  position: absolute;
+  left: 50%;
+  /* Anchored to the map's bottom edge rather than the viewport's, so the
+     card tucks right under the map at every aspect ratio instead of
+     drifting away from it on tall windows. Mirrors .hf-map's own sizing:
+     it starts at 7vh and its height is 0.64·width. */
+  top: calc(7vh + min(1150px, 96vw, 137vh - 315px) * 0.64 + 48px);
+  transform: translateX(-50%);
+  opacity: 0;
+  z-index: 4;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.hf-counter-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 42px 16px;
+  border-radius: 28px;
+}
+
+.hf-counter-month {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.hf-counter-num {
+  font-size: clamp(42px, 5.4vw, 66px);
+  line-height: 1;
+  font-weight: 200;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+  /* fixed-width digits — the number ticks constantly and would otherwise
+     shuffle the whole card sideways on every increment */
+  font-variant-numeric: tabular-nums;
+}
+
+.hf-counter-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--navy);
+  opacity: 0.55;
+}
+
+.hf-counter-track {
+  margin-top: 10px;
+  width: min(260px, 52vw);
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(12, 29, 61, 0.12);
+  overflow: hidden;
+}
+
+.hf-counter-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #85b5d8, #0c1d3d);
+}
+
 .hf-sticky {
   position: sticky;
   top: 0;
@@ -111,7 +285,12 @@ body {
 }
 
 .hf-map {
-  width: min(1150px, 96vw);
+  /* The third term reserves the band the tally card needs below the map.
+     Height is 0.64·width and the map starts at 7vh, so capping width at
+     ~1.37·vh − 280px leaves room for the card plus a bottom margin on
+     short-and-wide desktops; on tall screens the 1150px cap still wins.
+     Kept in sync with .hf-trips-counter's top, which repeats this term. */
+  width: min(1150px, 96vw, calc(137vh - 315px));
   aspect-ratio: 1000 / 640;
   transform-origin: 50% 85%;
   opacity: 0;
@@ -310,6 +489,11 @@ body {
   /* Title clears the fixed nav pill (~10vh tall); map sits below the title */
   .hf-map-persp { padding-top: 19vh; }
   .hf-trips-title { top: 12vh; }
+  /* Same anchor, phone geometry: map-persp pads 19vh and the map is
+     150vw wide, so its height is 150vw · 0.64 = 96vw. */
+  .hf-trips-counter { top: calc(19vh + 96vw + 44px); }
+  .hf-counter-card { padding: 13px 32px 15px; border-radius: 26px; }
+  .hf-counter-track { margin-top: 10px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

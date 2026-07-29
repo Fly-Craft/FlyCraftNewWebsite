@@ -61,7 +61,7 @@ export default function GlidepathPage() {
             href={siteConfig.glidepathUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 rounded-full bg-navy px-8 py-4 text-[11px] font-medium tracking-[0.3em] text-white uppercase transition-opacity hover:opacity-85"
+            className="glass-capsule glass-btn inline-flex items-center gap-3 rounded-full px-8 py-4 text-[11px] font-medium tracking-[0.3em] text-navy uppercase"
           >
             Visit Glidepath.ai
             <ArrowIcon />
@@ -79,7 +79,7 @@ export default function GlidepathPage() {
           One Fleet · Two Companies
         </p>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          <div className="flex flex-col rounded-3xl border border-navy/10 bg-white/90 p-10 shadow-[0_24px_80px_rgba(12,29,61,0.1)] backdrop-blur sm:p-14">
+          <div className="flex flex-col rounded-3xl glass p-10 sm:p-14">
             <p className="mb-5 text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase">
               The Operator
             </p>
@@ -93,7 +93,7 @@ export default function GlidepathPage() {
             </p>
           </div>
 
-          <div className="flex flex-col rounded-3xl border border-navy/10 bg-white/90 p-10 shadow-[0_24px_80px_rgba(12,29,61,0.1)] backdrop-blur sm:p-14">
+          <div className="flex flex-col rounded-3xl glass p-10 sm:p-14">
             <p className="mb-5 text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase">
               The Fund
             </p>
@@ -116,7 +116,7 @@ export default function GlidepathPage() {
 
       {/* How the fund works */}
       <section className="px-6 pt-16 pb-8 sm:px-20">
-        <div className="mx-auto max-w-4xl rounded-3xl border border-navy/10 bg-white/90 p-10 shadow-[0_24px_80px_rgba(12,29,61,0.1)] backdrop-blur sm:p-14">
+        <div className="mx-auto max-w-4xl rounded-3xl glass p-10 sm:p-14">
           <p className="mb-3 text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase">
             How It Works
           </p>
@@ -155,7 +155,7 @@ export default function GlidepathPage() {
 
       {/* The CRAFT perk + closing CTA */}
       <section className="px-6 pt-16 pb-28 sm:px-20">
-        <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 rounded-3xl bg-navy p-10 text-center shadow-[0_24px_80px_rgba(12,29,61,0.25)] sm:p-14">
+        <div className="glass-dark mx-auto flex max-w-4xl flex-col items-center gap-6 rounded-3xl p-10 text-center sm:p-14">
           <p className="text-[11px] font-normal tracking-[0.35em] text-white/60 uppercase">
             The CRAFT Connection
           </p>

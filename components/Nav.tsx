@@ -1,16 +1,63 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AIRCRAFT } from "@/lib/fleet-aircraft";
 import { landingLinks } from "@/lib/site-config";
 
 const linkCls =
-  "text-[9px] font-medium tracking-[0.2em] whitespace-nowrap text-navy uppercase transition-opacity hover:opacity-55 sm:text-[10px] sm:tracking-[0.25em] lg:text-[11px] lg:tracking-[0.3em]";
+  "relative z-10 text-[9px] font-medium tracking-[0.2em] whitespace-nowrap uppercase transition-colors duration-300 sm:text-[10px] sm:tracking-[0.25em] lg:text-[11px] lg:tracking-[0.3em]";
 
 export default function Nav() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLElement>(null);
+  const pillRef = useRef<HTMLDivElement>(null);
+  const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const [capsule, setCapsule] = useState({ left: 0, width: 0, visible: false });
+  // The capsule snaps into place on first paint, then glides on navigation
+  const [animated, setAnimated] = useState(false);
+
+  // Which nav tab owns the current page (sub-pages count toward their tab)
+  const activeHref =
+    pathname === "/"
+      ? "/"
+      : (landingLinks.find(
+          (l) => pathname === l.href || pathname.startsWith(l.href + "/")
+        )?.href ?? null);
+
+  useEffect(() => {
+    function update() {
+      const el = activeHref ? linkRefs.current[activeHref] : null;
+      const pill = pillRef.current;
+      if (!el || !pill) {
+        setCapsule((c) => ({ ...c, visible: false }));
+        return;
+      }
+      const er = el.getBoundingClientRect();
+      const pr = pill.getBoundingClientRect();
+      // Two corrections so the capsule sits on the glyphs, not the box:
+      // letter-spacing also trails the final character (shift back half),
+      // and `left` is measured from the pill's padding box while the rect
+      // is its border box (subtract the border).
+      const tracking = parseFloat(getComputedStyle(el).letterSpacing) || 0;
+      setCapsule({
+        left: er.left - pr.left - pill.clientLeft - 10 - tracking / 2,
+        width: er.width + 20,
+        visible: true,
+      });
+      requestAnimationFrame(() => setAnimated(true));
+    }
+    // After fonts settle, widths can shift a hair — measure twice
+    update();
+    const t = setTimeout(update, 300);
+    window.addEventListener("resize", update);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("resize", update);
+    };
+  }, [activeHref]);
 
   // Close the mobile menu on outside tap or Escape
   useEffect(() => {
@@ -30,13 +77,16 @@ export default function Nav() {
     };
   }, []);
 
+  const linkColor = (href: string) =>
+    activeHref === href ? "text-navy" : "text-navy hover:opacity-55";
+
   return (
     <nav
       ref={ref}
       className="fixed top-4 left-1/2 z-50 w-[92%] -translate-x-1/2 sm:w-fit sm:max-w-[92%]"
     >
       {/* ── Mobile bar: hamburger left, CRAFT centered ──── */}
-      <div className="relative flex items-center rounded-full border border-navy/10 bg-white/95 px-4 py-3 shadow-[0_4px_32px_rgba(12,29,61,0.08)] backdrop-blur-xl sm:hidden">
+      <div className="glass relative flex items-center rounded-full px-4 py-3 sm:hidden">
         <button
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
@@ -71,13 +121,15 @@ export default function Nav() {
 
       {/* ── Mobile dropdown ─────────────────────────────── */}
       {open && (
-        <div className="absolute top-full left-0 mt-2 w-60 overflow-hidden rounded-3xl border border-navy/10 bg-white/95 py-2 shadow-[0_24px_60px_rgba(12,29,61,0.16)] backdrop-blur-xl sm:hidden">
+        <div className="glass absolute top-full left-0 mt-2 w-60 overflow-hidden rounded-3xl p-2 sm:hidden">
           {landingLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="block px-7 py-3.5 text-[11px] font-medium tracking-[0.25em] text-navy uppercase transition-colors hover:bg-navy/5"
+              className={`block rounded-full px-5 py-3 text-[11px] font-medium tracking-[0.25em] text-navy uppercase transition-colors ${
+                activeHref === link.href ? "glass-capsule" : "hover:bg-navy/5"
+              }`}
             >
               {link.label}
             </Link>
@@ -85,11 +137,32 @@ export default function Nav() {
         </div>
       )}
 
-      {/* ── Desktop pill (unchanged) ────────────────────── */}
-      <div className="hidden items-center justify-center gap-x-8 rounded-full border border-navy/10 bg-white/95 px-12 py-3 shadow-[0_4px_32px_rgba(12,29,61,0.08)] backdrop-blur-xl sm:flex">
+      {/* ── Desktop pill ────────────────────────────────── */}
+      <div
+        ref={pillRef}
+        className="glass relative hidden items-center justify-center gap-x-6 rounded-full px-7 py-3 sm:flex"
+      >
+        {/* Active-tab capsule — glides to whichever page you're on */}
+        <div
+          aria-hidden
+          className={`glass-capsule absolute top-1/2 h-8 -translate-y-1/2 rounded-full ${
+            animated
+              ? "transition-[left,width,opacity] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+              : ""
+          }`}
+          style={{
+            left: capsule.left,
+            width: capsule.width,
+            opacity: capsule.visible ? 1 : 0,
+          }}
+        />
+
         <Link
           href="/"
-          className="text-[13px] font-semibold tracking-[0.32em] text-navy"
+          ref={(el) => {
+            linkRefs.current["/"] = el;
+          }}
+          className="relative z-10 text-[13px] font-semibold tracking-[0.32em] text-navy transition-colors duration-300"
         >
           CRAFT
         </Link>
@@ -98,11 +171,17 @@ export default function Nav() {
           if (link.href === "/fleet") {
             return (
               <div key={link.href} className="group relative flex items-center">
-                <Link href={link.href} className={linkCls}>
+                <Link
+                  href={link.href}
+                  ref={(el) => {
+                    linkRefs.current[link.href] = el;
+                  }}
+                  className={`${linkCls} ${linkColor(link.href)}`}
+                >
                   {link.label}
                 </Link>
                 <div className="pointer-events-none absolute top-full left-1/2 z-50 -translate-x-1/2 pt-4 opacity-0 transition-opacity duration-150 group-hover:pointer-events-auto group-hover:opacity-100">
-                  <div className="w-48 divide-y divide-navy/10 overflow-hidden rounded-3xl border border-navy/10 bg-white/95 shadow-[0_24px_60px_rgba(12,29,61,0.14)] backdrop-blur-xl">
+                  <div className="glass w-48 divide-y divide-navy/10 overflow-hidden rounded-3xl">
                     {AIRCRAFT.map((a) => (
                       <Link
                         key={a.slug}
@@ -121,7 +200,14 @@ export default function Nav() {
             );
           }
           return (
-            <Link key={link.href} href={link.href} className={linkCls}>
+            <Link
+              key={link.href}
+              href={link.href}
+              ref={(el) => {
+                linkRefs.current[link.href] = el;
+              }}
+              className={`${linkCls} ${linkColor(link.href)}`}
+            >
               {link.label}
             </Link>
           );

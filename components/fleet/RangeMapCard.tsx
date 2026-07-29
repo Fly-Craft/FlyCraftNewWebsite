@@ -75,6 +75,7 @@ export default function RangeMapCard({ rangeNm }: { rangeNm: number }) {
           placeholder="City or airport code (TEB, KOPF…)"
           value={origin}
           onChange={setOrigin}
+          centered
         />
       </div>
 
@@ -178,7 +179,7 @@ export default function RangeMapCard({ rangeNm }: { rangeNm: number }) {
           </svg>
 
           {!origin && (
-            <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-navy/10 bg-white/80 px-5 py-2.5 text-[10px] tracking-[0.28em] whitespace-nowrap text-ink-3 uppercase backdrop-blur">
+            <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full glass px-5 py-2.5 text-[10px] tracking-[0.28em] whitespace-nowrap text-ink-3 uppercase">
               Select a departure city
             </div>
           )}

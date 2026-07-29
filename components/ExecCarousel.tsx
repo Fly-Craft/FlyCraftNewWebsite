@@ -65,7 +65,7 @@ export default function ExecCarousel() {
           </div>
 
           <div className="pointer-events-none absolute top-full left-1/2 z-20 w-64 -translate-x-1/2 pt-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
-            <div className="rounded-2xl border border-navy/10 bg-white/95 p-4 text-left shadow-[0_16px_48px_rgba(12,29,61,0.14)] backdrop-blur">
+            <div className="rounded-2xl glass p-4 text-left">
               <p className="text-[12px] leading-relaxed font-light text-ink-2">
                 {exec.bio || "Bio coming soon."}
               </p>

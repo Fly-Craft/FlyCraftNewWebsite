@@ -81,7 +81,7 @@ export default function LegalPage() {
       />
 
       <section className="px-6 pb-28 sm:px-20">
-        <div className="mx-auto max-w-3xl rounded-3xl border border-navy/10 bg-white/90 p-10 shadow-[0_24px_80px_rgba(12,29,61,0.1)] backdrop-blur sm:p-14">
+        <div className="mx-auto max-w-3xl rounded-3xl glass p-10 sm:p-14">
           <ul className="flex flex-col">
             {SECTIONS.map((section) => (
               <li

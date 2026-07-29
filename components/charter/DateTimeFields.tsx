@@ -124,7 +124,7 @@ export function DateField({
       </button>
 
       {open && (
-        <div className="absolute z-30 mt-2 w-72 rounded-2xl border border-navy/10 bg-white p-4 shadow-[0_20px_60px_rgba(12,29,61,0.16)]">
+        <div className="absolute z-30 mt-2 w-72 rounded-2xl glass p-4">
           <div className="mb-3 flex items-center justify-between">
             <button
               type="button"
@@ -173,7 +173,7 @@ export function DateField({
                   }}
                   className={`mx-auto flex h-8 w-8 items-center justify-center rounded-full text-[13px] transition-colors ${
                     selected
-                      ? "bg-navy font-medium text-white"
+                      ? "glass-selected font-medium text-white"
                       : disabled
                         ? "cursor-not-allowed text-ink-3/40"
                         : `text-navy hover:bg-navy-light ${isToday ? "border border-navy/30" : ""}`
@@ -238,7 +238,7 @@ export function TimeField({
       {open && (
         <div
           ref={listRef}
-          className="absolute z-30 mt-2 max-h-64 w-full min-w-36 overflow-auto rounded-2xl border border-navy/10 bg-white py-2 shadow-[0_20px_60px_rgba(12,29,61,0.16)]"
+          className="absolute z-30 mt-2 max-h-64 w-full min-w-36 overflow-auto rounded-2xl glass py-2"
         >
           {options.map((t) => {
             const disabled = !!min && t < min;

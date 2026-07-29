@@ -17,6 +17,7 @@ import AirportSearch from "@/components/charter/AirportSearch";
 import { blackoutLabel } from "@/lib/blackout-dates";
 import { DateField, TimeField } from "@/components/charter/DateTimeFields";
 import RouteMap, { type MapNotice, type MapRoute } from "@/components/charter/RouteMap";
+import SegmentedToggle, { type SegmentedOption } from "@/components/SegmentedToggle";
 import { siteConfig } from "@/lib/site-config";
 
 const FUEL_STOP_MINUTES = 345; // 5 h 45 min
@@ -25,7 +26,7 @@ const MAX_RANGE_NM = 3000; // beyond this a fuel stop is required, not optional
 const BASE_MAX_PAX = 9;
 const FA_MAX_PAX = 8; // a flight attendant takes one of the cabin seats
 const MAX_UNDER_2 = 8; // hard ceiling regardless of the passenger mix
-const MAX_PETS = 4;
+const MAX_PETS = 20;
 const MEAL_TYPES = ["Regular", "Veggie", "Vegan", "Kosher"];
 // Kosher is arranged per-trip with the client — no meal count needed
 const COUNTED_MEALS = ["Regular", "Veggie", "Vegan"];
@@ -48,6 +49,12 @@ const TRIP_TYPES = [
 const OPTION_CHIPS = [...OPTIONS, "TBD"];
 
 type TripType = (typeof TRIP_TYPES)[number]["id"];
+type ClientType = "individual" | "broker";
+
+const CLIENT_TYPES: SegmentedOption<ClientType>[] = [
+  { id: "individual", label: "Individual" },
+  { id: "broker", label: "Broker" },
+];
 
 /** Whether the picked date/time anchors the departure or the arrival. */
 type TimeMode = "depart" | "arrive";
@@ -203,6 +210,11 @@ function TimingLine({
   );
 }
 
+const TIME_MODES: SegmentedOption<TimeMode>[] = [
+  { id: "depart", label: "Depart" },
+  { id: "arrive", label: "Arrive" },
+];
+
 function TimeModeToggle({
   value,
   onChange,
@@ -211,23 +223,21 @@ function TimeModeToggle({
   onChange: (m: TimeMode) => void;
 }) {
   return (
-    <div className="flex rounded-full border border-border p-0.5">
-      {(["depart", "arrive"] as const).map((m) => (
-        <button
-          key={m}
-          type="button"
-          aria-pressed={value === m}
-          onClick={() => onChange(m)}
-          className={`rounded-full px-2 py-0.5 text-[8px] font-medium tracking-[0.12em] uppercase transition-colors ${
-            value === m ? "bg-navy text-white" : "text-ink-3 hover:text-navy"
-          }`}
-        >
-          {m}
-        </button>
-      ))}
-    </div>
+    <SegmentedToggle
+      options={TIME_MODES}
+      value={value}
+      onChange={onChange}
+      ariaLabel="Anchor the time to departure or arrival"
+      fit
+      pad={2}
+      buttonClassName="px-2 py-0.5 text-[8px] font-medium tracking-[0.12em] uppercase"
+    />
   );
 }
+
+// Re-runs whenever the keyed leg block remounts, i.e. on every trip-type
+// switch — the fields fade up instead of popping into place.
+const legFade: React.CSSProperties = { animation: "pageFade 0.34s ease both" };
 
 const inputCls =
   "w-full rounded-xl border border-border bg-white px-4 py-3 text-[14px] text-navy outline-none focus:border-navy/40";
@@ -524,20 +534,44 @@ export default function CharterBooking() {
   const mapNotices = useMemo<MapNotice[]>(() => {
     const ns: MapNotice[] = [];
 
-    const allCalcs = [...calcs.filter(Boolean), returnCalc].filter(
-      Boolean
-    ) as LegCalc[];
-    if (allCalcs.some((c) => c.nm > MAX_RANGE_NM)) {
+    // Pair each calc with the leg it belongs to so a note can name the
+    // exact routing it applies to.
+    const code = (a: Airport) => a.iata || a.icao;
+    const legged: { c: LegCalc; label: string }[] = [];
+    legs.forEach((l, i) => {
+      const c = calcs[i];
+      if (c && l.from && l.to) {
+        legged.push({ c, label: `${code(l.from)} → ${code(l.to)}` });
+      }
+    });
+    if (tripType === "roundtrip" && returnCalc && legs[0].from && legs[0].to) {
+      legged.push({
+        c: returnCalc,
+        label: `${code(legs[0].to)} → ${code(legs[0].from)}`,
+      });
+    }
+    const legList = (items: typeof legged) =>
+      [...new Set(items.map((x) => x.label))].join(" · ");
+
+    const overRange = legged.filter((x) => x.c.nm > MAX_RANGE_NM);
+    const longLegs = legged.filter((x) => x.c.minutes > FUEL_STOP_MINUTES);
+    if (overRange.length > 0) {
       ns.push({
         id: "fuel-stop-required",
         title: "Fuel Stop",
-        text: "Trip exceeds the airplane's range — a fuel stop will be required.",
+        legs: legList(overRange),
+        text: `${
+          overRange.length > 1 ? "These legs exceed" : "This leg exceeds"
+        } the airplane's range — a fuel stop will be required.`,
       });
-    } else if (allCalcs.some((c) => c.minutes > FUEL_STOP_MINUTES)) {
+    } else if (longLegs.length > 0) {
       ns.push({
         id: "fuel-stop",
         title: "Fuel Stop",
-        text: "A fuel stop may be needed depending on the amount of passengers, weather at the destination airport, and wind strength along the route.",
+        legs: legList(longLegs),
+        text: `A fuel stop may be needed on ${
+          longLegs.length > 1 ? "these legs" : "this leg"
+        } depending on the amount of passengers, weather at the destination airport, and wind strength along the route.`,
       });
     }
 
@@ -550,11 +584,19 @@ export default function CharterBooking() {
       });
     }
     // Generic Class B tip (DCA gets its own, more specific note above)
-    if (selected.some((a) => a.classB && a.icao !== "KDCA")) {
+    const classB = [
+      ...new Set(
+        selected.filter((a) => a.classB && a.icao !== "KDCA").map(code)
+      ),
+    ];
+    if (classB.length > 0) {
       ns.push({
         id: "class-b",
         title: "Expert Tip",
-        text: "Airport fees and fuel prices may be expensive at large international airports — consider selecting a smaller airport nearby for cost saving.",
+        legs: classB.join(" · "),
+        text: `Airport fees and fuel prices may be expensive at ${
+          classB.length > 1 ? "these large international airports" : classB[0]
+        } — consider selecting a smaller airport nearby for cost saving.`,
       });
     }
 
@@ -829,7 +871,7 @@ export default function CharterBooking() {
 
   if (status === "sent") {
     return (
-      <div className="flex flex-col items-center gap-5 rounded-3xl border border-navy/10 bg-white px-8 py-20 text-center shadow-[0_24px_80px_rgba(12,29,61,0.1)]">
+      <div className="flex flex-col items-center gap-5 rounded-3xl glass px-8 py-20 text-center">
         <span className="flex h-14 w-14 items-center justify-center rounded-full bg-navy text-[20px] text-white">
           ✓
         </span>
@@ -854,27 +896,17 @@ export default function CharterBooking() {
       {/* ── Form ─────────────────────────────────────────── */}
       <form
         onSubmit={handleSubmit}
-        className="order-2 flex flex-col gap-8 rounded-3xl border border-navy/10 bg-white p-8 shadow-[0_24px_80px_rgba(12,29,61,0.1)] lg:order-1 sm:p-10"
+        className="order-2 flex flex-col gap-8 rounded-3xl glass p-8 lg:order-1 sm:p-10"
       >
         {/* Trip type */}
         <div className="flex flex-col gap-2">
-          <div className="flex rounded-full border border-border p-1">
-            {TRIP_TYPES.map((t) => (
-              <button
-                key={t.id}
-                type="button"
-                aria-pressed={tripType === t.id}
-                onClick={() => switchType(t.id)}
-                className={`flex-1 rounded-full px-2 py-2.5 text-[10px] font-medium tracking-[0.16em] whitespace-nowrap uppercase transition-colors sm:text-[11px] ${
-                  tripType === t.id
-                    ? "bg-navy text-white"
-                    : "text-ink-2 hover:text-navy"
-                }`}
-              >
-                {t.label}
-              </button>
-            ))}
-          </div>
+          <SegmentedToggle
+            options={TRIP_TYPES}
+            value={tripType}
+            onChange={switchType}
+            ariaLabel="Trip type"
+            buttonClassName="px-2 py-2.5 text-[10px] font-medium tracking-[0.16em] whitespace-nowrap uppercase sm:text-[11px]"
+          />
           <button
             type="button"
             onClick={clearAll}
@@ -884,9 +916,10 @@ export default function CharterBooking() {
           </button>
         </div>
 
-        {/* Legs */}
+        {/* Legs — keyed on the trip type so switching tabs fades the fields
+            in rather than swapping them instantly */}
         {tripType !== "multi" ? (
-          <div className="flex flex-col gap-5">
+          <div key={tripType} style={legFade} className="flex flex-col gap-5">
             <div className="relative flex flex-col gap-5">
               <AirportSearch
                 label="From"
@@ -921,7 +954,7 @@ export default function CharterBooking() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className={microLabel}>
-                  {tripType === "roundtrip" ? "Departure" : "Departure Date"}
+                  Date
                 </label>
                 <DateField
                   value={legs[0].date}
@@ -967,7 +1000,7 @@ export default function CharterBooking() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className={microLabel}>Return Date</label>
+                    <label className={microLabel}>Date</label>
                     <DateField
                       value={retDate}
                       min={laterDate(returnMinDep?.date ?? "", legs[0].date || today)}
@@ -1008,7 +1041,7 @@ export default function CharterBooking() {
             )}
           </div>
         ) : (
-          <div className="flex flex-col gap-5">
+          <div key="multi" style={legFade} className="flex flex-col gap-5">
             {legs.map((leg, i) => (
               <div
                 key={leg.id}
@@ -1147,7 +1180,7 @@ export default function CharterBooking() {
                 onClick={() => setPaxAllTrips((v) => !v)}
                 className={`justify-self-center rounded-full border px-4 py-1.5 text-[10px] font-medium tracking-[0.14em] uppercase transition-colors ${
                   paxAllTrips
-                    ? "border-navy bg-navy text-white"
+                    ? "glass-selected text-white"
                     : "border-border text-ink-2 hover:border-navy/40 hover:text-navy"
                 }`}
               >
@@ -1202,7 +1235,7 @@ export default function CharterBooking() {
                       onClick={() => toggleSegPaxTbd(seg.key)}
                       className={`rounded-full border px-3 py-1 text-[10px] font-medium tracking-[0.14em] uppercase transition-colors ${
                         segPaxTbd(seg.key)
-                          ? "border-navy bg-navy text-white"
+                          ? "glass-selected text-white"
                           : "border-border text-ink-2 hover:border-navy/40 hover:text-navy"
                       }`}
                     >
@@ -1250,7 +1283,7 @@ export default function CharterBooking() {
                   onClick={() => setHasUnder18((v) => !v)}
                   className={`rounded-full border px-3.5 py-1.5 text-[10px] font-medium tracking-[0.14em] uppercase transition-colors ${
                     hasUnder18
-                      ? "border-navy bg-navy text-white"
+                      ? "glass-selected text-white"
                       : "border-border text-ink-2 hover:border-navy/40 hover:text-navy"
                   }`}
                 >
@@ -1262,7 +1295,7 @@ export default function CharterBooking() {
                   onClick={() => setHasUnder2((v) => !v)}
                   className={`rounded-full border px-3.5 py-1.5 text-[10px] font-medium tracking-[0.14em] uppercase transition-colors ${
                     hasUnder2
-                      ? "border-navy bg-navy text-white"
+                      ? "glass-selected text-white"
                       : "border-border text-ink-2 hover:border-navy/40 hover:text-navy"
                   }`}
                 >
@@ -1274,7 +1307,7 @@ export default function CharterBooking() {
                   onClick={() => setPaxTbd((v) => !v)}
                   className={`rounded-full border px-3.5 py-1.5 text-[10px] font-medium tracking-[0.14em] uppercase transition-colors ${
                     paxTbd
-                      ? "border-navy bg-navy text-white"
+                      ? "glass-selected text-white"
                       : "border-border text-ink-2 hover:border-navy/40 hover:text-navy"
                   }`}
                 >
@@ -1371,7 +1404,7 @@ export default function CharterBooking() {
 
         {notice && (
           <div
-            className="rounded-2xl border border-navy/10 bg-white px-4 py-3 shadow-[0_12px_36px_rgba(12,29,61,0.12)]"
+            className="rounded-2xl glass px-4 py-3"
             style={{ animation: "pageFade 0.3s ease both" }}
           >
             <p className="mb-1 text-[10px] font-semibold tracking-[0.22em] text-navy uppercase">
@@ -1394,7 +1427,7 @@ export default function CharterBooking() {
                 onClick={() => setAllTrips((v) => !v)}
                 className={`justify-self-center rounded-full border px-4 py-1.5 text-[10px] font-medium tracking-[0.14em] uppercase transition-colors ${
                   allTrips
-                    ? "border-navy bg-navy text-white"
+                    ? "glass-selected text-white"
                     : "border-border text-ink-2 hover:border-navy/40 hover:text-navy"
                 }`}
               >
@@ -1428,7 +1461,7 @@ export default function CharterBooking() {
                           onClick={() => toggleLegOption(seg.key, o)}
                           className={`rounded-full border px-3.5 py-1.5 text-[10px] font-medium tracking-[0.14em] uppercase transition-colors ${
                             on
-                              ? "border-navy bg-navy text-white"
+                              ? "glass-selected text-white"
                               : "border-border text-ink-2 hover:border-navy/40 hover:text-navy"
                           }`}
                         >
@@ -1456,7 +1489,7 @@ export default function CharterBooking() {
                     onClick={() => toggleOption(o)}
                     className={`rounded-full border px-4 py-2 text-[11px] font-medium tracking-[0.14em] uppercase transition-colors ${
                       on
-                        ? "border-navy bg-navy text-white"
+                        ? "glass-selected text-white"
                         : "border-border text-ink-2 hover:border-navy/40 hover:text-navy"
                     }`}
                   >
@@ -1465,6 +1498,12 @@ export default function CharterBooking() {
                 );
               })}
             </div>
+          )}
+
+          {options.includes("Flight Attendant") && (
+            <p className="mt-4 text-[11px] font-light text-ink-3">
+              Flight attendant may require additional costs.
+            </p>
           )}
 
           {options.includes("Bed") && (
@@ -1489,7 +1528,7 @@ export default function CharterBooking() {
                 >
                   −
                 </button>
-                <span className="w-5 text-center text-[15px] font-light text-navy">
+                <span className="w-7 text-center text-[15px] font-light text-navy">
                   {petCount}
                 </span>
                 <button
@@ -1559,7 +1598,7 @@ export default function CharterBooking() {
                       onClick={() => toggleCatering(c)}
                       className={`rounded-full border px-3.5 py-1.5 text-[10px] font-medium tracking-[0.14em] uppercase transition-colors ${
                         on
-                          ? "border-navy bg-navy text-white"
+                          ? "glass-selected text-white"
                           : "border-border text-ink-2 hover:border-navy/40 hover:text-navy"
                       }`}
                     >
@@ -1620,23 +1659,13 @@ export default function CharterBooking() {
 
         {/* Contact */}
         <div className="flex flex-col gap-4">
-          <div className="flex rounded-full border border-border p-1">
-            {(["individual", "broker"] as const).map((t) => (
-              <button
-                key={t}
-                type="button"
-                aria-pressed={clientType === t}
-                onClick={() => setClientType(t)}
-                className={`flex-1 rounded-full px-2 py-2.5 text-[10px] font-medium tracking-[0.16em] uppercase transition-colors sm:text-[11px] ${
-                  clientType === t
-                    ? "bg-navy text-white"
-                    : "text-ink-2 hover:text-navy"
-                }`}
-              >
-                {t === "individual" ? "Individual" : "Broker"}
-              </button>
-            ))}
-          </div>
+          <SegmentedToggle
+            options={CLIENT_TYPES}
+            value={clientType}
+            onChange={setClientType}
+            ariaLabel="Client type"
+            buttonClassName="px-2 py-2.5 text-[10px] font-medium tracking-[0.16em] uppercase sm:text-[11px]"
+          />
           {clientType === "broker" && (
             <div>
               <label className={microLabel}>Brokerage Name *</label>
@@ -1649,7 +1678,7 @@ export default function CharterBooking() {
             </div>
           )}
           <div>
-            <label className={microLabel}>Full Name</label>
+            <label className={microLabel}>Name</label>
             <input
               type="text"
               value={name}
@@ -1697,7 +1726,7 @@ export default function CharterBooking() {
         <button
           type="submit"
           disabled={!canSubmit || status === "sending"}
-          className="mt-1 rounded-full bg-navy px-8 py-4 text-[11px] font-medium tracking-[0.3em] text-white uppercase transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-35"
+          className="mt-1 glass-selected rounded-full px-8 py-4 text-[11px] font-medium tracking-[0.3em] text-white uppercase transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-35"
         >
           {status === "sending" ? "Sending…" : "Send Request"}
         </button>

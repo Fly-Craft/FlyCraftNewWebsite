@@ -43,9 +43,6 @@ export default function Footer() {
           <span className="text-[13px] font-semibold tracking-[0.32em] text-navy">
             CRAFT
           </span>
-          <span className="text-[12px] font-light text-ink-2">
-            {siteConfig.address}
-          </span>
           <a
             href={`tel:${siteConfig.charterSalesPhone}`}
             className="text-[12px] font-light text-ink-2 transition-colors hover:text-navy"
@@ -58,6 +55,9 @@ export default function Footer() {
           >
             {siteConfig.contactEmail}
           </a>
+          <span className="text-[12px] font-light text-ink-2">
+            {siteConfig.address}
+          </span>
         </div>
 
         <div className="flex justify-center">
@@ -117,6 +117,12 @@ export default function Footer() {
           className="text-[11px] font-medium tracking-[0.2em] text-ink-3 uppercase transition-colors hover:text-navy"
         >
           Reviews
+        </Link>
+        <Link
+          href="/contact"
+          className="text-[11px] font-medium tracking-[0.2em] text-ink-3 uppercase transition-colors hover:text-navy"
+        >
+          Contact Us
         </Link>
       </div>
 

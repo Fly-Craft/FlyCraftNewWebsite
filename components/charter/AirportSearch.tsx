@@ -9,9 +9,17 @@ type Props = {
   placeholder: string;
   value: Airport | null;
   onChange: (a: Airport | null) => void;
+  /** Centre the label and field text (the fleet range map); default left. */
+  centered?: boolean;
 };
 
-export default function AirportSearch({ label, placeholder, value, onChange }: Props) {
+export default function AirportSearch({
+  label,
+  placeholder,
+  value,
+  onChange,
+  centered = false,
+}: Props) {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [results, setResults] = useState<Airport[]>([]);
@@ -59,7 +67,11 @@ export default function AirportSearch({ label, placeholder, value, onChange }: P
 
   return (
     <div ref={rootRef} className="relative">
-      <label className="mb-2 block text-[10px] font-medium tracking-[0.25em] text-ink-3 uppercase">
+      <label
+        className={`mb-2 block text-[10px] font-medium tracking-[0.25em] text-ink-3 uppercase ${
+          centered ? "text-center" : ""
+        }`}
+      >
         {label}
       </label>
 
@@ -74,9 +86,9 @@ export default function AirportSearch({ label, placeholder, value, onChange }: P
         onKeyDown={onKeyDown}
         autoComplete="off"
         spellCheck={false}
-        className={`w-full rounded-xl border bg-white px-4 py-3.5 text-[14px] text-navy transition-colors outline-none placeholder:text-ink-3/70 ${
-          value ? "border-navy/30 font-medium" : "border-border focus:border-navy/40"
-        }`}
+        className={`w-full rounded-xl border bg-white py-3.5 text-[14px] text-navy transition-colors outline-none placeholder:text-ink-3/70 ${
+          centered ? "px-10 text-center" : "px-4"
+        } ${value ? "border-navy/30 font-medium" : "border-border focus:border-navy/40"}`}
       />
 
       {value && (
@@ -96,7 +108,7 @@ export default function AirportSearch({ label, placeholder, value, onChange }: P
       {open && !value && (
         <ul
           role="listbox"
-          className="absolute z-30 mt-2 max-h-80 w-full overflow-auto rounded-2xl border border-navy/10 bg-white py-2 shadow-[0_20px_60px_rgba(12,29,61,0.16)]"
+          className="absolute z-30 mt-2 max-h-80 w-full overflow-auto rounded-2xl glass py-2"
         >
           {results.map((a, i) => (
             <li key={a.icao || a.iata} role="option" aria-selected={i === highlight}>

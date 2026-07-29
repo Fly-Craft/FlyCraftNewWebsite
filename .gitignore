@@ -42,31 +42,3 @@ next-env.d.ts
 
 # dev-only output (charter request PDFs when email isn't configured)
 /dev-output/
-
-# local source material — raw photos, design files, and the old standalone
-# fleet project. Not part of the deployed site; web-ready assets live in
-# /public. (Leading slashes keep app/safety, public/about etc. tracked.)
-/flycraft-fleet-next/
-/ASAP/
-/Clouds/
-/FACES/
-/about/
-/safety/
-/_DSC*.jpg
-/@TomKlockerPhoto-*.jpg
-/8DIVAN.png
-/8new.png
-/9DIVAN.png
-/9new.png
-/CABIN.zip
-/CABINDIMENSIONS.png
-/Corporate.png
-/corporate2.png
-/glidepath.png
-/jetcard.png
-/LargeLuggageDark.png
-/SmallLuggageDark.png
-/Logo No.png
-/starlink.svg
-/Craft Flights 2025.xlsx
-/Craft Flights 2026.xlsx

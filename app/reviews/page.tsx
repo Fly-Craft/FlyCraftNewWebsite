@@ -73,7 +73,7 @@ function Stars({ rating }: { rating: string }) {
 const sectionLabel =
   "mb-8 text-center text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase";
 const card =
-  "rounded-3xl border border-navy/10 bg-white/90 shadow-[0_24px_80px_rgba(12,29,61,0.1)] backdrop-blur";
+  "rounded-3xl glass";
 
 export default function ReviewsPage() {
   return (

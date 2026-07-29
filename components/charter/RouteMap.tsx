@@ -16,6 +16,8 @@ export type MapNotice = {
   id: string;
   title: string;
   text: string;
+  /** Airport codes for the leg(s) a note applies to, e.g. "TEB → VNY". */
+  legs?: string;
 };
 
 type Props = {
@@ -164,7 +166,7 @@ function layoutPills(
   // Bottom-left corner where the notice stack lives. Proportional so it
   // stays sane from narrow stacked layouts up to wide desktop maps; the 3D
   // tilt makes the overlay reach higher in plane coords than on screen.
-  const zone = { x: Math.min(350, W * 0.62), y: H - Math.max(140, H * 0.34) };
+  const zone = { x: Math.min(420, W * 0.7), y: H - Math.max(160, H * 0.36) };
 
   // Obstacle points: every arc sampled densely…
   const samples: { x: number; y: number }[] = [];
@@ -446,7 +448,7 @@ export default function RouteMap({ routes, pending, notices = [] }: Props) {
         {pills.map((p) => (
           <div
             key={p.r.key}
-            className={`pointer-events-none absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center border border-navy/10 bg-white/90 whitespace-nowrap shadow-[0_8px_28px_rgba(12,29,61,0.14)] backdrop-blur ${
+            className={`pointer-events-none absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center glass whitespace-nowrap ${
               p.r.lines.length > 1
                 ? "gap-0.5 rounded-2xl px-4 py-2.5"
                 : "rounded-full px-4 py-2"
@@ -473,7 +475,7 @@ export default function RouteMap({ routes, pending, notices = [] }: Props) {
         {useStack && <LegPillStack routes={arcsArr} />}
 
         {arcsArr.length === 0 && (
-          <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-navy/10 bg-white/80 px-5 py-2.5 text-[10px] tracking-[0.28em] whitespace-nowrap text-ink-3 uppercase backdrop-blur">
+          <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full glass px-5 py-2.5 text-[10px] tracking-[0.28em] whitespace-nowrap text-ink-3 uppercase">
             Select departure &amp; destination
           </div>
         )}
@@ -506,11 +508,11 @@ function LegPillStack({ routes }: { routes: MapRoute[] }) {
   return (
     <div className="pointer-events-none absolute top-2 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 sm:top-4">
       <div className="relative">
-        <div className="absolute inset-0 rotate-2 rounded-2xl border border-navy/10 bg-white/90 shadow-[0_10px_30px_rgba(12,29,61,0.12)]" />
-        <div className="absolute inset-0 -rotate-2 rounded-2xl border border-navy/10 bg-white/90 shadow-[0_10px_30px_rgba(12,29,61,0.12)]" />
+        <div className="absolute inset-0 rotate-2 rounded-2xl glass" />
+        <div className="absolute inset-0 -rotate-2 rounded-2xl glass" />
         <div
           key={r.key}
-          className="relative flex min-w-[172px] flex-col items-center gap-0.5 whitespace-nowrap rounded-2xl border border-navy/10 bg-white/90 px-5 py-3 shadow-[0_12px_36px_rgba(12,29,61,0.16)] backdrop-blur"
+          className="relative flex min-w-[172px] flex-col items-center gap-0.5 whitespace-nowrap rounded-2xl glass px-5 py-3"
           style={{ animation: "pageFade 0.3s ease both" }}
         >
           <span className="text-[9px] font-semibold tracking-[0.25em] text-ink-3 uppercase">
@@ -535,7 +537,7 @@ function LegPillStack({ routes }: { routes: MapRoute[] }) {
           type="button"
           aria-label="Previous leg"
           onClick={() => setTop((t) => (t - 1 + n) % n)}
-          className="flex h-7 w-7 items-center justify-center rounded-full border border-navy/10 bg-white/90 text-[13px] text-navy shadow-[0_6px_18px_rgba(12,29,61,0.12)] transition-colors hover:bg-navy-light"
+          className="flex h-7 w-7 items-center justify-center rounded-full glass text-[13px] text-navy transition-colors hover:bg-navy-light"
         >
           ←
         </button>
@@ -546,7 +548,7 @@ function LegPillStack({ routes }: { routes: MapRoute[] }) {
           type="button"
           aria-label="Next leg"
           onClick={() => setTop((t) => (t + 1) % n)}
-          className="flex h-7 w-7 items-center justify-center rounded-full border border-navy/10 bg-white/90 text-[13px] text-navy shadow-[0_6px_18px_rgba(12,29,61,0.12)] transition-colors hover:bg-navy-light"
+          className="flex h-7 w-7 items-center justify-center rounded-full glass text-[13px] text-navy transition-colors hover:bg-navy-light"
         >
           →
         </button>
@@ -571,20 +573,28 @@ function NoticeStack({ notices }: { notices: MapNotice[] }) {
   if (n === 0) return null;
   const notice = notices[Math.min(top, n - 1)];
 
+  // Shifted right and slightly up for visibility. The rightward move is
+  // free, but going much higher runs the card into transcontinental arcs
+  // as they descend toward the west coast.
   return (
-    <div className="pointer-events-none absolute bottom-2 left-2 z-10 flex w-full max-w-xs flex-col gap-2 sm:bottom-4 sm:left-4">
+    <div className="pointer-events-none absolute bottom-5 left-6 z-10 flex w-full max-w-xs flex-col gap-2 sm:bottom-7 sm:left-20">
       <div className="relative">
         {n > 1 && (
-          <div className="absolute inset-0 rotate-2 rounded-2xl border border-navy/10 bg-white/90 shadow-[0_10px_30px_rgba(12,29,61,0.12)]" />
+          <div className="absolute inset-0 rotate-2 rounded-2xl glass" />
         )}
         {n > 2 && (
-          <div className="absolute inset-0 -rotate-2 rounded-2xl border border-navy/10 bg-white/90 shadow-[0_10px_30px_rgba(12,29,61,0.12)]" />
+          <div className="absolute inset-0 -rotate-2 rounded-2xl glass" />
         )}
         <div
           key={notice.id}
-          className="relative rounded-2xl border border-navy/10 bg-white/90 px-4 py-3 shadow-[0_12px_36px_rgba(12,29,61,0.16)] backdrop-blur"
+          className="relative rounded-2xl glass px-4 py-3"
           style={{ animation: "pageFade 0.3s ease both" }}
         >
+          {notice.legs && (
+            <p className="mb-1 text-[10px] font-medium tracking-[0.18em] text-ink-3 uppercase">
+              {notice.legs}
+            </p>
+          )}
           <p className="mb-1 text-[10px] font-semibold tracking-[0.22em] text-navy uppercase">
             {notice.title}
           </p>
@@ -600,7 +610,7 @@ function NoticeStack({ notices }: { notices: MapNotice[] }) {
             type="button"
             aria-label="Previous note"
             onClick={() => setTop((t) => (t - 1 + n) % n)}
-            className="flex h-7 w-7 items-center justify-center rounded-full border border-navy/10 bg-white/90 text-[13px] text-navy shadow-[0_6px_18px_rgba(12,29,61,0.12)] transition-colors hover:bg-navy-light"
+            className="flex h-7 w-7 items-center justify-center rounded-full glass text-[13px] text-navy transition-colors hover:bg-navy-light"
           >
             ←
           </button>
@@ -611,7 +621,7 @@ function NoticeStack({ notices }: { notices: MapNotice[] }) {
             type="button"
             aria-label="Next note"
             onClick={() => setTop((t) => (t + 1) % n)}
-            className="flex h-7 w-7 items-center justify-center rounded-full border border-navy/10 bg-white/90 text-[13px] text-navy shadow-[0_6px_18px_rgba(12,29,61,0.12)] transition-colors hover:bg-navy-light"
+            className="flex h-7 w-7 items-center justify-center rounded-full glass text-[13px] text-navy transition-colors hover:bg-navy-light"
           >
             →
           </button>

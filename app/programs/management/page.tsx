@@ -5,7 +5,7 @@ import ManagementForm from "@/components/ManagementForm";
 export const metadata: Metadata = {
   title: "Aircraft Management | CRAFT",
   description:
-    "Place your aircraft on CRAFT's Part 135 certificate — crew, maintenance, and compliance handled, with charter revenue to offset the cost of ownership.",
+    "A leaseback program: own the aircraft, capture the bonus depreciation tax benefit, and fly the entire CRAFT fleet — while we cover the costs of operating it.",
 };
 
 export default function AircraftManagementPage() {
@@ -18,7 +18,7 @@ export default function AircraftManagementPage() {
             Own the Jet. <span className="font-medium">Skip the Ops.</span>
           </>
         }
-        subtitle="Tell us about your aircraft and how you fly — we'll walk you through placing it on our certificate, and how charter revenue offsets what it costs to own."
+        subtitle="Tell us about your aircraft and how you fly — we'll walk you through the leaseback: you own the jet and its tax benefits, we cover the operating costs, and the whole CRAFT fleet opens up to you."
         divider={false}
       />
 

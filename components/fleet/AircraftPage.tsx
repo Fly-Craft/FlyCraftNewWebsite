@@ -6,7 +6,7 @@ import PhotoStrip from "./PhotoStrip";
 import RangeMapCard from "./RangeMapCard";
 
 const card =
-  "rounded-3xl border border-navy/10 bg-white/90 p-8 shadow-[0_24px_80px_rgba(12,29,61,0.1)] backdrop-blur sm:p-10";
+  "rounded-3xl glass p-8 sm:p-10";
 const cardLabel =
   "mb-6 block text-center text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase";
 
@@ -205,7 +205,7 @@ export default function AircraftPage({ a }: { a: Aircraft }) {
                 </div>
               </div>
               <img
-                src="/assets/SmallLuggageDark.png"
+                src="/assets/SmallLuggageDark.png?v=2"
                 alt="Small luggage"
                 className="h-20 object-contain"
               />
@@ -219,7 +219,7 @@ export default function AircraftPage({ a }: { a: Aircraft }) {
                 </div>
               </div>
               <img
-                src="/assets/LargeLuggageDark.png"
+                src="/assets/LargeLuggageDark.png?v=2"
                 alt="Large luggage"
                 className="h-24 object-contain"
               />
@@ -229,7 +229,10 @@ export default function AircraftPage({ a }: { a: Aircraft }) {
 
         <div className={card}>
           <span className={cardLabel}>Amenities</span>
-          <div className="grid grid-cols-3 items-end gap-6 py-4 text-center">
+          {/* items-start: the icon wells are a fixed height, so aligning
+              from the top keeps every label on the same line even when a
+              column has no sub-caption (e.g. N971MC's Bluetooth). */}
+          <div className="grid grid-cols-3 items-start gap-6 py-4 text-center">
             <div>
               <div className="flex h-14 items-center justify-center">
                 <img

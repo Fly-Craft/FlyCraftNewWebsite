@@ -29,11 +29,16 @@ const onMap = (p: [number, number]) =>
 const seg = (p: number, a: number, b: number) =>
   Math.min(1, Math.max(0, (p - a) / (b - a)));
 
-// Intro (plane + map reveal) plays over the first 45% of the scroll;
-// the 2025 trips draw chronologically over the rest.
-const INTRO_END = 0.45;
-const TRIPS_START = 0.47;
+// Fractions of .hf-section's 420vh. Tuned so the intro (plane + map
+// reveal) spans the same ~2.1 screens it always did, while the trips
+// phase that follows drops from ~2.2 screens to ~1 — the year drew far
+// too slowly at the old rate.
+const INTRO_END = 0.65;
+const TRIPS_START = 0.67;
 const TRIPS_END = 0.97;
+// Title + tally cross-fade in over the handoff between the two phases
+const TALLY_IN_START = 0.62;
+const TALLY_IN_END = 0.7;
 
 const smooth = (t: number) => t * t * (3 - 2 * t);
 
@@ -89,7 +94,10 @@ export default function HeroFlight() {
   const hintRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const tripsTitleRef = useRef<HTMLDivElement>(null);
+  const tripsCounterRef = useRef<HTMLDivElement>(null);
   const tripsMonthRef = useRef<HTMLSpanElement>(null);
+  const tripsCountRef = useRef<HTMLSpanElement>(null);
+  const tripsFillRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -103,10 +111,14 @@ export default function HeroFlight() {
     const hint = hintRef.current;
     const svg = svgRef.current;
     const tripsTitle = tripsTitleRef.current;
+    const tripsCounter = tripsCounterRef.current;
     const tripsMonth = tripsMonthRef.current;
+    const tripsCount = tripsCountRef.current;
+    const tripsFill = tripsFillRef.current;
     if (
       !section || !plane || !starlink || !title || !map || !trails ||
-      !trailL || !trailR || !hint || !svg || !tripsTitle || !tripsMonth
+      !trailL || !trailR || !hint || !svg || !tripsTitle || !tripsCounter ||
+      !tripsMonth || !tripsCount || !tripsFill
     )
       return;
 
@@ -143,7 +155,10 @@ export default function HeroFlight() {
       plane.style.opacity = "0.9";
       hint.style.display = "none";
       tripsTitle.style.opacity = "1";
-      tripsMonth.textContent = `December · ${n.toLocaleString()} flights`;
+      tripsCounter.style.opacity = "1";
+      tripsMonth.textContent = "December";
+      tripsCount.textContent = n.toLocaleString();
+      tripsFill.style.transform = "scaleX(1)";
       tripEls.forEach((t) => {
         if (!t) return;
         t.style.strokeDashoffset = "0";
@@ -155,6 +170,7 @@ export default function HeroFlight() {
     cities.forEach((c) => (c.style.opacity = "0"));
 
     let lastVisible = 0;
+    let lastCount = -1;
     let lastMonthText = "";
     let ticking = false;
     let planeFlying = false;
@@ -269,15 +285,23 @@ export default function HeroFlight() {
         lastVisible = visible;
       }
 
-      tripsTitle!.style.opacity = `${seg(p, 0.42, 0.5)}`;
-      const monthText =
-        visible > 0
-          ? `${MONTHS[TRIPS[visible - 1][0]]} · ${visible.toLocaleString()} flights`
-          : "January";
+      const tallyIn = `${seg(p, TALLY_IN_START, TALLY_IN_END)}`;
+      tripsTitle!.style.opacity = tallyIn;
+      tripsCounter!.style.opacity = tallyIn;
+
+      // Counter runs on every device — on mobile it's the only part of the
+      // trips phase that animates (the route layer is pre-drawn), so it
+      // can't hang off lastVisible, which mobile never updates.
+      if (visible !== lastCount) {
+        tripsCount!.textContent = visible.toLocaleString();
+        lastCount = visible;
+      }
+      const monthText = visible > 0 ? MONTHS[TRIPS[visible - 1][0]] : "January";
       if (monthText !== lastMonthText) {
         tripsMonth!.textContent = monthText;
         lastMonthText = monthText;
       }
+      tripsFill!.style.transform = `scaleX(${tp})`;
 
       hint!.style.opacity = `${1 - seg(p, 0, 0.04)}`;
     }
@@ -408,10 +432,22 @@ export default function HeroFlight() {
           <p className="text-[clamp(20px,2.6vw,32px)] font-extralight tracking-tight text-navy">
             Real Craft Trips <span className="font-medium">in 2025</span>
           </p>
-          <span
-            ref={tripsMonthRef}
-            className="text-[11px] font-medium tracking-[0.3em] text-ink-3 uppercase"
-          />
+        </div>
+
+        {/* Running flight tally, below the map */}
+        <div ref={tripsCounterRef} className="hf-trips-counter">
+          <div className="hf-counter-card glass">
+            <span ref={tripsMonthRef} className="hf-counter-month">
+              January
+            </span>
+            <span ref={tripsCountRef} className="hf-counter-num">
+              0
+            </span>
+            <span className="hf-counter-label">Flights Flown</span>
+            <span className="hf-counter-track">
+              <span ref={tripsFillRef} className="hf-counter-fill" />
+            </span>
+          </div>
         </div>
 
         {/* Cloud deck — parts down the middle on scroll to reveal the map */}
@@ -479,19 +515,19 @@ export default function HeroFlight() {
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/contact"
-              className="w-64 rounded-full border border-navy/20 px-8 py-4 text-center text-[11px] font-medium tracking-[0.3em] text-navy uppercase transition-colors hover:bg-navy-light"
+              className="w-64 rounded-full glass px-8 py-4 text-center text-[11px] font-medium tracking-[0.3em] text-navy uppercase transition-colors hover:bg-navy-light"
             >
               Contact Us
             </Link>
             <Link
               href="/charter"
-              className="w-64 rounded-full border border-navy/20 px-8 py-4 text-center text-[11px] font-medium tracking-[0.3em] text-navy uppercase transition-colors hover:bg-navy-light"
+              className="w-64 rounded-full glass px-8 py-4 text-center text-[11px] font-medium tracking-[0.3em] text-navy uppercase transition-colors hover:bg-navy-light"
             >
               Request a Quote
             </Link>
             <Link
               href="/asap"
-              className="w-64 rounded-full border border-navy/20 px-8 py-4 text-center text-[11px] font-medium tracking-[0.3em] text-navy uppercase transition-colors hover:bg-navy-light"
+              className="w-64 rounded-full glass px-8 py-4 text-center text-[11px] font-medium tracking-[0.3em] text-navy uppercase transition-colors hover:bg-navy-light"
             >
               ASAP
             </Link>

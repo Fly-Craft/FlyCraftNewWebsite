@@ -5,13 +5,13 @@ import PageHero from "@/components/PageHero";
 export const metadata: Metadata = {
   title: "Programs | CRAFT",
   description:
-    "Aircraft Management — place your jet on CRAFT's Part 135 certificate — and the Corporate Program with dedicated account management for executive teams.",
+    "Aircraft Management — a leaseback program where you own the jet, capture bonus depreciation, and fly the CRAFT fleet while we cover operating costs — plus the Corporate Program for executive teams.",
 };
 
 const MANAGEMENT_POINTS = [
-  "Your aircraft on our Part 135 certificate",
-  "Crew, maintenance, and compliance handled in-house",
-  "Charter revenue that offsets the cost of ownership",
+  "You own the aircraft — and its bonus depreciation tax benefit",
+  "We cover the costs of operating the aircraft",
+  "Access to the entire CRAFT Challenger fleet",
 ];
 
 const CORPORATE_POINTS = [
@@ -36,7 +36,7 @@ export default function ProgramsPage() {
 
       <section className="grid grid-cols-1 gap-8 px-6 pb-24 sm:px-20 lg:grid-cols-2">
         {/* ── Aircraft Management ───────────────────────── */}
-        <div className="flex flex-col rounded-3xl border border-navy/10 bg-white/90 p-10 shadow-[0_24px_80px_rgba(12,29,61,0.1)] backdrop-blur sm:p-14">
+        <div className="flex flex-col rounded-3xl glass p-10 sm:p-14">
           <p className="mb-5 text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase">
             For Owners
           </p>
@@ -44,13 +44,13 @@ export default function ProgramsPage() {
             Aircraft <span className="font-medium">Management</span>
           </h2>
           <p className="mt-6 text-[15px] font-light leading-relaxed text-ink-2">
-            Own the aircraft, skip the operational headache. We manage
-            Challenger 300, 350, and 3500 aircraft — place your jet on
-            CRAFT&apos;s Part 135 certificate and we handle the crew,
-            maintenance, and compliance, then charter it when you&apos;re not
-            flying to offset the cost of ownership. And because your aircraft
-            joins a pool of Challengers, you can always fly — even when yours
-            is down for its scheduled maintenance.
+            Structured as a leaseback: you own the airplane, and it flies on
+            CRAFT&apos;s Part 135 certificate. We cover the costs of operating
+            the aircraft — crew, maintenance, and compliance — while you
+            capture the bonus depreciation tax benefit of ownership and get
+            access to our entire fleet of Challenger 300, 350, and 3500
+            aircraft. You can always fly, even when your jet is down for its
+            scheduled maintenance.
           </p>
 
           <ul className="mt-10 flex flex-col">
@@ -73,7 +73,7 @@ export default function ProgramsPage() {
         </div>
 
         {/* ── Corporate Program ─────────────────────────── */}
-        <div className="flex flex-col rounded-3xl border border-navy/10 bg-white/90 p-10 shadow-[0_24px_80px_rgba(12,29,61,0.1)] backdrop-blur sm:p-14">
+        <div className="flex flex-col rounded-3xl glass p-10 sm:p-14">
           <p className="mb-5 text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase">
             For Teams
           </p>
