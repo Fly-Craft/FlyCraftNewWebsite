@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import BookNowFab from "@/components/BookNowFab";
 
 /**
  * Site-wide chrome. The fleet orbit selector and menu pages ship their own
@@ -19,6 +20,7 @@ export default function Chrome({ children }: { children: React.ReactNode }) {
       <Nav />
       <main className="flex-1">{children}</main>
       {!isFleetMini && <Footer />}
+      <BookNowFab />
     </>
   );
 }

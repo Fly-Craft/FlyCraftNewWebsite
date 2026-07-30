@@ -188,7 +188,9 @@ export default function HeroFlight() {
       // Headline fades out as soon as scrolling starts
       const tOut = seg(ip, 0, 0.14);
       title!.style.opacity = `${1 - tOut}`;
-      title!.style.transform = `translate(-50%, ${tOut * -28}px)`;
+      // -50% keeps the block centred on its own `top`; the px term is the
+      // drift-up as it fades (see .hf-title).
+      title!.style.transform = `translate(-50%, calc(-50% + ${tOut * -28}px))`;
 
       // Starlink badge below the plane fades the instant the flight begins
       starlink!.style.opacity = `${1 - seg(ip, 0, 0.08)}`;

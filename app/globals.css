@@ -407,8 +407,12 @@ body {
 .hf-title {
   position: absolute;
   left: 50%;
-  bottom: 9vh;
-  transform: translate(-50%, 0);
+  /* Centred in the viewport, but never allowed to ride up into the plane:
+     the second term is the Starlink badge's baseline (see .hf-starlink)
+     plus half the block's height, so on short-and-wide screens the title
+     sits just below the badge instead of overlapping it. */
+  top: max(50%, calc(15vh + min(860px, 92vw) * 0.2353 + 195px));
+  transform: translate(-50%, -50%);
   width: min(920px, 92vw);
   text-align: center;
   z-index: 4;
@@ -489,6 +493,9 @@ body {
   /* Title clears the fixed nav pill (~10vh tall); map sits below the title */
   .hf-map-persp { padding-top: 19vh; }
   .hf-trips-title { top: 12vh; }
+  /* The CTA buttons stack on phones, so the block is roughly twice as
+     tall — its clearance term grows to match. */
+  .hf-title { top: max(50%, calc(15vh + 92vw * 0.2353 + 255px)); }
   /* Same anchor, phone geometry: map-persp pads 19vh and the map is
      150vw wide, so its height is 150vw · 0.64 = 96vw. */
   .hf-trips-counter { top: calc(19vh + 96vw + 44px); }
