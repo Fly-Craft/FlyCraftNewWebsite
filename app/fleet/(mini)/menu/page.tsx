@@ -51,7 +51,7 @@ export default function MenuPage() {
 
           <div className="snack-card">
             <div className="snack-card-title">Sweet Peach Slices</div>
-            <img src="/assets/Snacks/Peach" alt="Sweet Peach Slices" className="snack-card-img" />
+            <img src="/assets/Snacks/Peach.png" alt="Sweet Peach Slices" className="snack-card-img" />
             <p className="snack-card-desc">Sweet and chewy peach-flavored rings with a soft, sugar-dusted fruity center.</p>
           </div>
 
