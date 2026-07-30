@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   title: "CRAFT | Private Jet Charter",
   description:
     "CRAFT operates a fleet of Challenger 300 and 350 aircraft for private charter, corporate programs, and safety-first travel.",
+  // Private review period — see app/robots.ts. Remove both at launch.
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({
