@@ -1332,13 +1332,10 @@ export default function CharterBooking() {
                 {!isBroker && paxTbdChip}
               </div>
 
-              {/* Eases open and closed as the client type changes, rather
-                  than snapping. inert keeps the collapsed fields out of the
-                  tab order. */}
-              <div className="form-reveal" data-open={isBroker} inert={!isBroker}>
-              <div className="flex flex-wrap items-center gap-2 pt-0.5">
-                {isBroker && (
-                  <>
+              {/* Broker-only: an individual's TBD chip already sits inline
+                  after "Max N", so this row would duplicate it. */}
+              {isBroker && (
+              <div key={clientType} style={legFade} className="flex flex-wrap items-center gap-2">
                     <button
                       type="button"
                       aria-pressed={hasUnder18}
@@ -1363,11 +1360,9 @@ export default function CharterBooking() {
                     >
                       Under 2
                     </button>
-                  </>
-                )}
                 {paxTbdChip}
               </div>
-              </div>
+              )}
 
               {isBroker && hasUnder18 && (
                 <div className="flex flex-col gap-2 rounded-2xl border border-border p-4">
@@ -1471,8 +1466,8 @@ export default function CharterBooking() {
         {/* Options — broker-only. Someone booking their own trip gets a
             clean form; a broker quoting for a client needs the full
             amenity detail up front. */}
-        <div className="form-reveal" data-open={isBroker} inert={!isBroker}>
-        <div>
+        {isBroker && (
+        <div key={clientType} style={legFade}>
           <div className="mb-3 grid grid-cols-[1fr_auto_1fr] items-center gap-2">
             <label className="block text-[10px] font-medium tracking-[0.25em] text-ink-3 uppercase">
               Options
@@ -1711,7 +1706,7 @@ export default function CharterBooking() {
             </div>
           )}
         </div>
-        </div>
+        )}
 
         <hr className="border-border" />
 

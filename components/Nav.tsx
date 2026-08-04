@@ -4,10 +4,42 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AIRCRAFT } from "@/lib/fleet-aircraft";
-import { landingLinks } from "@/lib/site-config";
+import { landingLinks, programLinks } from "@/lib/site-config";
 
 const linkCls =
   "relative z-10 text-[9px] font-medium tracking-[0.2em] whitespace-nowrap uppercase transition-colors duration-300 sm:text-[10px] sm:tracking-[0.25em] lg:text-[11px] lg:tracking-[0.3em]";
+
+/**
+ * Tabs that open a hover menu. One shape for both, so Programs inherits the
+ * Fleet menu's look exactly; only the widths differ, since programme names
+ * run longer than tail numbers.
+ */
+const DROPDOWNS: Record<
+  string,
+  {
+    width: string;
+    itemWidth: string;
+    items: { href: string; label: React.ReactNode }[];
+  }
+> = {
+  "/fleet": {
+    width: "w-48",
+    itemWidth: "w-[120px]",
+    items: AIRCRAFT.map((a) => ({
+      href: `/fleet/${a.slug}`,
+      label: (
+        <>
+          Pod {a.pod} <span className="opacity-40">·</span> {a.tail}
+        </>
+      ),
+    })),
+  },
+  "/programs": {
+    width: "w-60",
+    itemWidth: "w-[168px]",
+    items: programLinks,
+  },
+};
 
 export default function Nav() {
   const pathname = usePathname();
@@ -168,9 +200,12 @@ export default function Nav() {
         </Link>
 
         {landingLinks.map((link) => {
-          if (link.href === "/fleet") {
+          const menu = DROPDOWNS[link.href];
+          if (menu) {
             return (
               <div key={link.href} className="group relative flex items-center">
+                {/* The tab itself still navigates to the section landing page;
+                    the menu is hover-only. */}
                 <Link
                   href={link.href}
                   ref={(el) => {
@@ -181,17 +216,16 @@ export default function Nav() {
                   {link.label}
                 </Link>
                 <div className="pointer-events-none absolute top-full left-1/2 z-50 -translate-x-1/2 pt-4 opacity-0 transition-opacity duration-150 group-hover:pointer-events-auto group-hover:opacity-100">
-                  <div className="glass w-48 divide-y divide-navy/10 overflow-hidden rounded-3xl">
-                    {AIRCRAFT.map((a) => (
+                  <div
+                    className={`glass ${menu.width} divide-y divide-navy/10 overflow-hidden rounded-3xl`}
+                  >
+                    {menu.items.map((item) => (
                       <Link
-                        key={a.slug}
-                        href={`/fleet/${a.slug}`}
+                        key={item.href}
+                        href={item.href}
                         className="flex justify-center px-4 py-3 text-[10px] font-medium tracking-[0.2em] text-ink-2 uppercase transition-colors hover:bg-navy/5 hover:text-navy"
                       >
-                        <span className="w-[120px]">
-                          Pod {a.pod} <span className="opacity-40">·</span>{" "}
-                          {a.tail}
-                        </span>
+                        <span className={menu.itemWidth}>{item.label}</span>
                       </Link>
                     ))}
                   </div>
