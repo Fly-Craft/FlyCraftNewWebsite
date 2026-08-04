@@ -1,29 +1,11 @@
-import type { Metadata } from "next";
 import Link from "next/link";
-import PageHero from "@/components/PageHero";
 import ExecCarousel from "@/components/ExecCarousel";
 import { siteConfig } from "@/lib/site-config";
 
-export const metadata: Metadata = {
-  title: "About Us | CRAFT",
-  description:
-    "CRAFT is a Miami-based private jet operator founded in 2020 — an all-Challenger fleet, 45,000+ flight hours, and a warm, family-like standard of service.",
-};
-
-export default function AboutPage() {
+/** The former /about page body, minus its hero — now the top half of /company. */
+export default function AboutSections() {
   return (
     <>
-      <PageHero
-        eyebrow="About Us"
-        title={
-          <>
-            The <span className="font-medium">CRAFT</span> Family
-          </>
-        }
-        subtitle="Founded in 2020 and based in Miami, CRAFT pairs an all-Challenger fleet with a warm, family-like standard of service."
-        divider={false}
-      />
-
       <section className="py-16">
         <p className="mb-10 px-6 text-center text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase sm:px-20">
           Our Executives

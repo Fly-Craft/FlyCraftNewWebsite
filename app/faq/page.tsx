@@ -60,7 +60,7 @@ const FAQ_ITEMS: FaqItem[] = [
         safety record. We operate all of our flights under Part 135
         regulations, and have obtained safety certificates from the leading
         audit companies in the industry.{" "}
-        <Link href="/safety" className={linkCls}>
+        <Link href="/company#safety" className={linkCls}>
           Read more here
         </Link>
         .

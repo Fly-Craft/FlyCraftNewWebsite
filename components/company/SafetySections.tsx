@@ -1,19 +1,21 @@
-import type { Metadata } from "next";
 import DebriefStack from "@/components/DebriefStack";
 
-export const metadata: Metadata = {
-  title: "Safety | CRAFT",
-  description:
-    "Tens of thousands of flight hours without an accident. ARGUS Platinum rated, Wyvern certified, Part 135 on every flight, and an Air Force debrief culture.",
-};
-
-export default function SafetyPage() {
+/**
+ * The former /safety page, appended below the About content on /company.
+ * Its <h1> is demoted to <h2> — the page already has one in the hero — and
+ * the nav-clearing top padding becomes a divider, since it now sits
+ * mid-page rather than at the top of its own route.
+ */
+export default function SafetySections() {
   return (
     <>
-      <section className="flex flex-col px-6 pt-40 pb-10 sm:px-20">
-        <h1 className="max-w-3xl text-[clamp(40px,6vw,76px)] leading-[0.95] font-extralight tracking-tight text-navy">
+      <section
+        id="safety"
+        className="flex flex-col scroll-mt-28 border-t border-navy/10 px-6 pt-24 pb-10 sm:px-20"
+      >
+        <h2 className="max-w-3xl text-[clamp(40px,6vw,76px)] leading-[0.95] font-extralight tracking-tight text-navy">
           Safety <span className="font-medium">Above All</span>
-        </h1>
+        </h2>
         <p className="mt-6 max-w-xl text-[15px] font-light leading-relaxed text-ink-2">
           Tens of thousands of flight hours without an accident — earned one
           disciplined flight at a time.

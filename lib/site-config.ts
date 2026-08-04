@@ -10,20 +10,11 @@ export const siteConfig = {
   linkedin: "https://www.linkedin.com/company/fly-craft",
 };
 
+// Glidepath now lives as a card on /programs rather than its own tab, and
+// About Us + Safety merged into /company.
 export const landingLinks = [
   { href: "/charter", label: "Charter" },
   { href: "/programs", label: "Programs" },
-  { href: "/glidepath", label: "Glidepath" },
   { href: "/fleet", label: "Fleet" },
-  { href: "/safety", label: "Safety" },
-  { href: "/about", label: "About Us" },
-];
-
-export const navLinks = [
-  { href: "/charter", label: "Charter" },
-  { href: "/programs", label: "Programs" },
-  { href: "/fleet", label: "Fleet" },
-  { href: "/safety", label: "Safety" },
-  { href: "/about", label: "About Us" },
-  { href: "/contact", label: "Contact" },
+  { href: "/company", label: "Company" },
 ];
