@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
+import PreferToTalk from "@/components/PreferToTalk";
 import ManagementForm from "@/components/ManagementForm";
 
 export const metadata: Metadata = {
@@ -25,6 +26,8 @@ export default function AircraftManagementPage() {
       <section className="px-6 pb-24 sm:px-20">
         <ManagementForm />
       </section>
+
+      <PreferToTalk />
     </>
   );
 }

@@ -21,7 +21,7 @@ export const landingLinks = [
 
 // The three cards on /programs, mirrored in the nav dropdown.
 export const programLinks = [
-  { href: "/programs/management", label: "Aircraft Management" },
+  { href: "/programs/management", label: "Leaseback" },
   { href: "/glidepath", label: "Glidepath" },
-  { href: "/programs/corporate", label: "Corporate Program" },
+  { href: "/programs/corporate", label: "Corporate" },
 ];

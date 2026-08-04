@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
+import PreferToTalk from "@/components/PreferToTalk";
 
 export const metadata: Metadata = {
   title: "Programs | CRAFT",
@@ -152,6 +153,8 @@ export default function ProgramsPage() {
           </Link>
         </div>
       </section>
+
+      <PreferToTalk />
     </>
   );
 }

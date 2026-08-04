@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
+import PreferToTalk from "@/components/PreferToTalk";
 import CorporateProgramForm from "@/components/CorporateProgramForm";
 
 export const metadata: Metadata = {
@@ -25,6 +26,8 @@ export default function CorporateProgramPage() {
       <section className="px-6 pb-24 sm:px-20">
         <CorporateProgramForm />
       </section>
+
+      <PreferToTalk />
     </>
   );
 }
