@@ -652,6 +652,31 @@ export default function CharterBooking() {
 
   const contactOk = email.trim() !== "" || phone.trim() !== "";
   const brokerageOk = clientType === "individual" || brokerage.trim() !== "";
+
+  // Brokers quote on a client's behalf and need the full picture; someone
+  // booking their own trip gets a passenger count and nothing more.
+  const isBroker = clientType === "broker";
+
+  /** Dropping back to Individual clears everything the broker-only fields
+      collected, so a hidden selection can't ride along on the request. */
+  function switchClientType(t: ClientType) {
+    setClientType(t);
+    if (t === "individual") {
+      setHasUnder18(false);
+      setHasUnder2(false);
+      setUnder18(0);
+      setUnder2(0);
+      setOptions([]);
+      setLegOptions({});
+      setAllTrips(true);
+      setCatering([]);
+      setMealCounts({});
+      setAllergyDetails("");
+      setPetCount(1);
+      setSlidingHours(2);
+      setBrokerage("");
+    }
+  }
   const perLegRequestsOk =
     !showAllTripsToggle ||
     allTrips ||
@@ -1167,11 +1192,22 @@ export default function CharterBooking() {
 
         <hr className="border-border" />
 
+        {/* Who's booking — gates how much of the form is shown. Individuals
+            get a passenger count and nothing else; brokers, who are quoting
+            on someone else's behalf, get the full detail. */}
+        <SegmentedToggle
+          options={CLIENT_TYPES}
+          value={clientType}
+          onChange={switchClientType}
+          ariaLabel="Client type"
+          buttonClassName="px-2 py-2.5 text-[10px] font-medium tracking-[0.16em] uppercase sm:text-[11px]"
+        />
+
         {/* Passengers */}
         <div>
           <div className="mb-3 grid grid-cols-[1fr_auto_1fr] items-center gap-2">
             <label className="block text-[10px] font-medium tracking-[0.25em] text-ink-3 uppercase">
-              Adult Passengers
+              {isBroker ? "Adult Passengers" : "Passengers"}
             </label>
             {showAllTripsToggle && (
               <button
@@ -1277,30 +1313,34 @@ export default function CharterBooking() {
               </div>
 
               <div className="flex flex-wrap items-center gap-2">
-                <button
-                  type="button"
-                  aria-pressed={hasUnder18}
-                  onClick={() => setHasUnder18((v) => !v)}
-                  className={`rounded-full border px-3.5 py-1.5 text-[10px] font-medium tracking-[0.14em] uppercase transition-colors ${
-                    hasUnder18
-                      ? "glass-selected text-white"
-                      : "border-border text-ink-2 hover:border-navy/40 hover:text-navy"
-                  }`}
-                >
-                  Under 18
-                </button>
-                <button
-                  type="button"
-                  aria-pressed={hasUnder2}
-                  onClick={() => setHasUnder2((v) => !v)}
-                  className={`rounded-full border px-3.5 py-1.5 text-[10px] font-medium tracking-[0.14em] uppercase transition-colors ${
-                    hasUnder2
-                      ? "glass-selected text-white"
-                      : "border-border text-ink-2 hover:border-navy/40 hover:text-navy"
-                  }`}
-                >
-                  Under 2
-                </button>
+                {isBroker && (
+                  <>
+                    <button
+                      type="button"
+                      aria-pressed={hasUnder18}
+                      onClick={() => setHasUnder18((v) => !v)}
+                      className={`rounded-full border px-3.5 py-1.5 text-[10px] font-medium tracking-[0.14em] uppercase transition-colors ${
+                        hasUnder18
+                          ? "glass-selected text-white"
+                          : "border-border text-ink-2 hover:border-navy/40 hover:text-navy"
+                      }`}
+                    >
+                      Under 18
+                    </button>
+                    <button
+                      type="button"
+                      aria-pressed={hasUnder2}
+                      onClick={() => setHasUnder2((v) => !v)}
+                      className={`rounded-full border px-3.5 py-1.5 text-[10px] font-medium tracking-[0.14em] uppercase transition-colors ${
+                        hasUnder2
+                          ? "glass-selected text-white"
+                          : "border-border text-ink-2 hover:border-navy/40 hover:text-navy"
+                      }`}
+                    >
+                      Under 2
+                    </button>
+                  </>
+                )}
                 <button
                   type="button"
                   aria-pressed={paxTbd}
@@ -1315,7 +1355,7 @@ export default function CharterBooking() {
                 </button>
               </div>
 
-              {hasUnder18 && (
+              {isBroker && hasUnder18 && (
                 <div className="flex flex-col gap-2 rounded-2xl border border-border p-4">
                   <span className="text-[10px] font-medium tracking-[0.25em] text-ink-3 uppercase">
                     Under 18
@@ -1353,7 +1393,7 @@ export default function CharterBooking() {
                 </div>
               )}
 
-              {hasUnder2 && (
+              {isBroker && hasUnder2 && (
                 <div className="flex flex-col gap-2 rounded-2xl border border-border p-4">
                   <span className="text-[10px] font-medium tracking-[0.25em] text-ink-3 uppercase">
                     Under 2
@@ -1391,7 +1431,7 @@ export default function CharterBooking() {
                 </div>
               )}
 
-              {((hasUnder18 && under18Clamped > 0) || (hasUnder2 && under2Clamped > 0)) && (
+              {isBroker && ((hasUnder18 && under18Clamped > 0) || (hasUnder2 && under2Clamped > 0)) && (
                 <p className="text-[11px] font-light text-ink-3">
                   For international travel, if a child or infant is traveling
                   without both parents, a travel consent letter is required
@@ -1414,7 +1454,10 @@ export default function CharterBooking() {
           </div>
         )}
 
-        {/* Options */}
+        {/* Options — broker-only. Someone booking their own trip gets a
+            clean form; a broker quoting for a client needs the full
+            amenity detail up front. */}
+        {isBroker && (
         <div>
           <div className="mb-3 grid grid-cols-[1fr_auto_1fr] items-center gap-2">
             <label className="block text-[10px] font-medium tracking-[0.25em] text-ink-3 uppercase">
@@ -1654,19 +1697,15 @@ export default function CharterBooking() {
             </div>
           )}
         </div>
+        )}
 
         <hr className="border-border" />
 
-        {/* Contact */}
+        {/* Contact — the Individual/Broker slider that used to open this
+            block now sits above Passengers, since it decides how much of
+            the form appears. */}
         <div className="flex flex-col gap-4">
-          <SegmentedToggle
-            options={CLIENT_TYPES}
-            value={clientType}
-            onChange={setClientType}
-            ariaLabel="Client type"
-            buttonClassName="px-2 py-2.5 text-[10px] font-medium tracking-[0.16em] uppercase sm:text-[11px]"
-          />
-          {clientType === "broker" && (
+          {isBroker && (
             <div>
               <label className={microLabel}>Brokerage Name *</label>
               <input
