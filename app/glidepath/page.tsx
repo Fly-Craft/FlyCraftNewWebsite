@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
+import PreferToTalk from "@/components/PreferToTalk";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -52,6 +53,7 @@ export default function GlidepathPage() {
         }
         subtitle="Glidepath is an independent exchange fund built on Section 721 — diversify a concentrated stock position with no tax event, and unlock the CRAFT fleet at a preferred hourly rate while you're at it."
         divider={false}
+        aside={<PreferToTalk />}
       />
 
       {/* Prominent link out — projections, eligibility, and closings all live there */}

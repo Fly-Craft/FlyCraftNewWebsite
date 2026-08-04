@@ -10,8 +10,8 @@ const linkCls =
   "relative z-10 text-[9px] font-medium tracking-[0.2em] whitespace-nowrap uppercase transition-colors duration-300 sm:text-[10px] sm:tracking-[0.25em] lg:text-[11px] lg:tracking-[0.3em]";
 
 /**
- * Tabs that open a hover menu. One shape and one set of dimensions for
- * both, so the two menus can't drift apart.
+ * Tabs that open a hover menu — one implementation for both, so the panel
+ * styling can't drift; only the dimensions differ per menu.
  */
 const DROPDOWNS: Record<
   string,
@@ -33,9 +33,12 @@ const DROPDOWNS: Record<
       ),
     })),
   },
+  // ~15% narrower than Fleet, and a tighter label column so the short
+  // programme names sit closer to centre while staying left-aligned
+  // with each other.
   "/programs": {
-    width: "w-48",
-    itemWidth: "w-[120px]",
+    width: "w-[164px]",
+    itemWidth: "w-[92px]",
     items: programLinks,
   },
 };

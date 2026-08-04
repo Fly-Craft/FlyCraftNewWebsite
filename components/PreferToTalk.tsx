@@ -14,7 +14,7 @@ const NATAN = {
  */
 export default function PreferToTalk() {
   return (
-    <div className="w-full rounded-3xl glass p-6 sm:w-[280px]">
+    <div className="w-full rounded-3xl glass p-6 sm:w-[320px]">
       <p className="mb-5 text-[10px] font-normal tracking-[0.3em] text-ink-3 uppercase">
         Prefer to Talk?
       </p>
