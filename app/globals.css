@@ -122,6 +122,51 @@
     0 10px 26px rgba(12, 29, 61, 0.2);
 }
 
+/* ============================================================
+   SKY BACKDROP — the landing screen's sky, reused as a static
+   page background (components/SkyBackdrop.tsx). Sits at z-index
+   -1 so page content stays above it without any per-page z-index
+   bookkeeping, while the body gradient still shows through below.
+   ============================================================ */
+.sky-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sky-backdrop-wash {
+  position: absolute;
+  inset: 0;
+  /* Matches .hf-sky — pale up top, deepening toward the bottom. */
+  background: linear-gradient(
+    180deg,
+    #f7fbfd 0%,
+    #e8f2fa 30%,
+    #d3e6f5 65%,
+    #b8d7ee 100%
+  );
+}
+
+.sky-backdrop-cloud {
+  position: absolute;
+  will-change: transform;
+}
+
+/* Thin the deck on phones — same reasoning as the hero's cloud layer. */
+@media (max-width: 640px) {
+  .sky-backdrop-cloud--alt {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sky-backdrop .hf-cloud-drift {
+    animation: none;
+  }
+}
+
 /* Soft cross-page fade — app/template.tsx remounts this per navigation */
 .page-fade {
   animation: pageFade 0.45s ease both;
