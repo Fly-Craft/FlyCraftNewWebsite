@@ -27,7 +27,7 @@ export default function AboutSections() {
             The Craft Story
           </p>
           <h2 className="text-[clamp(28px,4vw,44px)] leading-tight font-extralight text-navy">
-            One Challenger.
+            One Challenger,
             <br />
             <span className="font-medium">Then a fleet of them.</span>
           </h2>

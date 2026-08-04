@@ -119,6 +119,12 @@ export default function Footer() {
           Reviews
         </Link>
         <Link
+          href="/careers"
+          className="text-[11px] font-medium tracking-[0.2em] text-ink-3 uppercase transition-colors hover:text-navy"
+        >
+          Careers
+        </Link>
+        <Link
           href="/contact"
           className="text-[11px] font-medium tracking-[0.2em] text-ink-3 uppercase transition-colors hover:text-navy"
         >

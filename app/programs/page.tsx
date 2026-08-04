@@ -34,7 +34,7 @@ export default function ProgramsPage() {
         eyebrow="Programs"
         title={
           <>
-            Three Ways to <span className="font-medium">Fly</span>
+            One Fleet. <span className="font-medium">Many Ways In.</span>
           </>
         }
         subtitle="Whether you own the aircraft, come in through the fund, or move a whole executive team, CRAFT builds the program around you — and flies only its own metal, never as a broker."

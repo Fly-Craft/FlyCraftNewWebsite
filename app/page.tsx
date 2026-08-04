@@ -113,7 +113,7 @@ export default function Home() {
             possible.
           </p>
           <Link
-            href="/company#safety"
+            href="/company"
             className="mt-2 text-[11px] font-medium tracking-[0.3em] text-navy uppercase underline underline-offset-4 transition-opacity hover:opacity-60"
           >
             Our Safety Standards →

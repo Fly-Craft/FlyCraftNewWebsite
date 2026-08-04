@@ -122,11 +122,12 @@ export default function OrbitScene() {
     };
   }, []);
 
+  // The drifting cloud PNGs that used to sit here were a holdover from
+  // the standalone fleet app, and the only thing making this page's
+  // backdrop differ from the rest of the site — which shows the sky
+  // gradient plain.
   return (
     <section className="orbit-scene" ref={sceneRef}>
-      <img src="/assets/Clouds/1.png" alt="" className="orbit-clouds-left" />
-      <img src="/assets/Clouds/8.png" alt="" className="orbit-clouds" />
-      <img src="/assets/Clouds/2.png" alt="" className="orbit-clouds-topright" />
       <div className="orbit-path" />
       <div className="orbit-center">
         <img src="/assets/Logo No.png" alt="Craft" className="orbit-logo" />
