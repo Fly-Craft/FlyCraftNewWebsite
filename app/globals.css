@@ -273,6 +273,26 @@ body {
   overflow: hidden;
 }
 
+/* Sky wash behind the hero. The site's base gradient is deliberately near
+   white so the glass reads against it, which left the opening screen pale
+   for something meant to be sky — this layer adds the colour back for the
+   plane sequence only, then fades out under JS control (HeroFlight.tsx). */
+.hf-sky {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* Pale at the horizon line up top, deepening toward the bottom of the
+     frame — the inverse of the site's base gradient. */
+  background: linear-gradient(
+    180deg,
+    #f7fbfd 0%,
+    #e8f2fa 30%,
+    #d3e6f5 65%,
+    #b8d7ee 100%
+  );
+}
+
 .hf-map-persp {
   position: absolute;
   inset: 0;
@@ -371,10 +391,14 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   z-index: 3;
   pointer-events: none;
   will-change: opacity;
+  /* Positioned with `left` and no `right`, so the box's available width is
+     only half the viewport — on phones the label wrapped to two lines.
+     nowrap makes the text's own width win instead. */
+  white-space: nowrap;
 }
 
 .hf-trails {
@@ -411,12 +435,37 @@ body {
      the second term is the Starlink badge's baseline (see .hf-starlink)
      plus half the block's height, so on short-and-wide screens the title
      sits just below the badge instead of overlapping it. */
-  top: max(50%, calc(15vh + min(860px, 92vw) * 0.2353 + 195px));
+  top: max(50%, calc(15vh + min(860px, 92vw) * 0.2353 + 228px));
   transform: translate(-50%, -50%);
   width: min(920px, 92vw);
   text-align: center;
   z-index: 4;
   will-change: transform, opacity;
+}
+
+/* Connectivity pip on the Starlink badge — a signal ping, echoing the
+   pulse on the map's city dots. */
+.hf-live-dot {
+  position: relative;
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.hf-live-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: hfLive 2.4s ease-out infinite;
+}
+
+@keyframes hfLive {
+  0% { transform: scale(1); opacity: 0.6; }
+  70%, 100% { transform: scale(3.4); opacity: 0; }
 }
 
 .hf-hint {
@@ -427,24 +476,26 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  font-size: 9px;
+  gap: 9px;
+  /* was 9px in ink-3 (navy at 40%) and barely registered — the one cue
+     telling people the page even scrolls, so it earns real contrast */
+  font-size: 10px;
+  font-weight: 500;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: rgba(12, 29, 61, 0.58);
   z-index: 4;
 }
 
-.hf-hint-line {
-  width: 1px;
-  height: 26px;
-  background: linear-gradient(to bottom, var(--ink-3), transparent);
-  animation: hfHint 1.8s ease-in-out infinite;
+/* A chevron that falls and resets reads as "keep going" far better than
+   a line that just breathes in place. */
+.hf-hint-chevron {
+  animation: hfHint 1.9s ease-in-out infinite;
 }
 
 @keyframes hfHint {
-  0%, 100% { transform: scaleY(1); opacity: 0.8; }
-  50% { transform: scaleY(0.55); opacity: 0.3; }
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50% { transform: translateY(7px); opacity: 1; }
 }
 
 .hf-dot-halo {
@@ -493,8 +544,8 @@ body {
   /* Title clears the fixed nav pill (~10vh tall); map sits below the title */
   .hf-map-persp { padding-top: 19vh; }
   .hf-trips-title { top: 12vh; }
-  /* The CTA buttons stack on phones, so the block is roughly twice as
-     tall — its clearance term grows to match. */
+  /* The two CTA buttons stack on phones, so the block is taller here than
+     on desktop — its clearance term grows to match. */
   .hf-title { top: max(50%, calc(15vh + 92vw * 0.2353 + 255px)); }
   /* Same anchor, phone geometry: map-persp pads 19vh and the map is
      150vw wide, so its height is 150vw · 0.64 = 96vw. */
@@ -506,7 +557,8 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .hf-section { height: auto; }
   .hf-sticky { position: relative; height: auto; min-height: 100vh; }
-  .hf-hint-line, .hf-dot-halo, .hf-cloud-drift { animation: none; }
+  .hf-hint-chevron, .hf-dot-halo, .hf-cloud-drift { animation: none; }
+  .hf-live-dot::after { animation: none; }
   .hf-clouds { display: none; }
 }
 

@@ -83,6 +83,7 @@ const CLOUDS: CloudSpec[] = [
 
 export default function HeroFlight() {
   const sectionRef = useRef<HTMLElement>(null);
+  const skyRef = useRef<HTMLDivElement>(null);
   const planeRef = useRef<HTMLImageElement>(null);
   const starlinkRef = useRef<HTMLDivElement>(null);
   const cloudsRef = useRef<HTMLDivElement>(null);
@@ -101,6 +102,7 @@ export default function HeroFlight() {
 
   useEffect(() => {
     const section = sectionRef.current;
+    const sky = skyRef.current;
     const plane = planeRef.current;
     const starlink = starlinkRef.current;
     const title = titleRef.current;
@@ -116,7 +118,7 @@ export default function HeroFlight() {
     const tripsCount = tripsCountRef.current;
     const tripsFill = tripsFillRef.current;
     if (
-      !section || !plane || !starlink || !title || !map || !trails ||
+      !section || !sky || !plane || !starlink || !title || !map || !trails ||
       !trailL || !trailR || !hint || !svg || !tripsTitle || !tripsCounter ||
       !tripsMonth || !tripsCount || !tripsFill
     )
@@ -150,6 +152,7 @@ export default function HeroFlight() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (reduced) {
+      sky.style.opacity = "0";
       map.style.opacity = "1";
       map.style.clipPath = "none";
       plane.style.opacity = "0.9";
@@ -184,6 +187,10 @@ export default function HeroFlight() {
       const total = rect.height - vh;
       const p = Math.min(1, Math.max(0, -rect.top / total));
       const ip = Math.min(1, p / INTRO_END); // intro-phase progress
+
+      // Sky wash clears as the map comes up — it's fully gone by the time
+      // the trips start drawing, so the arcs keep their pale backdrop.
+      sky!.style.opacity = `${1 - smooth(seg(ip, 0.12, 0.55))}`;
 
       // Headline fades out as soon as scrolling starts
       const tOut = seg(ip, 0, 0.14);
@@ -327,6 +334,11 @@ export default function HeroFlight() {
   return (
     <section ref={sectionRef} className="hf-section">
       <div className="hf-sticky">
+        {/* Sky wash — richer blue while the plane is on screen, fading to
+            the site's pale gradient as the map takes over, which needs the
+            light background to stay legible. */}
+        <div ref={skyRef} className="hf-sky" aria-hidden="true" />
+
         {/* Tilted holographic map */}
         <div className="hf-map-persp">
           <div ref={mapRef} className="hf-map">
@@ -499,9 +511,12 @@ export default function HeroFlight() {
           className="hf-plane"
         />
 
-        {/* Starlink — our flagship in-cabin feature, sits under the plane */}
+        {/* Starlink — our flagship in-cabin feature, sits under the plane.
+            No container: just the signal dot and the type, set in full navy
+            rather than the ink-3 it used to be, which vanished on the sky. */}
         <div ref={starlinkRef} className="hf-starlink">
-          <span className="text-[11px] font-normal tracking-[0.3em] text-ink-3 uppercase">
+          <span className="hf-live-dot" aria-hidden />
+          <span className="text-[11px] font-medium tracking-[0.3em] text-navy uppercase">
             Equipped with Starlink
           </span>
         </div>
@@ -514,31 +529,51 @@ export default function HeroFlight() {
           <h1 className="text-[clamp(40px,7vw,96px)] leading-[0.95] font-bold tracking-[0.01em] text-navy uppercase">
             CRAFT
           </h1>
-          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              href="/contact"
-              className="w-64 rounded-full glass px-8 py-4 text-center text-[11px] font-medium tracking-[0.3em] text-navy uppercase transition-colors hover:bg-navy-light"
-            >
-              Contact Us
-            </Link>
+          <div className="mt-8 flex flex-col items-center justify-center gap-5 sm:flex-row">
             <Link
               href="/charter"
-              className="w-64 rounded-full glass px-8 py-4 text-center text-[11px] font-medium tracking-[0.3em] text-navy uppercase transition-colors hover:bg-navy-light"
+              className="w-72 rounded-full glass px-10 py-5 text-center text-[13px] font-medium tracking-[0.3em] text-navy uppercase transition-colors hover:bg-navy-light"
             >
               Request a Quote
             </Link>
             <Link
               href="/asap"
-              className="w-64 rounded-full glass px-8 py-4 text-center text-[11px] font-medium tracking-[0.3em] text-navy uppercase transition-colors hover:bg-navy-light"
+              className="w-72 rounded-full glass px-10 py-5 text-center text-[13px] font-medium tracking-[0.3em] text-navy uppercase transition-colors hover:bg-navy-light"
             >
               ASAP
             </Link>
           </div>
+
+          {/* Operator, not a broker — the distinction charter buyers care
+              most about, and easy to miss anywhere further down the page.
+              Wording tracks the legal page's Part 135 language. */}
+          <p className="mx-auto mt-9 max-w-md text-[12px] leading-relaxed font-light text-ink-2">
+            <span className="font-medium text-navy">
+              We&apos;re the operator — not a brokerage.
+            </span>{" "}
+            Every trip is flown on our own Challengers, by our own crews,
+            under our own Part 135 certificate.
+          </p>
         </div>
 
         <div ref={hintRef} className="hf-hint">
           Scroll
-          <span className="hf-hint-line" />
+          <svg
+            className="hf-hint-chevron"
+            width="18"
+            height="11"
+            viewBox="0 0 18 11"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M1.5 1.5L9 9L16.5 1.5"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </div>
       </div>
     </section>
