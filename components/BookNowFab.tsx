@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 /**
  * Persistent call to action, bottom-right on every page except the two
  * where it would be redundant: the landing page (which already leads with
- * Request a Quote) and the charter form itself.
+ * Book) and the charter form itself.
  */
 export default function BookNowFab() {
   const pathname = usePathname();

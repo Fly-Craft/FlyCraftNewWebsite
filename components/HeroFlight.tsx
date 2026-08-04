@@ -534,7 +534,7 @@ export default function HeroFlight() {
               href="/charter"
               className="w-72 rounded-full glass px-10 py-5 text-center text-[13px] font-medium tracking-[0.3em] text-navy uppercase transition-colors hover:bg-navy-light"
             >
-              Request a Quote
+              Book
             </Link>
             <Link
               href="/asap"
