@@ -722,6 +722,23 @@ export default function CharterBooking() {
   // back to state, so a temporary cap drop (e.g. adding a flight attendant)
   // doesn't destructively lose a count if the cap opens back up later.
 
+  // Shared so the chip can sit inline after "Max N" for individuals, or
+  // alongside the Under 18/Under 2 chips for brokers.
+  const paxTbdChip = (
+    <button
+      type="button"
+      aria-pressed={paxTbd}
+      onClick={() => setPaxTbd((v) => !v)}
+      className={`rounded-full border px-3.5 py-1.5 text-[10px] font-medium tracking-[0.14em] uppercase transition-colors ${
+        paxTbd
+          ? "glass-selected text-white"
+          : "border-border text-ink-2 hover:border-navy/40 hover:text-navy"
+      }`}
+    >
+      TBD
+    </button>
+  );
+
   function segPaxCap(key: string) {
     return (legOptions[key] ?? []).includes("Flight Attendant")
       ? FA_MAX_PAX
@@ -1310,9 +1327,16 @@ export default function CharterBooking() {
                 <span className="text-[11px] tracking-[0.2em] text-ink-3 uppercase">
                   Max {adultsCap}
                 </span>
+                {/* With no Under 18/Under 2 chips to sit beside, TBD reads
+                    cleaner inline than alone on its own row. */}
+                {!isBroker && paxTbdChip}
               </div>
 
-              <div className="flex flex-wrap items-center gap-2">
+              {/* Eases open and closed as the client type changes, rather
+                  than snapping. inert keeps the collapsed fields out of the
+                  tab order. */}
+              <div className="form-reveal" data-open={isBroker} inert={!isBroker}>
+              <div className="flex flex-wrap items-center gap-2 pt-0.5">
                 {isBroker && (
                   <>
                     <button
@@ -1341,18 +1365,8 @@ export default function CharterBooking() {
                     </button>
                   </>
                 )}
-                <button
-                  type="button"
-                  aria-pressed={paxTbd}
-                  onClick={() => setPaxTbd((v) => !v)}
-                  className={`rounded-full border px-3.5 py-1.5 text-[10px] font-medium tracking-[0.14em] uppercase transition-colors ${
-                    paxTbd
-                      ? "glass-selected text-white"
-                      : "border-border text-ink-2 hover:border-navy/40 hover:text-navy"
-                  }`}
-                >
-                  TBD
-                </button>
+                {paxTbdChip}
+              </div>
               </div>
 
               {isBroker && hasUnder18 && (
@@ -1457,7 +1471,7 @@ export default function CharterBooking() {
         {/* Options — broker-only. Someone booking their own trip gets a
             clean form; a broker quoting for a client needs the full
             amenity detail up front. */}
-        {isBroker && (
+        <div className="form-reveal" data-open={isBroker} inert={!isBroker}>
         <div>
           <div className="mb-3 grid grid-cols-[1fr_auto_1fr] items-center gap-2">
             <label className="block text-[10px] font-medium tracking-[0.25em] text-ink-3 uppercase">
@@ -1697,7 +1711,7 @@ export default function CharterBooking() {
             </div>
           )}
         </div>
-        )}
+        </div>
 
         <hr className="border-border" />
 

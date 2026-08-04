@@ -122,6 +122,35 @@
     0 10px 26px rgba(12, 29, 61, 0.2);
 }
 
+/* Collapsible form region — the broker-only fields on the charter page.
+   Animating grid-template-rows from 0fr to 1fr lets the block ease open
+   and closed at its natural height; a mount/unmount could only fade one
+   direction, and max-height would need a hard-coded guess. */
+.form-reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.42s cubic-bezier(0.32, 0.72, 0, 1),
+    opacity 0.28s ease;
+}
+
+.form-reveal > * {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.form-reveal[data-open="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-reveal {
+    transition: none;
+  }
+}
+
 /* Soft cross-page fade — app/template.tsx remounts this per navigation */
 .page-fade {
   animation: pageFade 0.45s ease both;

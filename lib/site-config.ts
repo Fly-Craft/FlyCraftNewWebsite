@@ -13,7 +13,7 @@ export const siteConfig = {
 // Glidepath now lives as a card on /programs rather than its own tab, and
 // About Us + Safety merged into /company.
 export const landingLinks = [
-  { href: "/charter", label: "Charter" },
+  { href: "/charter", label: "Book" },
   { href: "/programs", label: "Programs" },
   { href: "/fleet", label: "Fleet" },
   { href: "/company", label: "Company" },

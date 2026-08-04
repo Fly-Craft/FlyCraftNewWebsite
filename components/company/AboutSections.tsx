@@ -47,28 +47,53 @@ export default function AboutSections() {
         </div>
       </section>
 
-      {/* ── Trusted at the highest level ────────────────── */}
+      {/* ── Track record + ratings ──────────────────────── */}
       <section className="grid grid-cols-1 items-center gap-12 px-6 py-24 sm:px-20 lg:grid-cols-2 lg:gap-20">
         <div className="mx-auto flex max-w-xl flex-col items-start gap-6">
           <p className="text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase">
-            Who Flies With Us
+            Track Record
           </p>
           <h2 className="text-[clamp(28px,4vw,44px)] leading-tight font-extralight text-navy">
-            Trusted at the
+            Tens of thousands of hours.
             <br />
-            <span className="font-medium">highest level.</span>
+            <span className="font-medium">Zero accidents.</span>
           </h2>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
-            CRAFT has flown a sitting U.S. president, former presidents,
-            British royalty, and some of the world&apos;s most recognized
-            artists — alongside the founders, executives, and families who
-            fly with us week in and week out.
+            Since 2020, CRAFT has flown tens of thousands of hours without an
+            accident. That record isn&apos;t luck — it&apos;s the product of
+            standards we refuse to bend, audited and verified by the two most
+            respected independent safety authorities in aviation.
           </p>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
-            Whoever is on board, the standard is the same: absolute
-            discretion, meticulous preparation, and a crew that knows your
-            preferences before you step on the aircraft.
+            CRAFT is ARGUS Platinum rated — a distinction earned by a small
+            fraction of charter operators worldwide — and Wyvern certified.
           </p>
+          <div className="mt-2 flex w-full items-center justify-center gap-8">
+            <a
+              href="https://www.argus.aero/operator-registry-new"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-opacity hover:opacity-70"
+            >
+              <img
+                src="/safety/argus.png"
+                alt="ARGUS Platinum rating"
+                className="h-20 w-auto object-contain"
+              />
+            </a>
+            <a
+              href="https://app.wyvern.systems/public/directory/registered"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-opacity hover:opacity-70"
+            >
+              <img
+                src="/safety/wyvern.png"
+                alt="Wyvern certification"
+                className="h-16 w-auto object-contain"
+              />
+            </a>
+          </div>
         </div>
 
         <div className="mx-auto w-full max-w-xl">
