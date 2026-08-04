@@ -39,6 +39,7 @@ export default function ProgramsPage() {
         }
         subtitle="Whether you own the aircraft, come in through the fund, or move a whole executive team, CRAFT builds the program around you — and flies only its own metal, never as a broker."
         divider={false}
+        aside={<PreferToTalk />}
       />
 
       <section className="grid grid-cols-1 gap-8 px-6 pb-24 sm:px-20 lg:grid-cols-3">
@@ -153,8 +154,6 @@ export default function ProgramsPage() {
           </Link>
         </div>
       </section>
-
-      <PreferToTalk />
     </>
   );
 }

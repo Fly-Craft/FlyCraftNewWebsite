@@ -21,13 +21,12 @@ export default function CorporateProgramPage() {
         }
         subtitle="Tell us how your team flies — where you're based, how much you fly, and where you go — and we'll shape a program around it."
         divider={false}
+        aside={<PreferToTalk />}
       />
 
       <section className="px-6 pb-24 sm:px-20">
         <CorporateProgramForm />
       </section>
-
-      <PreferToTalk />
     </>
   );
 }

@@ -21,13 +21,12 @@ export default function AircraftManagementPage() {
         }
         subtitle="Tell us about your aircraft and how you fly — we'll walk you through the leaseback: you own the jet and its tax benefits, we cover the operating costs, and the whole CRAFT fleet opens up to you."
         divider={false}
+        aside={<PreferToTalk />}
       />
 
       <section className="px-6 pb-24 sm:px-20">
         <ManagementForm />
       </section>
-
-      <PreferToTalk />
     </>
   );
 }

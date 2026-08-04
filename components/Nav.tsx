@@ -10,9 +10,8 @@ const linkCls =
   "relative z-10 text-[9px] font-medium tracking-[0.2em] whitespace-nowrap uppercase transition-colors duration-300 sm:text-[10px] sm:tracking-[0.25em] lg:text-[11px] lg:tracking-[0.3em]";
 
 /**
- * Tabs that open a hover menu. One shape for both, so Programs inherits the
- * Fleet menu's look exactly; only the widths differ, since programme names
- * run longer than tail numbers.
+ * Tabs that open a hover menu. One shape and one set of dimensions for
+ * both, so the two menus can't drift apart.
  */
 const DROPDOWNS: Record<
   string,
@@ -35,8 +34,8 @@ const DROPDOWNS: Record<
     })),
   },
   "/programs": {
-    width: "w-60",
-    itemWidth: "w-[168px]",
+    width: "w-48",
+    itemWidth: "w-[120px]",
     items: programLinks,
   },
 };
