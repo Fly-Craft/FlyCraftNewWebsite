@@ -123,6 +123,32 @@
 }
 
 /* ============================================================
+   PAGE WIDTH — the layout is designed around 16:9. Beyond that
+   the content stops widening and centres, so ultrawide monitors
+   get bands of page background either side instead of a
+   stretched layout.
+
+   The threshold is 2:1 rather than 16:9 (1.78) on purpose: the
+   viewport is always shorter than the screen once browser chrome
+   is subtracted, so a 16:9 *monitor* presents a viewport nearer
+   2:1. Cutting at exactly 16:9 would band real 16:9 displays,
+   which is what we're trying to avoid. 21:9 (2.33) and 32:9
+   (3.56) still land well past it.
+   ============================================================ */
+.site-main {
+  width: 100%;
+  max-width: max(1280px, calc(100vh * 2));
+  margin-inline: auto;
+}
+
+/* Full-bleed exception for decorative backdrops that should still span
+   the whole viewport — the hero's sky and its cloud deck. Margin-based
+   so no `width: 100vw` can add a horizontal scrollbar. */
+.site-main .full-bleed {
+  margin-inline: calc(50% - 50vw);
+}
+
+/* ============================================================
    SKY BACKDROP — the landing screen's sky, reused as a static
    page background (components/SkyBackdrop.tsx). Sits at z-index
    -1 so page content stays above it without any per-page z-index

@@ -35,10 +35,11 @@ const DROPDOWNS: Record<
   },
   // ~15% narrower than Fleet, and a tighter label column so the short
   // programme names sit closer to centre while staying left-aligned
-  // with each other.
+  // with each other. The pl-2 shifts all three right by the same 8px —
+  // their ink sat 36px from the left edge but ~52px from the right.
   "/programs": {
     width: "w-[164px]",
-    itemWidth: "w-[92px]",
+    itemWidth: "w-[92px] pl-2",
     items: programLinks,
   },
 };

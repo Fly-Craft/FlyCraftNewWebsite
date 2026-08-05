@@ -120,10 +120,10 @@ export default function CareersPage() {
             keep good people on file even when the timing isn&apos;t right.
           </p>
           <a
-            href={`mailto:${siteConfig.contactEmail}?subject=Careers%20at%20CRAFT`}
+            href={`mailto:${siteConfig.careersEmail}?subject=Careers%20at%20CRAFT`}
             className="mt-2 rounded-full glass-selected px-9 py-4 text-[12px] font-medium tracking-[0.3em] text-white uppercase transition-transform duration-300 hover:-translate-y-0.5"
           >
-            {siteConfig.contactEmail}
+            {siteConfig.careersEmail}
           </a>
         </div>
       </section>

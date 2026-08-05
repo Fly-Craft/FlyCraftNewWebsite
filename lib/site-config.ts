@@ -4,6 +4,7 @@ export const siteConfig = {
   charterSalesPhoneDisplay: "+1 (310) 848-3636",
   glidepathUrl: "https://glidepath.ai",
   contactEmail: "charter@flycraft.com",
+  careersEmail: "careers@flycraft.com",
   address: "14200 NW 42nd Ave, Opa-locka, Florida 33054",
   instagram: "https://www.instagram.com/flywithcraft/",
   facebook: "https://www.facebook.com/flywithcraft",

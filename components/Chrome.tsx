@@ -18,7 +18,10 @@ export default function Chrome({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Nav />
-      <main className="flex-1">{children}</main>
+      {/* Content stops widening past 16:9 so ultrawide monitors don't
+          stretch the layout — the page background fills the sides. See
+          .site-main in globals.css. */}
+      <main className="site-main flex-1">{children}</main>
       {!isFleetMini && <Footer />}
       <BookNowFab />
     </>

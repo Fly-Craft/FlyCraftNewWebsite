@@ -26,13 +26,13 @@ export default function CharterPage() {
           {/* Escape hatch for trips that can't wait on a quote turnaround —
               sits beside the title so it's visible before anyone starts
               filling the form in. */}
-          <div className="flex flex-col items-start gap-3 lg:shrink-0 lg:items-end lg:pt-3">
+          <div className="flex flex-col items-start gap-3 lg:shrink-0 lg:items-center lg:pt-3 lg:pr-10">
             <p className="text-[10px] font-normal tracking-[0.3em] text-ink-3 uppercase">
               Flying Today?
             </p>
             <Link
               href="/asap"
-              className="glass-selected rounded-full px-10 py-4 text-[12px] font-medium tracking-[0.3em] text-white uppercase transition-transform duration-300 hover:-translate-y-0.5"
+              className="glass-selected rounded-full px-14 py-5 text-[14px] font-medium tracking-[0.3em] text-white uppercase transition-transform duration-300 hover:-translate-y-0.5"
             >
               ASAP
             </Link>

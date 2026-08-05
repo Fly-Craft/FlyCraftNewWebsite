@@ -332,7 +332,10 @@ export default function HeroFlight() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="hf-section">
+    // full-bleed: the sky and cloud deck span the whole viewport even on
+    // ultrawide, where .site-main caps the rest of the page at 16:9. The
+    // hero's own contents are px-capped, so nothing stretches.
+    <section ref={sectionRef} className="hf-section full-bleed">
       <div className="hf-sticky">
         {/* Sky wash — richer blue while the plane is on screen, fading to
             the site's pale gradient as the map takes over, which needs the
