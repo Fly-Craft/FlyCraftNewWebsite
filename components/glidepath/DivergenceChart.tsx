@@ -121,8 +121,10 @@ export default function DivergenceChart() {
       aria-label={`Chart: exchanging a $1,000,000 position under Section 721 instead of selling it leaves ${fmt(DELTA)} more value at year seven. Illustrative — assumptions at glidepath.ai.`}
     >
       {/* The delta readout sits above the plot rather than inside it —
-          overlaid, its third line landed on the exchange curve's tip. */}
-      <div className="flex flex-col items-end text-right">
+          overlaid, its third line landed on the exchange curve's tip.
+          Centred over the plot: right-aligned it read as an afterthought
+          pinned to the edge rather than the chart's headline. */}
+      <div className="flex flex-col items-center text-center">
         <span
           ref={counterRef}
           className="block text-[clamp(30px,4.2vw,54px)] leading-none font-extralight tracking-tight text-navy tabular-nums"
