@@ -168,6 +168,15 @@
   margin-inline: calc(50% - 50vw);
 }
 
+/* Full-bleed band whose CONTENT stays on the site column: the margins
+   pull the paint to the viewport edges, the padding puts the text back
+   where it was (both % values resolve against the same containing
+   block, so they cancel exactly). Used by the Glidepath proof band. */
+.site-main .full-bleed-band {
+  margin-inline: calc(50% - 50vw);
+  padding-inline: calc(50vw - 50%);
+}
+
 /* ============================================================
    SKY BACKDROP — the landing screen's sky, reused as a static
    page background (components/SkyBackdrop.tsx). Sits at z-index
@@ -210,6 +219,31 @@
 @media (prefers-reduced-motion: reduce) {
   .sky-backdrop .hf-cloud-drift {
     animation: none;
+  }
+}
+
+/* ============================================================
+   GLIDEPATH — scroll-in reveal for the proof band and the
+   mechanism timeline (components/glidepath/Reveal.tsx). One
+   fade-up, fired once by IntersectionObserver; reduced-motion
+   gets the final state instantly.
+   ============================================================ */
+.gp-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gp-reveal-on {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gp-reveal {
+    transition: none;
   }
 }
 
