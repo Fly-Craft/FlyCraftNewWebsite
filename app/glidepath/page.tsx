@@ -117,32 +117,31 @@ export default function GlidepathPage() {
         </div>
       </section>
 
-      {/* ── Proof band — the only full-bleed dark moment on the site ── */}
-      <section className="full-bleed-band mt-16 bg-[linear-gradient(160deg,#0c1d3d_0%,#14294e_55%,#0c1d3d_100%)] py-20 sm:py-24">
-        <div className="px-6 sm:px-20">
+      {/* ── Proof — three numbers in a glass card, same material as the
+          rest of the page ── */}
+      <section className="px-6 pt-16 pb-8 sm:px-20">
+        <div className="rounded-3xl glass p-10 sm:p-14">
           <Reveal>
-            <h2 className="max-w-3xl text-[clamp(26px,3.2vw,40px)] leading-tight font-extralight text-white">
+            <h2 className="max-w-3xl text-[clamp(26px,3.2vw,40px)] leading-tight font-extralight text-navy">
               Concentration built the fortune.{" "}
               <span className="font-medium">
                 It&apos;s also the biggest risk to it.
               </span>
             </h2>
           </Reveal>
-          <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-0">
+          <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-3 lg:gap-0">
             {PROOF.map((stat, i) => (
               <Reveal
                 key={stat.value}
                 delay={i * 120}
                 className={
-                  i > 0
-                    ? "sm:border-l sm:border-white/10 sm:pl-10"
-                    : undefined
+                  i > 0 ? "lg:border-l lg:border-border lg:pl-10" : undefined
                 }
               >
-                <p className="text-[clamp(44px,5.5vw,72px)] leading-none font-extralight text-white">
+                <p className="text-[clamp(40px,4.8vw,64px)] leading-none font-extralight whitespace-nowrap text-navy">
                   {stat.value}
                 </p>
-                <p className="mt-4 max-w-[240px] text-[10px] font-medium tracking-[0.3em] text-white/55 uppercase">
+                <p className="mt-4 max-w-[240px] text-[10px] font-medium tracking-[0.3em] text-ink-3 uppercase">
                   {stat.label}
                 </p>
               </Reveal>
