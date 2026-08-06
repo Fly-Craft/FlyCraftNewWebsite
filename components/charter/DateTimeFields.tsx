@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 const MONTHS = [
   "January", "February", "March", "April", "May", "June",
@@ -30,11 +31,50 @@ function formatTime(value: string): string {
   return `${h12}:${pad(m)} ${am ? "AM" : "PM"}`;
 }
 
-function usePopover(onClose: () => void) {
-  const ref = useRef<HTMLDivElement>(null);
+const useIsoLayoutEffect =
+  typeof window === "undefined" ? useEffect : useLayoutEffect;
+
+const GAP = 8; // breathing room between the trigger and the floating panel
+const EDGE = 8; // minimum distance from the viewport edge
+
+/**
+ * Anchors a floating panel to a trigger and closes it on outside click / Esc.
+ *
+ * The panel can't live inside the form: `.glass` sets `backdrop-filter`, which
+ * makes every card its own stacking context, so a popover nested in one card
+ * is painted under any later card no matter how high its z-index goes. So the
+ * panel is portalled to <body> and positioned from the trigger's rect instead —
+ * which also means outside-click needs to check both subtrees, since the panel
+ * is no longer a DOM descendant of the trigger.
+ */
+function useAnchoredPopover(open: boolean, onClose: () => void) {
+  const anchorRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const [rect, setRect] = useState<DOMRect | null>(null);
+
+  useIsoLayoutEffect(() => {
+    if (!open) return;
+    const measure = () => {
+      const el = anchorRef.current;
+      if (el) setRect(el.getBoundingClientRect());
+    };
+    measure();
+    // capture:true so scrolling any ancestor container repositions it too
+    window.addEventListener("scroll", measure, true);
+    window.addEventListener("resize", measure);
+    return () => {
+      window.removeEventListener("scroll", measure, true);
+      window.removeEventListener("resize", measure);
+    };
+  }, [open]);
+
   useEffect(() => {
+    if (!open) return;
     function onDoc(e: MouseEvent) {
-      if (!ref.current?.contains(e.target as Node)) onClose();
+      const target = e.target as Node;
+      if (anchorRef.current?.contains(target)) return;
+      if (panelRef.current?.contains(target)) return;
+      onClose();
     }
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") onClose();
@@ -45,8 +85,63 @@ function usePopover(onClose: () => void) {
       document.removeEventListener("mousedown", onDoc);
       document.removeEventListener("keydown", onKey);
     };
-  }, [onClose]);
-  return ref;
+  }, [open, onClose]);
+
+  return { anchorRef, panelRef, rect };
+}
+
+/**
+ * The floating half of the pair. `height` is the panel's approximate rendered
+ * height — used only to decide whether it fits below the trigger; when it
+ * flips above we pin the panel's bottom edge instead, so the estimate never
+ * has to be exact.
+ */
+function Popover({
+  panelRef,
+  rect,
+  width,
+  height,
+  className,
+  children,
+}: {
+  panelRef: React.RefObject<HTMLDivElement | null>;
+  rect: DOMRect | null;
+  width?: number;
+  height: number;
+  className: string;
+  children: React.ReactNode;
+}) {
+  // `rect` doubles as the client-side guard: it stays null until the layout
+  // effect measures the trigger, so document.body is never touched on the
+  // server, and the measure lands before paint so there's no flash.
+  if (!rect) return null;
+
+  const panelWidth = width ?? rect.width;
+  const spaceBelow = window.innerHeight - rect.bottom;
+  const flipUp = spaceBelow < height + GAP && rect.top > spaceBelow;
+
+  const left = Math.min(
+    Math.max(EDGE, rect.left),
+    Math.max(EDGE, window.innerWidth - panelWidth - EDGE),
+  );
+
+  return createPortal(
+    <div
+      ref={panelRef}
+      style={{
+        position: "fixed",
+        left,
+        width: panelWidth,
+        ...(flipUp
+          ? { bottom: window.innerHeight - rect.top + GAP }
+          : { top: rect.bottom + GAP }),
+      }}
+      className={`z-40 ${className}`}
+    >
+      {children}
+    </div>,
+    document.body,
+  );
 }
 
 const triggerCls = (hasValue: boolean) =>
@@ -95,7 +190,9 @@ export function DateField({
         : new Date();
     return new Date(base.getFullYear(), base.getMonth(), 1);
   });
-  const ref = usePopover(() => setOpen(false));
+  const { anchorRef, panelRef, rect } = useAnchoredPopover(open, () =>
+    setOpen(false),
+  );
 
   function openPicker() {
     if (!open && value) {
@@ -117,14 +214,20 @@ export function DateField({
   ];
 
   return (
-    <div ref={ref} className="relative">
+    <div ref={anchorRef} className="relative">
       <button type="button" onClick={openPicker} className={triggerCls(!!value)}>
         <span className="truncate">{value ? formatDate(value) : placeholder}</span>
         <CalendarIcon />
       </button>
 
       {open && (
-        <div className="absolute z-30 mt-2 w-72 rounded-2xl glass p-4">
+        <Popover
+          panelRef={panelRef}
+          rect={rect}
+          width={288}
+          height={348}
+          className="rounded-2xl glass-popover p-4"
+        >
           <div className="mb-3 flex items-center justify-between">
             <button
               type="button"
@@ -184,7 +287,7 @@ export function DateField({
               );
             })}
           </div>
-        </div>
+        </Popover>
       )}
     </div>
   );
@@ -202,8 +305,9 @@ export function TimeField({
   placeholder?: string;
 }) {
   const [open, setOpen] = useState(false);
-  const ref = usePopover(() => setOpen(false));
-  const listRef = useRef<HTMLDivElement>(null);
+  const { anchorRef, panelRef, rect } = useAnchoredPopover(open, () =>
+    setOpen(false),
+  );
 
   const options: string[] = [];
   for (let h = 0; h < 24; h++) {
@@ -213,19 +317,26 @@ export function TimeField({
   }
 
   useEffect(() => {
-    if (!open || !listRef.current) return;
+    const panel = panelRef.current;
+    if (!open || !panel) return;
     // min may not sit on the 15-min grid — scroll to the first pickable slot
     const firstAllowed = min
       ? options.find((t) => t >= min)
       : undefined;
     const target = value || firstAllowed || "08:00";
-    const el = listRef.current.querySelector<HTMLElement>(`[data-t="${target}"]`);
-    el?.scrollIntoView({ block: "center" });
+    const el = panel.querySelector<HTMLElement>(`[data-t="${target}"]`);
+    // set scrollTop directly rather than scrollIntoView — the panel is
+    // position:fixed, and scrollIntoView would also scroll the page behind it,
+    // dragging the anchor out from under us
+    if (el) {
+      panel.scrollTop =
+        el.offsetTop - panel.clientHeight / 2 + el.offsetHeight / 2;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- options is a constant grid
-  }, [open, value, min]);
+  }, [open, rect, value, min]);
 
   return (
-    <div ref={ref} className="relative">
+    <div ref={anchorRef} className="relative">
       <button
         type="button"
         onClick={() => setOpen(!open)}
@@ -236,9 +347,11 @@ export function TimeField({
       </button>
 
       {open && (
-        <div
-          ref={listRef}
-          className="absolute z-30 mt-2 max-h-64 w-full min-w-36 overflow-auto rounded-2xl glass py-2"
+        <Popover
+          panelRef={panelRef}
+          rect={rect}
+          height={256}
+          className="max-h-64 min-w-36 overflow-auto rounded-2xl glass-popover py-2"
         >
           {options.map((t) => {
             const disabled = !!min && t < min;
@@ -264,7 +377,7 @@ export function TimeField({
               </button>
             );
           })}
-        </div>
+        </Popover>
       )}
     </div>
   );
