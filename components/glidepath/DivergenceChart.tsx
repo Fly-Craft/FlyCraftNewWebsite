@@ -116,135 +116,168 @@ export default function DivergenceChart() {
 
   return (
     <div
-      ref={containerRef}
-      className="relative h-[clamp(280px,46vh,430px)] w-full"
+      className="w-full"
       role="img"
       aria-label={`Chart: exchanging a $1,000,000 position under Section 721 instead of selling it leaves ${fmt(DELTA)} more value at year seven. Illustrative — assumptions at glidepath.ai.`}
     >
-      <svg
-        className="absolute inset-0 h-full w-full"
-        viewBox={`0 0 ${VB_W} ${VB_H}`}
-        preserveAspectRatio="none"
-        fill="none"
-        aria-hidden="true"
-      >
-        <defs>
-          <linearGradient id="gpLine" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#0c1d3d" />
-            <stop offset="100%" stopColor="#85b5d8" />
-          </linearGradient>
-          <linearGradient id="gpArea" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#85b5d8" stopOpacity="0.16" />
-            <stop offset="100%" stopColor="#85b5d8" stopOpacity="0" />
-          </linearGradient>
-          <clipPath id="gpSellClip">
-            <rect ref={sellClipRef} x="0" y="0" width="0" height={VB_H} />
-          </clipPath>
-        </defs>
-
-        <path
-          d={AREA_D}
-          fill="url(#gpArea)"
-          className={`transition-opacity duration-700 ${drawn ? "opacity-100" : "opacity-0"}`}
-        />
-
-        {/* baseline */}
-        <line
-          x1="40"
-          y1="370"
-          x2="960"
-          y2="370"
-          stroke="#0c1d3d"
-          strokeOpacity="0.12"
-          vectorEffect="non-scaling-stroke"
-        />
-        {/* the redemption threshold — year 7 + 1 day */}
-        <line
-          x1="930"
-          y1="70"
-          x2="930"
-          y2="370"
-          stroke="#0c1d3d"
-          strokeOpacity="0.15"
-          strokeDasharray="2 6"
-          vectorEffect="non-scaling-stroke"
-        />
-
-        <g clipPath="url(#gpSellClip)">
-          <path
-            d={SELL_D}
-            stroke="#0c1d3d"
-            strokeOpacity="0.35"
-            strokeWidth="1.5"
-            strokeDasharray="2 6"
-            vectorEffect="non-scaling-stroke"
-          />
-        </g>
-
-        <path
-          ref={exchangeRef}
-          d={EXCHANGE_D}
-          stroke="url(#gpLine)"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          vectorEffect="non-scaling-stroke"
-        />
-
-        {/* delta bracket between the two endings */}
-        <g
-          stroke="#0c1d3d"
-          strokeOpacity="0.4"
-          className={`transition-opacity duration-500 ${drawn ? "opacity-100" : "opacity-0"}`}
-        >
-          <line x1="944" y1="110" x2="944" y2="268" vectorEffect="non-scaling-stroke" />
-          <line x1="938" y1="110" x2="950" y2="110" vectorEffect="non-scaling-stroke" />
-          <line x1="938" y1="268" x2="950" y2="268" vectorEffect="non-scaling-stroke" />
-        </g>
-      </svg>
-
-      {/* the plane rides the tip of the exchange line */}
-      <span
-        ref={planeRef}
-        className="absolute"
-        style={{ left: "7%", top: "71.4%", transform: "translate(-50%,-50%)" }}
-        aria-hidden="true"
-      >
-        <PlaneDart />
-      </span>
-
-      {/* ── HTML annotations ── */}
-      <div className="absolute top-0 right-0 max-w-[46%] text-right sm:max-w-none">
+      {/* The delta readout sits above the plot rather than inside it —
+          overlaid, its third line landed on the exchange curve's tip. */}
+      <div className="flex flex-col items-end text-right">
         <span
           ref={counterRef}
           className="block text-[clamp(30px,4.2vw,54px)] leading-none font-extralight tracking-tight text-navy tabular-nums"
         >
           $0
         </span>
-        <span className="mt-2 block text-[9px] font-medium tracking-[0.22em] text-ink-3 uppercase sm:text-[10px]">
+        <span className="mt-3 block text-[9px] font-medium tracking-[0.22em] text-ink-3 uppercase sm:text-[10px]">
           More at year 7 · $1M NVDA position
         </span>
-        <span className="mt-1 block text-[10px] font-light text-ink-3">
+        <span className="mt-1.5 block text-[10px] font-light text-ink-3">
           Illustrative — assumptions at glidepath.ai
         </span>
       </div>
 
-      {/* Sits above the curves on desktop; on phones the sell line cuts
-          through that spot, so it drops to the baseline row instead. */}
-      <span className={`absolute left-[4%] top-[90%] sm:top-[75%] ${micro}`}>
-        $1,000,000<span className="hidden sm:inline"> · Today</span>
-      </span>
-      <span className={`absolute right-[3%] top-[90%] ${micro}`}>
-        Year 7 + 1 Day
-      </span>
-      <span className="absolute left-[9%] top-[86%] hidden text-[11px] font-light text-ink-3 sm:block">
-        the tax hit — capital gains due the day you sell
-      </span>
-      <span className={`absolute left-[56%] top-[78%] hidden sm:block ${micro}`}>
-        Sell
-      </span>
-      <span className="absolute left-[56%] top-[44%] hidden text-[10px] font-medium tracking-[0.25em] text-navy/70 uppercase sm:block">
-        Exchange — §721
-      </span>
+      <div
+        ref={containerRef}
+        className="relative mt-7 h-[clamp(230px,36vh,340px)] w-full"
+      >
+        <svg
+          className="absolute inset-0 h-full w-full"
+          viewBox={`0 0 ${VB_W} ${VB_H}`}
+          preserveAspectRatio="none"
+          fill="none"
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient id="gpLine" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#0c1d3d" />
+              <stop offset="100%" stopColor="#85b5d8" />
+            </linearGradient>
+            <linearGradient id="gpArea" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#85b5d8" stopOpacity="0.16" />
+              <stop offset="100%" stopColor="#85b5d8" stopOpacity="0" />
+            </linearGradient>
+            <clipPath id="gpSellClip">
+              <rect ref={sellClipRef} x="0" y="0" width="0" height={VB_H} />
+            </clipPath>
+          </defs>
+
+          <path
+            d={AREA_D}
+            fill="url(#gpArea)"
+            className={`transition-opacity duration-700 ${drawn ? "opacity-100" : "opacity-0"}`}
+          />
+
+          {/* baseline */}
+          <line
+            x1="40"
+            y1="370"
+            x2="960"
+            y2="370"
+            stroke="#0c1d3d"
+            strokeOpacity="0.12"
+            vectorEffect="non-scaling-stroke"
+          />
+          {/* the redemption threshold — year 7 + 1 day */}
+          <line
+            x1="930"
+            y1="70"
+            x2="930"
+            y2="370"
+            stroke="#0c1d3d"
+            strokeOpacity="0.15"
+            strokeDasharray="2 6"
+            vectorEffect="non-scaling-stroke"
+          />
+
+          <g clipPath="url(#gpSellClip)">
+            <path
+              d={SELL_D}
+              stroke="#0c1d3d"
+              strokeOpacity="0.35"
+              strokeWidth="1.5"
+              strokeDasharray="2 6"
+              vectorEffect="non-scaling-stroke"
+            />
+          </g>
+
+          <path
+            ref={exchangeRef}
+            d={EXCHANGE_D}
+            stroke="url(#gpLine)"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            vectorEffect="non-scaling-stroke"
+          />
+
+          {/* delta bracket between the two endings */}
+          <g
+            stroke="#0c1d3d"
+            strokeOpacity="0.4"
+            className={`transition-opacity duration-500 ${drawn ? "opacity-100" : "opacity-0"}`}
+          >
+            <line
+              x1="944"
+              y1="110"
+              x2="944"
+              y2="268"
+              vectorEffect="non-scaling-stroke"
+            />
+            <line
+              x1="938"
+              y1="110"
+              x2="950"
+              y2="110"
+              vectorEffect="non-scaling-stroke"
+            />
+            <line
+              x1="938"
+              y1="268"
+              x2="950"
+              y2="268"
+              vectorEffect="non-scaling-stroke"
+            />
+          </g>
+        </svg>
+
+        {/* the plane rides the tip of the exchange line */}
+        <span
+          ref={planeRef}
+          className="absolute"
+          style={{
+            left: "7%",
+            top: "71.4%",
+            transform: "translate(-50%,-50%)",
+          }}
+          aria-hidden="true"
+        >
+          <PlaneDart />
+        </span>
+
+        {/* ── HTML annotations ──
+          Positioned by percentage against the plot's own box. The two
+          curves leave a common origin at 71% and the baseline sits at
+          88%, so the origin label goes ABOVE the origin (below it runs
+          the dotted tax-cliff drop) and the axis row goes below the
+          baseline, clear of every stroke. */}
+        <span className={`absolute left-[4%] top-[57%] ${micro}`}>
+          $1,000,000<span className="hidden sm:inline"> · Today</span>
+        </span>
+        <span className={`absolute right-[3%] top-[91%] ${micro}`}>
+          Year 7 + 1 Day
+        </span>
+        <span className="absolute left-[4%] top-[91%] hidden text-[11px] font-light text-ink-3 sm:block">
+          the tax hit — capital gains due the day you sell
+        </span>
+        <span
+          className={`absolute left-[56%] top-[78%] hidden sm:block ${micro}`}
+        >
+          Sell
+        </span>
+        <span className="absolute left-[56%] top-[44%] hidden text-[10px] font-medium tracking-[0.25em] text-navy/70 uppercase sm:block">
+          Exchange — §721
+        </span>
+      </div>
     </div>
   );
 }
