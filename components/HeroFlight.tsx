@@ -187,7 +187,6 @@ export default function HeroFlight() {
     let skyHidden = false;
     let titleHidden = false;
     let tallyHidden = false;
-    let mapHidden = false;
     let trailsHidden = false;
     // Read once and refresh on resize rather than per frame — phones fire
     // scroll far more often than the URL bar collapses.
@@ -317,14 +316,12 @@ export default function HeroFlight() {
         map!.style.opacity = mapOpacity;
         lastMapOpacity = mapOpacity;
       }
-      // Before its fade begins, the map is composited invisibly BENEATH
-      // the opaque cloud deck — the largest texture on the page, paid for
-      // during exactly the frames the intro can least afford.
-      const mapGone = mapIn <= 0;
-      if (mapGone !== mapHidden) {
-        map!.style.visibility = mapGone ? "hidden" : "";
-        mapHidden = mapGone;
-      }
+      // Deliberately NOT visibility-gated like the other faders: at
+      // opacity 0 the compositor already skips drawing this layer, so
+      // hiding it saved no fill — but un-hiding forced the page's largest
+      // texture to re-rasterize mid-gesture, a downward-scroll-only hitch
+      // in the busiest window of the intro. Resident-but-transparent is
+      // the cheap state for the map.
       const mapTransform = `rotateX(${50 - settle * 12}deg) scale(${0.9 + settle * 0.14})`;
       if (mapTransform !== lastMapTransform) {
         map!.style.transform = mapTransform;

@@ -505,10 +505,6 @@ body::before {
   animation-play-state: paused;
 }
 
-.hf-clouds-off .hf-cloud {
-  will-change: auto;
-}
-
 .hf-cloud-drift img {
   display: block;
   width: 100%;
@@ -708,6 +704,11 @@ body::before {
   .hf-cloud:nth-child(1),
   .hf-cloud:nth-child(3) { display: none; }
   .hf-frame { display: none; }
+  /* Release the parked deck's layers on phones only — the re-raster on
+     scroll-up is four small 700w textures here. Desktop keeps its twelve
+     full-size layers resident instead of re-rasterizing them mid-gesture
+     every time the deck returns. */
+  .hf-clouds-off .hf-cloud { will-change: auto; }
   /* The trips layer is ~1,800 animated paths — far too many for phone
      GPUs. Show every 4th; at this scale the density still reads as the
      full picture. */
