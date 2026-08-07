@@ -194,7 +194,7 @@ export default function RangeMapCard({ rangeNm }: { rangeNm: number }) {
       )}
 
       <p className="mt-3 text-center text-[11px] font-light tracking-[0.06em] text-ink-3">
-        Generic assumptions — real range may vary based on a variety of factors
+        Optimal conditions — real range may vary based on a variety of factors
         such as weights and weather.
       </p>
     </div>

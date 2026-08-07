@@ -12,7 +12,7 @@ const cardLabel =
 
 const FOOTNOTES_300 = [
   "These are best-case figures and may vary depending on weather conditions, aircraft weight, and client-specific requests.",
-  "Cruising speed shown is a ground speed, assuming no wind.",
+  "Cruising speed shown is ground speed, assuming no wind.",
   "Standard crew does not include a flight attendant. Optional upon request (additional charges apply).",
   "Flight attendant on board reduces maximum passenger occupancy to 8.",
   "Use of the bed reduces passenger capacity to 7 or 8 passengers, depending if the bed is being used by 1 or 2 occupants.",
@@ -22,7 +22,7 @@ const FOOTNOTES_300 = [
 
 const FOOTNOTES_350 = [
   "These are best-case figures and may vary depending on weather conditions, aircraft weight, and client-specific requests.",
-  "Cruising speed shown is a ground speed, assuming no wind.",
+  "Cruising speed shown is ground speed, assuming no wind.",
   "Standard crew does not include a flight attendant. Optional upon request (additional charges apply).",
   "Each bed reduces the maximum passenger occupancy by 1, for example if 1 bed is open the maximum passenger occupancy is 7.",
   "The maximum cargo compartment allowable load is 750 pounds. If a client arrives with more luggage than the aircraft can accommodate, some items may need to be left behind and not loaded onto the aircraft.",
