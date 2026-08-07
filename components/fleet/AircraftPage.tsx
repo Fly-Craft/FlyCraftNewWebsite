@@ -12,6 +12,7 @@ const cardLabel =
 
 const FOOTNOTES_300 = [
   "These are best-case figures and may vary depending on weather conditions, aircraft weight, and client-specific requests.",
+  "Cruising speed shown is a ground speed, assuming no wind.",
   "Standard crew does not include a flight attendant. Optional upon request (additional charges apply).",
   "Flight attendant on board reduces maximum passenger occupancy to 8.",
   "Use of the bed reduces passenger capacity to 7 or 8 passengers, depending if the bed is being used by 1 or 2 occupants.",
@@ -21,6 +22,7 @@ const FOOTNOTES_300 = [
 
 const FOOTNOTES_350 = [
   "These are best-case figures and may vary depending on weather conditions, aircraft weight, and client-specific requests.",
+  "Cruising speed shown is a ground speed, assuming no wind.",
   "Standard crew does not include a flight attendant. Optional upon request (additional charges apply).",
   "Each bed reduces the maximum passenger occupancy by 1, for example if 1 bed is open the maximum passenger occupancy is 7.",
   "The maximum cargo compartment allowable load is 750 pounds. If a client arrives with more luggage than the aircraft can accommodate, some items may need to be left behind and not loaded onto the aircraft.",
@@ -28,24 +30,29 @@ const FOOTNOTES_350 = [
   "Max range displayed, real range may vary based on a variety of factors such as weight and weather.",
 ];
 
+// Note numbers run in reading order down the page, so inserting one means
+// renumbering everything below it. Keep these in step with the FOOTNOTES
+// arrays — index n-1 of the array is the note rendered as n.
 const NOTE_MAP_300 = {
   performance: 1,
-  crew: 2,
-  dayHeadline: 3,
-  nightHeadline: 4,
-  luggage: 5,
+  cruiseSpeed: 2,
+  crew: 3,
+  dayHeadline: 4,
+  nightHeadline: 5,
+  luggage: 6,
   appleTv: undefined as number | undefined,
-  rangeMap: 6,
+  rangeMap: 7,
 };
 
 const NOTE_MAP_350 = {
   performance: 1,
-  crew: 2,
+  cruiseSpeed: 2,
+  crew: 3,
   dayHeadline: undefined as number | undefined,
-  nightHeadline: 3,
-  luggage: 4,
-  appleTv: 5,
-  rangeMap: 6,
+  nightHeadline: 4,
+  luggage: 5,
+  appleTv: 6,
+  rangeMap: 7,
 };
 
 function Note({ n }: { n?: number }) {
@@ -138,6 +145,7 @@ export default function AircraftPage({ a }: { a: Aircraft }) {
               <div key={s.label}>
                 <div className="text-[26px] font-extralight text-navy">
                   {s.value}
+                  {s.label === "Knots" && <Note n={notes.cruiseSpeed} />}
                   {s.label === "Crew" && <Note n={notes.crew} />}
                 </div>
                 <div className="mt-1 text-[10px] tracking-[0.2em] text-ink-3 uppercase">
@@ -165,9 +173,15 @@ export default function AircraftPage({ a }: { a: Aircraft }) {
       </section>
 
       {/* ── Lower gallery ────────────────────────────────── */}
+      {/* Phones get the same swipeable strip as the top gallery — stacked
+          full-width, the three photos were most of a screen each. */}
+      <div className="pb-12 sm:hidden">
+        <PhotoStrip images={a.lower.slice(0, 3)} tail={a.tail} />
+      </div>
+
       {/* Explicit heights everywhere: an auto-sized grid row would let the
           intrinsic image heights overflow the section onto the cards below */}
-      <section className="px-6 pb-16 sm:px-20">
+      <section className="hidden px-6 pb-16 sm:block sm:px-20">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-[3fr_2fr]">
           <img
             src={a.lower[0]}

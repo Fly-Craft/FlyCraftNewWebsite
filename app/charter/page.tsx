@@ -26,7 +26,9 @@ export default function CharterPage() {
           {/* Escape hatch for trips that can't wait on a quote turnaround —
               sits beside the title so it's visible before anyone starts
               filling the form in. */}
-          <div className="flex flex-col items-start gap-3 lg:shrink-0 lg:items-center lg:pt-3 lg:pr-10">
+          {/* Centred on mobile, where the block spans the full width and
+              left-aligning it stranded the button against the edge. */}
+          <div className="flex flex-col items-center gap-3 lg:shrink-0 lg:pt-3 lg:pr-10">
             <p className="text-[10px] font-normal tracking-[0.3em] text-ink-3 uppercase">
               Flying Today?
             </p>
