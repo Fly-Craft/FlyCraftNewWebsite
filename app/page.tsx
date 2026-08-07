@@ -1,10 +1,13 @@
 import Link from "next/link";
 import HeroFlight from "@/components/HeroFlight";
+import FpsMeter from "@/components/FpsMeter";
 import { siteConfig } from "@/lib/site-config";
 
 export default function Home() {
   return (
     <div>
+      {/* On-device frame diagnostics — renders only with ?fps=1 */}
+      <FpsMeter />
       <HeroFlight />
 
       <section className="grid grid-cols-1 items-center gap-12 px-6 pt-8 pb-24 sm:px-20 lg:grid-cols-2 lg:gap-20">

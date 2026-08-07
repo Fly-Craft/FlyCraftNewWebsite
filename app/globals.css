@@ -668,19 +668,35 @@ body::before {
    fills the top two-thirds of the screen instead of a small strip
    pinned to the very top. */
 @media (max-width: 640px) {
-  /* Phone GPUs pay for backdrop-filter per pixel per frame, and the nav
-     pill sits fixed over scrolling content — so its backdrop re-blurs on
-     EVERY frame at blur(28px). A more opaque fill lets a 12px radius
-     read as the same material at a fraction of the cost. */
+  /* No backdrop-filter at all on phones. It is the single most expensive
+     per-pixel-per-frame effect on mobile Safari, and the nav pill sits
+     FIXED over scrolling content, so its backdrop re-filters on every
+     frame at every scroll position — blur(12px) still janked real
+     devices. Near-opaque fills carry the material's read instead. */
   .glass {
     background: linear-gradient(
       150deg,
-      rgba(255, 255, 255, 0.92) 0%,
-      rgba(255, 255, 255, 0.8) 55%,
-      rgba(255, 255, 255, 0.88) 100%
+      rgba(255, 255, 255, 0.94) 0%,
+      rgba(255, 255, 255, 0.84) 55%,
+      rgba(255, 255, 255, 0.9) 100%
     );
-    -webkit-backdrop-filter: blur(12px) saturate(150%);
-    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .glass-capsule,
+  .glass-selected,
+  .glass-dark {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  /* The wireframe already carries true alpha (95% transparent, ink-only
+     strokes) — multiply reads nearly identically to plain alpha blending
+     over the pale sky, but forces backdrop isolation on every frame the
+     content under the flying plane changes, which is all of them. */
+  .hf-plane {
+    mix-blend-mode: normal;
   }
 
   .hf-cloud:nth-child(even) { display: none; }

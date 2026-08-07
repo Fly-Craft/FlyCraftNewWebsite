@@ -184,6 +184,9 @@ export default function HeroFlight() {
     let cloudsHidden = false;
     let starlinkHidden = false;
     let hintHidden = false;
+    let skyHidden = false;
+    let titleHidden = false;
+    let tallyHidden = false;
     // Read once and refresh on resize rather than per frame — phones fire
     // scroll far more often than the URL bar collapses.
     let vh = window.innerHeight;
@@ -201,14 +204,28 @@ export default function HeroFlight() {
 
       // Sky wash clears as the map comes up — it's fully gone by the time
       // the trips start drawing, so the arcs keep their pale backdrop.
+      // A full-viewport layer, so once cleared it goes visibility:hidden
+      // and stops costing a composite per frame.
+      const skyGone = smooth(seg(ip, 0.12, 0.55)) >= 1;
       sky!.style.opacity = `${1 - smooth(seg(ip, 0.12, 0.55))}`;
+      if (skyGone !== skyHidden) {
+        sky!.style.visibility = skyGone ? "hidden" : "";
+        skyHidden = skyGone;
+      }
 
-      // Headline fades out as soon as scrolling starts
+      // Headline fades out as soon as scrolling starts. It carries the two
+      // glass CTA buttons, so hiding it once faded also stops their
+      // (desktop) backdrop-filters from sampling an animating backdrop.
       const tOut = seg(ip, 0, 0.14);
       title!.style.opacity = `${1 - tOut}`;
       // -50% keeps the block centred on its own `top`; the px term is the
       // drift-up as it fades (see .hf-title).
       title!.style.transform = `translate(-50%, calc(-50% + ${tOut * -28}px))`;
+      const titleGone = tOut >= 1;
+      if (titleGone !== titleHidden) {
+        title!.style.visibility = titleGone ? "hidden" : "";
+        titleHidden = titleGone;
+      }
 
       // Starlink badge below the plane fades the instant the flight begins.
       // Once fully faded it goes visibility:hidden too — its live-dot ping
@@ -338,9 +355,18 @@ export default function HeroFlight() {
         lastVisible = visible;
       }
 
-      const tallyIn = `${seg(p, TALLY_IN_START, TALLY_IN_END)}`;
+      const tallyProgress = seg(p, TALLY_IN_START, TALLY_IN_END);
+      const tallyIn = `${tallyProgress}`;
       tripsTitle!.style.opacity = tallyIn;
       tripsCounter!.style.opacity = tallyIn;
+      // Hidden through the whole intro, not just transparent
+      const tallyGone = tallyProgress <= 0;
+      if (tallyGone !== tallyHidden) {
+        const vis = tallyGone ? "hidden" : "";
+        tripsTitle!.style.visibility = vis;
+        tripsCounter!.style.visibility = vis;
+        tallyHidden = tallyGone;
+      }
 
       // Counter runs on every device — on mobile it's the only part of the
       // trips phase that animates (the route layer is pre-drawn), so it
@@ -550,7 +576,16 @@ export default function HeroFlight() {
                   } as React.CSSProperties
                 }
               >
-                <img src={`/clouds/${c.src}.webp`} alt="" loading="eager" />
+                {/* Phones pick the 700px variant — the full 1400px decode
+                    is 4-7× oversized for a ≤33vw slot and costs texture
+                    bandwidth on every drift frame. */}
+                <img
+                  src={`/clouds/${c.src}.webp`}
+                  srcSet={`/clouds/${c.src}-700.webp 700w, /clouds/${c.src}.webp 1400w`}
+                  sizes={`${c.w}vw`}
+                  alt=""
+                  loading="eager"
+                />
               </div>
             </div>
           ))}
@@ -566,6 +601,8 @@ export default function HeroFlight() {
         <img
           ref={planeRef}
           src="/plane.png"
+          srcSet="/plane-1200.png 1172w, /plane.png 2342w"
+          sizes="(max-width: 934px) 92vw, 860px"
           alt="CRAFT Challenger 300/350 front-view technical wireframe"
           className="hf-plane"
         />
