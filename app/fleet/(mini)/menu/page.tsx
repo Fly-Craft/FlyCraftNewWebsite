@@ -20,13 +20,15 @@ export default async function MenuPage({
      aircraft to return to, so fall back to the fleet index. */
   const origin = AIRCRAFT.find((a) => a.slug === from);
   const backHref = origin ? `/fleet/${origin.slug}` : '/fleet';
-  const backLabel = origin
+  // The visible label is just "Back" — the destination still varies, so
+  // the accessible name spells out where it actually goes.
+  const backDest = origin
     ? `Challenger ${origin.model} · ${origin.tail}`
     : 'The Fleet';
 
   return (
     <>
-      <Link href={backHref} className="menu-back" aria-label={`Back to ${backLabel}`}>
+      <Link href={backHref} className="menu-back" aria-label={`Back to ${backDest}`}>
         <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
           <path
             d="M8.5 2 L3.5 7 L8.5 12"
@@ -36,7 +38,7 @@ export default async function MenuPage({
             strokeLinejoin="round"
           />
         </svg>
-        {backLabel}
+        Back
       </Link>
 
       {/* ── MENU CONTENT ──────────────────────────────────────── */}

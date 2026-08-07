@@ -261,14 +261,31 @@
 }
 
 body {
-  /* Fixed attachment: every viewport shows the full light→blue range,
-     and the gradient runs uninterrupted through the footer. */
-  background: var(--sky-gradient) fixed;
+  /* Sky tone, not var(--background): iOS overscroll exposes this colour
+     beyond the pseudo-layer below, and gray would flash there. */
+  background-color: #f6fafc;
   color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* The site's gradient as a real fixed layer. `background: … fixed` on
+   body painted the same picture but disabled composited scrolling: a
+   fixed-attachment background can't scroll with its cached texture, so
+   mobile browsers repainted the viewport on EVERY scrolled frame, on
+   every page — the single biggest source of scroll jank on phones. A
+   fixed pseudo-element composites once and never repaints. z-index -2
+   keeps it beneath .sky-backdrop (-1), so the fleet page's cloud deck
+   still paints over it. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: var(--sky-gradient);
 }
 
 /* ============================================================
@@ -475,6 +492,23 @@ body {
     infinite alternate;
 }
 
+/* Once the deck has fully faded (~30% into the intro), stop paying for
+   it: without this, six drift animations kept ticking the compositor at
+   opacity 0 for the remaining three screens of the sticky section — and
+   will-change pinned ~20MB of decoded cloud textures for the whole
+   visit. Toggled from HeroFlight.tsx when cloudFade crosses 0. */
+.hf-clouds-off {
+  visibility: hidden;
+}
+
+.hf-clouds-off .hf-cloud-drift {
+  animation-play-state: paused;
+}
+
+.hf-clouds-off .hf-cloud {
+  will-change: auto;
+}
+
 .hf-cloud-drift img {
   display: block;
   width: 100%;
@@ -533,7 +567,11 @@ body {
   bottom: 0;
   left: 0;
   width: 2px;
-  height: 0;
+  /* Fixed height, grown via scaleY in the per-frame transform — height
+     was animated directly before, which dirtied layout on every intro
+     frame (and `height` in will-change composites nothing). */
+  height: 38vh;
+  transform: scaleY(0);
   transform-origin: bottom center;
   background: linear-gradient(
     to top,
@@ -541,7 +579,7 @@ body {
     rgba(133, 181, 216, 0)
   );
   border-radius: 2px;
-  will-change: transform, height;
+  will-change: transform;
 }
 
 .hf-title {
@@ -630,6 +668,21 @@ body {
    fills the top two-thirds of the screen instead of a small strip
    pinned to the very top. */
 @media (max-width: 640px) {
+  /* Phone GPUs pay for backdrop-filter per pixel per frame, and the nav
+     pill sits fixed over scrolling content — so its backdrop re-blurs on
+     EVERY frame at blur(28px). A more opaque fill lets a 12px radius
+     read as the same material at a fraction of the cost. */
+  .glass {
+    background: linear-gradient(
+      150deg,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(255, 255, 255, 0.8) 55%,
+      rgba(255, 255, 255, 0.88) 100%
+    );
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    backdrop-filter: blur(12px) saturate(150%);
+  }
+
   .hf-cloud:nth-child(even) { display: none; }
   .hf-frame { display: none; }
   /* The trips layer is ~1,800 animated paths — far too many for phone
@@ -666,7 +719,16 @@ body {
   /* Same anchor, phone geometry: map-persp pads 19vh and the map is
      150vw wide, so its height is 150vw · 0.64 = 96vw. */
   .hf-trips-counter { top: calc(19vh + 96vw + 44px); }
-  .hf-counter-card { padding: 13px 32px 15px; border-radius: 26px; }
+  /* The counter's contents mutate every frame during the trips phase, so
+     even a reduced-radius backdrop-filter never settles — solid fill on
+     phones, where the frosted read is least visible anyway. */
+  .hf-counter-card {
+    padding: 13px 32px 15px;
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.9);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
   .hf-counter-track { margin-top: 10px; }
 }
 

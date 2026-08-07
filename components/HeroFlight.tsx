@@ -177,12 +177,23 @@ export default function HeroFlight() {
     let lastMonthText = "";
     let ticking = false;
     let planeFlying = false;
+    let planeHidden = false;
     let lastMapTransform = "";
+    let lastMapOpacity = "";
     let cloudsIdle = false;
+    let cloudsHidden = false;
+    let starlinkHidden = false;
+    let hintHidden = false;
+    // Read once and refresh on resize rather than per frame — phones fire
+    // scroll far more often than the URL bar collapses.
+    let vh = window.innerHeight;
+
+    // Mobile never wipes the map, so set the final value once instead of
+    // assigning "none" on every scrolled frame of the session.
+    if (mobileMq.matches) map.style.clipPath = "none";
 
     function apply() {
       ticking = false;
-      const vh = window.innerHeight;
       const rect = section!.getBoundingClientRect();
       const total = rect.height - vh;
       const p = Math.min(1, Math.max(0, -rect.top / total));
@@ -199,8 +210,16 @@ export default function HeroFlight() {
       // drift-up as it fades (see .hf-title).
       title!.style.transform = `translate(-50%, calc(-50% + ${tOut * -28}px))`;
 
-      // Starlink badge below the plane fades the instant the flight begins
+      // Starlink badge below the plane fades the instant the flight begins.
+      // Once fully faded it goes visibility:hidden too — its live-dot ping
+      // is an infinite animation that would otherwise keep the compositor
+      // awake at opacity 0 for the rest of the section.
       starlink!.style.opacity = `${1 - seg(ip, 0, 0.08)}`;
+      const starlinkGone = seg(ip, 0, 0.08) >= 1;
+      if (starlinkGone !== starlinkHidden) {
+        starlink!.style.visibility = starlinkGone ? "hidden" : "";
+        starlinkHidden = starlinkGone;
+      }
 
       // Cloud deck parts down the middle as the plane accelerates: each
       // half slides out its own side with parallax (near clouds travel
@@ -218,6 +237,15 @@ export default function HeroFlight() {
         }
         cloudsIdle = cloudFade <= 0;
       }
+      // …and once invisible, take the whole deck out of the render tree:
+      // the drift animations pause and will-change releases (see
+      // .hf-clouds-off), so a faded deck costs nothing instead of six
+      // eternally-animating composited layers.
+      const hideClouds = cloudFade <= 0;
+      if (hideClouds !== cloudsHidden && clouds) {
+        clouds.classList.toggle("hf-clouds-off", hideClouds);
+        cloudsHidden = hideClouds;
+      }
 
       // Plane flies toward the viewer, then past the camera
       const fly = seg(ip, 0, 0.5);
@@ -229,38 +257,54 @@ export default function HeroFlight() {
       // Promote to a composited layer only while flying — at rest the layer
       // is released so the multiply-blended wireframe rasterizes sharply on
       // high-DPI displays instead of being upscaled from a base-size texture.
-      const flying = fly > 0.001;
+      // `fly` saturates at 1 and stays there, so without the planeGone term
+      // the old gate never released after the fade — the will-change layer
+      // AND the mix-blend-mode context (backdrop isolation every frame)
+      // stayed live for the entire trips phase. Hidden, both go away.
+      const planeGone = seg(ip, 0.42, 0.6) >= 1;
+      const flying = fly > 0.001 && !planeGone;
       if (flying !== planeFlying) {
         plane!.style.willChange = flying ? "transform, opacity" : "auto";
         planeFlying = flying;
       }
+      if (planeGone !== planeHidden) {
+        plane!.style.visibility = planeGone ? "hidden" : "";
+        planeHidden = planeGone;
+      }
 
-      // Contrails stream back toward the horizon
+      // Contrails stream back toward the horizon. Growth is scaleY on a
+      // fixed-height span (origin bottom) — animating `height` here cost a
+      // layout pass on every intro frame for two 2px lines.
       const trailGrow = seg(ip, 0.04, 0.5);
       trails!.style.opacity = `${seg(ip, 0.04, 0.14) * (1 - seg(ip, 0.5, 0.64))}`;
       const spread = 14 + trailGrow * 56;
       const tilt = 4 + trailGrow * 4;
-      trailL!.style.height = `${trailGrow * 38}vh`;
-      trailR!.style.height = `${trailGrow * 38}vh`;
-      trailL!.style.transform = `translateX(${-spread}px) rotate(${tilt}deg)`;
-      trailR!.style.transform = `translateX(${spread}px) rotate(${-tilt}deg)`;
+      trailL!.style.transform = `translateX(${-spread}px) rotate(${tilt}deg) scaleY(${trailGrow})`;
+      trailR!.style.transform = `translateX(${spread}px) rotate(${-tilt}deg) scaleY(${trailGrow})`;
 
       // Map reveal: contrail wake wipes it open
       const mapIn = seg(ip, 0.16, 0.34);
       const wake = seg(ip, 0.18, 0.62);
       const settle = seg(ip, 0.16, 0.7);
-      map!.style.opacity = `${mapIn}`;
-      // Skip redundant transform writes once the map has settled
+      // Guard writes on the most expensive element in the tree — the map
+      // layer holds ~500 vector paths, so even style dirtying is not free.
+      const mapOpacity = `${mapIn}`;
+      if (mapOpacity !== lastMapOpacity) {
+        map!.style.opacity = mapOpacity;
+        lastMapOpacity = mapOpacity;
+      }
       const mapTransform = `rotateX(${50 - settle * 12}deg) scale(${0.9 + settle * 0.14})`;
       if (mapTransform !== lastMapTransform) {
         map!.style.transform = mapTransform;
         lastMapTransform = mapTransform;
       }
-      map!.style.clipPath = mobileMq.matches
-        ? "none"
-        : wake >= 1
-          ? "none"
-          : `polygon(${50 - 100 * wake}% 0%, ${50 + 100 * wake}% 0%, ${50 + 170 * wake}% 100%, ${50 - 170 * wake}% 100%)`;
+      // Mobile's clip-path is pinned to "none" once, outside the loop
+      if (!mobileMq.matches) {
+        map!.style.clipPath =
+          wake >= 1
+            ? "none"
+            : `polygon(${50 - 100 * wake}% 0%, ${50 + 100 * wake}% 0%, ${50 + 170 * wake}% 100%, ${50 - 170 * wake}% 100%)`;
+      }
 
       // City dots + labels pop in (statically visible on mobile via CSS)
       if (!mobileMq.matches) {
@@ -312,7 +356,14 @@ export default function HeroFlight() {
       }
       tripsFill!.style.transform = `scaleX(${tp})`;
 
+      // The chevron's fall is another infinite animation — parked at
+      // opacity 0 within the first 4% of the scroll, hidden thereafter.
       hint!.style.opacity = `${1 - seg(p, 0, 0.04)}`;
+      const hintGone = seg(p, 0, 0.04) >= 1;
+      if (hintGone !== hintHidden) {
+        hint!.style.visibility = hintGone ? "hidden" : "";
+        hintHidden = hintGone;
+      }
     }
 
     function onScroll() {
@@ -322,12 +373,17 @@ export default function HeroFlight() {
       }
     }
 
+    function onResize() {
+      vh = window.innerHeight;
+      onScroll();
+    }
+
     apply();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", onResize);
     return () => {
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 
