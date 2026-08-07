@@ -1,14 +1,44 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { AIRCRAFT } from '@/lib/fleet-aircraft';
 
 export const metadata: Metadata = {
   title: 'Menu | Craft Fleet',
   description: "Craft's in-flight menu and snacks.",
 };
 
-export default function MenuPage() {
+export default async function MenuPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const { from } = await searchParams;
+
+  /* Resolve ?from against the real fleet rather than trusting it — the href
+     is built from the matched aircraft, so an arbitrary value in the URL can
+     never become a link. Arriving from the FAQ or directly leaves no
+     aircraft to return to, so fall back to the fleet index. */
+  const origin = AIRCRAFT.find((a) => a.slug === from);
+  const backHref = origin ? `/fleet/${origin.slug}` : '/fleet';
+  const backLabel = origin
+    ? `Challenger ${origin.model} · ${origin.tail}`
+    : 'The Fleet';
+
   return (
     <>
+      <Link href={backHref} className="menu-back" aria-label={`Back to ${backLabel}`}>
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path
+            d="M8.5 2 L3.5 7 L8.5 12"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        {backLabel}
+      </Link>
+
       {/* ── MENU CONTENT ──────────────────────────────────────── */}
       <div className="menu-page">
 

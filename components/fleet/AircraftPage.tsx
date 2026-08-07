@@ -95,8 +95,11 @@ export default function AircraftPage({ a }: { a: Aircraft }) {
           >
             3D Virtual Tour
           </a>
+          {/* ?from carries the aircraft so the menu can offer a way back to
+              it — the menu is also reachable from the FAQ and directly, where
+              there is no aircraft to return to. */}
           <Link
-            href="/fleet/menu"
+            href={`/fleet/menu?from=${a.slug}`}
             className="text-[11px] font-medium tracking-[0.3em] text-navy uppercase underline underline-offset-4 transition-opacity hover:opacity-60"
           >
             Inflight Menu
