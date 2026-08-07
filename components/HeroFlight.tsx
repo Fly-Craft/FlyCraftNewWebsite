@@ -194,7 +194,18 @@ export default function HeroFlight() {
 
     // Mobile never wipes the map, so set the final value once instead of
     // assigning "none" on every scrolled frame of the session.
-    if (mobileMq.matches) map.style.clipPath = "none";
+    // The transform is pinned too: the map is the page's only PAINTED
+    // vector layer (~460 paths on phones), and WebKit re-rasterizes
+    // painted layers whenever their scale changes — so the desktop's
+    // per-frame settle (rotateX 50→38, scale 0.9→1.04) had the phone
+    // repainting a ~2000px layer on every frame of the intro. That was
+    // the render-freeze-render oscillation on real devices. Bitmap
+    // layers (clouds, plane) just get GPU-stretched and keep their
+    // motion.
+    if (mobileMq.matches) {
+      map.style.clipPath = "none";
+      map.style.transform = "rotateX(38deg) scale(1.04)";
+    }
 
     function apply() {
       ticking = false;
@@ -322,10 +333,15 @@ export default function HeroFlight() {
       // texture to re-rasterize mid-gesture, a downward-scroll-only hitch
       // in the busiest window of the intro. Resident-but-transparent is
       // the cheap state for the map.
-      const mapTransform = `rotateX(${50 - settle * 12}deg) scale(${0.9 + settle * 0.14})`;
-      if (mapTransform !== lastMapTransform) {
-        map!.style.transform = mapTransform;
-        lastMapTransform = mapTransform;
+      // Desktop only — on phones the transform is pinned at init (see
+      // above); writing a changing scale here would re-raster the vector
+      // layer every frame on WebKit.
+      if (!mobileMq.matches) {
+        const mapTransform = `rotateX(${50 - settle * 12}deg) scale(${0.9 + settle * 0.14})`;
+        if (mapTransform !== lastMapTransform) {
+          map!.style.transform = mapTransform;
+          lastMapTransform = mapTransform;
+        }
       }
       // Mobile's clip-path is pinned to "none" once, outside the loop
       if (!mobileMq.matches) {
