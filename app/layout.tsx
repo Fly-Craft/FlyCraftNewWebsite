@@ -13,10 +13,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: {
-    default: "CRAFT | Private Jet Charter",
-    template: "%s | CRAFT",
-  },
+  // No `template` here: every page already ends its own title with
+  // "| CRAFT", so a template would render "Contact | CRAFT | CRAFT".
+  title: "CRAFT | Private Jet Charter",
   description:
     "CRAFT is a Part 135 air carrier operating an all-Challenger fleet for private charter from Miami — the operator, not a brokerage.",
   applicationName: "CRAFT",
