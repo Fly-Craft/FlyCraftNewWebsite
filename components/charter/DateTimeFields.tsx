@@ -215,7 +215,18 @@ export function DateField({
 
   return (
     <div ref={anchorRef} className="relative">
-      <button type="button" onClick={openPicker} className={triggerCls(!!value)}>
+      <button
+        type="button"
+        onClick={openPicker}
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        aria-label={
+          value ? `Departure date, ${formatDate(value)}` : "Choose departure date"
+        }
+        data-field="date"
+        data-value={value || ""}
+        className={triggerCls(!!value)}
+      >
         <span className="truncate">{value ? formatDate(value) : placeholder}</span>
         <CalendarIcon />
       </button>
@@ -270,6 +281,13 @@ export function DateField({
                   key={dStr}
                   type="button"
                   disabled={disabled}
+                  // "18" alone is meaningless out of context. The ISO date
+                  // in data-date is the automation hook: an agent can go
+                  // straight to [data-date="2026-12-18"] without reading
+                  // the header to work out which month is showing.
+                  data-date={dStr}
+                  aria-label={formatDate(dStr)}
+                  aria-current={selected ? "date" : undefined}
                   onClick={() => {
                     onChange(dStr);
                     setOpen(false);
@@ -340,6 +358,13 @@ export function TimeField({
       <button
         type="button"
         onClick={() => setOpen(!open)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label={
+          value ? `Departure time, ${formatTime(value)}` : "Choose departure time"
+        }
+        data-field="time"
+        data-value={value || ""}
         className={triggerCls(!!value)}
       >
         <span className="truncate">{value ? formatTime(value) : placeholder}</span>

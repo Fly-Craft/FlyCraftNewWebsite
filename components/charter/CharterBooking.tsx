@@ -938,6 +938,9 @@ export default function CharterBooking() {
       {/* ── Form ─────────────────────────────────────────── */}
       <form
         onSubmit={handleSubmit}
+        id="charter-quote-form"
+        name="charter-quote"
+        aria-label="Charter quote request"
         className="order-2 flex flex-col gap-8 rounded-3xl glass p-8 lg:order-1 sm:p-10"
       >
         {/* Trip type */}
@@ -947,6 +950,7 @@ export default function CharterBooking() {
             value={tripType}
             onChange={switchType}
             ariaLabel="Trip type"
+            field="trip-type"
             buttonClassName="px-2 py-2.5 text-[10px] font-medium tracking-[0.16em] whitespace-nowrap uppercase sm:text-[11px]"
           />
           <button
@@ -965,6 +969,8 @@ export default function CharterBooking() {
             <div className="relative flex flex-col gap-5">
               <AirportSearch
                 label="From"
+                field="from"
+                name="from"
                 placeholder="City or airport code (JFK, KTEB…)"
                 value={legs[0].from}
                 onChange={(a) => updateLeg(legs[0].id, { from: a })}
@@ -988,6 +994,8 @@ export default function CharterBooking() {
               </button>
               <AirportSearch
                 label="To"
+                field="to"
+                name="to"
                 placeholder="City or airport code (ASE, TJSJ…)"
                 value={legs[0].to}
                 onChange={(a) => updateLeg(legs[0].id, { to: a })}
@@ -1217,6 +1225,7 @@ export default function CharterBooking() {
           value={clientType}
           onChange={switchClientType}
           ariaLabel="Client type"
+          field="client-type"
           buttonClassName="px-2 py-2.5 text-[10px] font-medium tracking-[0.16em] uppercase sm:text-[11px]"
         />
 
@@ -1310,7 +1319,18 @@ export default function CharterBooking() {
                 >
                   −
                 </button>
+                {/* The count lives in a span, so without spinbutton
+                    semantics the current value is invisible to anything
+                    not reading pixels. */}
                 <span
+                  role="spinbutton"
+                  aria-label="Passengers"
+                  aria-valuenow={paxTbd ? undefined : pax}
+                  aria-valuemin={1}
+                  aria-valuemax={adultsCap}
+                  aria-valuetext={paxTbd ? "To be decided" : String(pax)}
+                  data-field="passengers"
+                  data-value={paxTbd ? "" : pax}
                   className={`w-8 text-center text-[20px] font-light ${paxTbd ? "text-ink-3" : "text-navy"}`}
                 >
                   {paxTbd ? "—" : pax}
@@ -1781,8 +1801,12 @@ export default function CharterBooking() {
             </p>
           )}
           <div>
-            <label className={microLabel}>Additional Notes</label>
+            <label htmlFor="booking-notes" className={microLabel}>
+              Additional Notes
+            </label>
             <textarea
+              id="booking-notes"
+              name="notes"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               rows={4}

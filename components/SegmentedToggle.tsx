@@ -27,6 +27,7 @@ export default function SegmentedToggle<T extends string>({
   className = "",
   buttonClassName = "",
   ariaLabel,
+  field,
 }: {
   options: readonly SegmentedOption<T>[];
   value: T;
@@ -39,6 +40,8 @@ export default function SegmentedToggle<T extends string>({
   className?: string;
   buttonClassName?: string;
   ariaLabel?: string;
+  /** Stable automation hook, e.g. "trip-type" → [data-field="trip-type"]. */
+  field?: string;
 }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const btnRefs = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -97,10 +100,15 @@ export default function SegmentedToggle<T extends string>({
   const dark = variant === "dark";
 
   return (
+    // radiogroup, not group: these options are mutually exclusive, and
+    // that's the difference between "some toggles" and "pick exactly one"
+    // to a screen reader or an agent reading the tree.
     <div
       ref={trackRef}
-      role="group"
+      role="radiogroup"
       aria-label={ariaLabel}
+      data-field={field}
+      data-value={value}
       className={`relative flex rounded-full border border-border ${fit ? "w-fit" : ""} ${className}`}
       style={{ padding: pad }}
     >
@@ -117,7 +125,9 @@ export default function SegmentedToggle<T extends string>({
         <button
           key={o.id}
           type="button"
-          aria-pressed={value === o.id}
+          role="radio"
+          aria-checked={value === o.id}
+          data-value={o.id}
           ref={(el) => {
             btnRefs.current[o.id] = el;
           }}
