@@ -187,6 +187,8 @@ export default function HeroFlight() {
     let skyHidden = false;
     let titleHidden = false;
     let tallyHidden = false;
+    let mapHidden = false;
+    let trailsHidden = false;
     // Read once and refresh on resize rather than per frame — phones fire
     // scroll far more often than the URL bar collapses.
     let vh = window.innerHeight;
@@ -294,6 +296,11 @@ export default function HeroFlight() {
       // layout pass on every intro frame for two 2px lines.
       const trailGrow = seg(ip, 0.04, 0.5);
       trails!.style.opacity = `${seg(ip, 0.04, 0.14) * (1 - seg(ip, 0.5, 0.64))}`;
+      const trailsGone = ip <= 0.04 || ip >= 0.64;
+      if (trailsGone !== trailsHidden) {
+        trails!.style.visibility = trailsGone ? "hidden" : "";
+        trailsHidden = trailsGone;
+      }
       const spread = 14 + trailGrow * 56;
       const tilt = 4 + trailGrow * 4;
       trailL!.style.transform = `translateX(${-spread}px) rotate(${tilt}deg) scaleY(${trailGrow})`;
@@ -309,6 +316,14 @@ export default function HeroFlight() {
       if (mapOpacity !== lastMapOpacity) {
         map!.style.opacity = mapOpacity;
         lastMapOpacity = mapOpacity;
+      }
+      // Before its fade begins, the map is composited invisibly BENEATH
+      // the opaque cloud deck — the largest texture on the page, paid for
+      // during exactly the frames the intro can least afford.
+      const mapGone = mapIn <= 0;
+      if (mapGone !== mapHidden) {
+        map!.style.visibility = mapGone ? "hidden" : "";
+        mapHidden = mapGone;
       }
       const mapTransform = `rotateX(${50 - settle * 12}deg) scale(${0.9 + settle * 0.14})`;
       if (mapTransform !== lastMapTransform) {

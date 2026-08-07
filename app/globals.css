@@ -699,7 +699,14 @@ body::before {
     mix-blend-mode: normal;
   }
 
+  /* The intro is fill-rate bound on phones: sky + map + clouds + plane
+     is ~6-8 viewports of alpha-blended overdraw per frame at 3x DPR.
+     Drop the far cloud layer entirely (small, slow, least missed at
+     phone size) — with the evens already gone that leaves one mid and
+     the three near clouds that actually carry the split. */
   .hf-cloud:nth-child(even) { display: none; }
+  .hf-cloud:nth-child(1),
+  .hf-cloud:nth-child(3) { display: none; }
   .hf-frame { display: none; }
   /* The trips layer is ~1,800 animated paths — far too many for phone
      GPUs. Show every 4th; at this scale the density still reads as the
