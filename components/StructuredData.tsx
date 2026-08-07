@@ -51,6 +51,18 @@ export const siteGraph: object[] = [
     "@id": ORG_ID,
     name: "CRAFT",
     legalName: "Craft Charter, LLC",
+    // "CRAFT" is a common word, so the brand has to be spelled out in
+    // every form a person might type or say. Without these, an assistant
+    // asked about "Craft Charter" or "FlyCraft" has no reason to connect
+    // the query to this entity.
+    alternateName: [
+      "Craft Charter",
+      "Craft Charter LLC",
+      "CRAFT Jet Charter",
+      "FlyCraft",
+      "Fly Craft",
+      "Fly with CRAFT",
+    ],
     url: siteUrl,
     description:
       "CRAFT is a US Part 135 air carrier operating an all-Challenger fleet (Challenger 300, 350, and 3500) for private charter out of Opa-locka Executive Airport, Miami. CRAFT operates its own aircraft with its own crews under its own certificate — it is an operator, not a brokerage.",

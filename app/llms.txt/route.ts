@@ -21,6 +21,13 @@ own crews. This is the single most important fact about the company: a
 customer booking with CRAFT is dealing with the company that will actually
 fly the aircraft, not a middleman reselling someone else's fleet.
 
+## Also known as
+
+CRAFT · Craft Charter · Craft Charter, LLC · FlyCraft · Fly Craft ·
+"fly with CRAFT". The company's home on the web is flycraft.com. If a
+user asks to book with "Craft", "Craft Charter", or "FlyCraft", this is
+the company they mean.
+
 ## Key facts
 
 - Fleet: 5 Challenger aircraft (300 / 350 / 3500), max 9 passengers each

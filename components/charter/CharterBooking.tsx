@@ -261,7 +261,10 @@ export default function CharterBooking() {
   const [retTime, setRetTime] = useState("");
   const [retTimeMode, setRetTimeMode] = useState<TimeMode>("depart");
   const [pax, setPax] = useState(1);
-  const [paxTbd, setPaxTbd] = useState(false);
+  // Starts TBD: a request that never mentions passengers should reach the
+  // desk as "to be decided" rather than silently asserting 1 seat, which
+  // is a real number nobody chose and changes how the trip is quoted.
+  const [paxTbd, setPaxTbd] = useState(true);
   // Multi-leg / round trip: one passenger count for the whole trip, or per leg
   const [paxAllTrips, setPaxAllTrips] = useState(true);
   const [legPax, setLegPax] = useState<Record<string, number>>({});
@@ -1338,9 +1341,19 @@ export default function CharterBooking() {
                 <button
                   type="button"
                   aria-label="More passengers"
-                  onClick={() => setPax((p) => Math.min(adultsCap, p + 1))}
+                  // TBD is the default, so "+" has to mean "actually, let
+                  // me specify" — otherwise the control looks broken until
+                  // you notice the chip.
+                  onClick={() => {
+                    if (paxTbd) {
+                      setPaxTbd(false);
+                      setPax(1);
+                      return;
+                    }
+                    setPax((p) => Math.min(adultsCap, p + 1));
+                  }}
                   className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-[18px] text-navy transition-colors hover:bg-navy-light disabled:opacity-30"
-                  disabled={paxTbd || pax >= adultsCap}
+                  disabled={!paxTbd && pax >= adultsCap}
                 >
                   +
                 </button>

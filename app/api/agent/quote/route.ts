@@ -75,9 +75,19 @@ export async function POST(request: Request) {
   }
   if (legsIn.length > 6) return bad("At most 6 legs per request.");
 
-  const passengers = body.passengers === undefined ? 1 : Number(body.passengers);
-  if (!Number.isInteger(passengers) || passengers < 1 || passengers > MAX_PAX) {
-    return bad(`\`passengers\` must be a whole number from 1 to ${MAX_PAX}.`);
+  // Unspecified means TBD, not 1. Inventing a seat count would quote a
+  // trip nobody asked for, and the desk needs to know it's still open.
+  const paxGiven = body.passengers !== undefined && body.passengers !== null;
+  const passengers = paxGiven ? Number(body.passengers) : null;
+  if (
+    paxGiven &&
+    (!Number.isInteger(passengers) ||
+      (passengers as number) < 1 ||
+      (passengers as number) > MAX_PAX)
+  ) {
+    return bad(
+      `\`passengers\` must be a whole number from 1 to ${MAX_PAX}, or omitted to leave it TBD.`,
+    );
   }
 
   const warnings: string[] = [];
@@ -181,7 +191,8 @@ export async function POST(request: Request) {
     totalDistanceNm: legs.reduce((s, l) => s + l.distanceNm, 0),
     totalFlightTimeMinutes: totalMinutes,
     totalFlightTime: formatDuration(totalMinutes),
-    passengers,
+    passengers: passengers ?? "TBD",
+    passengersSpecified: paxGiven,
     aircraft: "Bombardier Challenger 300 / 350 / 3500",
     operator: "CRAFT — Craft Charter, LLC (FAA Part 135)",
     // Never imply a price exists. An agent must not infer "free" or "TBD
@@ -222,7 +233,7 @@ export async function POST(request: Request) {
     `New charter request (submitted by an AI agent)`,
     ``,
     `Request ID: ${requestId}`,
-    `Passengers: ${passengers}`,
+    `Passengers: ${passengers ?? "TBD"}`,
     ``,
     ...legs.flatMap((l, i) => [
       `Leg ${i + 1}: ${l.from.city} (${l.from.code}) -> ${l.to.city} (${l.to.code})`,
