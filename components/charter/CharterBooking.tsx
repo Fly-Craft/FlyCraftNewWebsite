@@ -1716,9 +1716,15 @@ export default function CharterBooking() {
         <div className="flex flex-col gap-4">
           {isBroker && (
             <div>
-              <label className={microLabel}>Brokerage Name *</label>
+              <label htmlFor="booking-brokerage" className={microLabel}>
+                Brokerage Name *
+              </label>
               <input
+                id="booking-brokerage"
+                name="brokerage"
                 type="text"
+                autoComplete="organization"
+                required
                 value={brokerage}
                 onChange={(e) => setBrokerage(e.target.value)}
                 className={inputCls}
@@ -1726,9 +1732,14 @@ export default function CharterBooking() {
             </div>
           )}
           <div>
-            <label className={microLabel}>Name</label>
+            <label htmlFor="booking-name" className={microLabel}>
+              Name
+            </label>
             <input
+              id="booking-name"
+              name="name"
               type="text"
+              autoComplete="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className={inputCls}
@@ -1736,18 +1747,28 @@ export default function CharterBooking() {
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className={microLabel}>Email</label>
+              <label htmlFor="booking-email" className={microLabel}>
+                Email
+              </label>
               <input
+                id="booking-email"
+                name="email"
                 type="email"
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={inputCls}
               />
             </div>
             <div>
-              <label className={microLabel}>Phone</label>
+              <label htmlFor="booking-phone" className={microLabel}>
+                Phone
+              </label>
               <input
+                id="booking-phone"
+                name="phone"
                 type="tel"
+                autoComplete="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 className={inputCls}

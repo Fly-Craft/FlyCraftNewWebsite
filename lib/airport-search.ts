@@ -41,3 +41,50 @@ export function airportLabel(a: Airport): string {
   const code = a.iata || a.icao;
   return `${a.city || a.name} (${code})`;
 }
+
+/** Strip punctuation and collapse runs of space: "Opa-locka" → "OPA LOCKA". */
+const normalize = (s: string) =>
+  s.toUpperCase().replace(/[^A-Z0-9]+/g, " ").trim();
+
+/**
+ * Resolve free text to exactly one airport, or report the ambiguity.
+ *
+ * Separate from `searchAirports` because the two have different jobs: that
+ * one ranks live suggestions for a human who will pick from a list, this
+ * one has to commit to a single answer for a caller that can't look. It
+ * matches punctuation-insensitively — "Opa-locka" has to find "Miami-Opa
+ * Locka Executive Airport", which a literal substring search misses.
+ */
+export function resolveAirport(
+  input: string,
+): { airport: Airport } | { candidates: Airport[] } {
+  const raw = (input ?? "").trim();
+  if (raw.length < 2) return { candidates: [] };
+
+  const code = raw.toUpperCase().replace(/[^A-Z0-9]/g, "");
+  const exact = AIRPORTS.find(
+    (a) => a.iata === code || a.icao === code || a.local === code,
+  );
+  if (exact) return { airport: exact };
+
+  const ranked = searchAirports(raw, 6);
+  if (ranked.length === 1) return { airport: ranked[0] };
+
+  const norm = normalize(raw);
+  if (ranked.length > 1) {
+    // A query naming the city outright beats the rest of the ranked list.
+    const cityHit = ranked.filter((a) => normalize(a.city) === norm);
+    if (cityHit.length === 1) return { airport: cityHit[0] };
+    return { candidates: ranked };
+  }
+
+  // Nothing ranked — fall back to a token match over city + name, which
+  // survives hyphens, apostrophes, and "St." vs "St".
+  const tokens = norm.split(" ").filter(Boolean);
+  const loose = AIRPORTS.filter((a) => {
+    const hay = normalize(`${a.city} ${a.name}`);
+    return tokens.every((t) => hay.includes(t));
+  });
+  if (loose.length === 1) return { airport: loose[0] };
+  return { candidates: loose.slice(0, 6) };
+}

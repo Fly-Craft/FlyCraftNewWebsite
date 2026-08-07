@@ -1,3 +1,20 @@
+/**
+ * Canonical origin. Everything machine-readable (sitemap, JSON-LD @id,
+ * llms.txt) needs absolute URLs, so this is the one place they come from.
+ * Set NEXT_PUBLIC_SITE_URL to the real domain at launch.
+ */
+export const siteUrl = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://craft-website-tau.vercel.app"
+).replace(/\/$/, "");
+
+/**
+ * Private-review gate. While false the site sends `noindex` and a
+ * blanket robots.txt disallow — which also turns away every well-behaved
+ * AI crawler and agent, regardless of the structured data below.
+ * Set SITE_PUBLIC=true in the Vercel environment to open it up.
+ */
+export const isPublic = process.env.SITE_PUBLIC === "true";
+
 export const siteConfig = {
   name: "CRAFT",
   charterSalesPhone: "+13108483636",

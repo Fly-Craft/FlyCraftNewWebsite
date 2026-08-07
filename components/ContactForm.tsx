@@ -81,10 +81,18 @@ export default function ContactForm() {
         onSubmit={handleSubmit}
         className="flex max-w-xl flex-col gap-6 rounded-3xl glass p-8 sm:p-12"
       >
+        {/* id/htmlFor + name + autoComplete throughout: without them a
+            screen reader announces an unlabelled box, and an agent filling
+            the form has nothing but visual order to go on. */}
         <div>
-          <label className={microLabel}>Name</label>
+          <label htmlFor="contact-name" className={microLabel}>
+            Name
+          </label>
           <input
+            id="contact-name"
+            name="name"
             type="text"
+            autoComplete="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             className={inputCls}
@@ -93,31 +101,47 @@ export default function ContactForm() {
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
-            <label className={microLabel}>Email</label>
+            <label htmlFor="contact-email" className={microLabel}>
+              Email
+            </label>
             <input
+              id="contact-email"
+              name="email"
               type="email"
+              autoComplete="email"
+              aria-describedby="contact-reach"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className={inputCls}
             />
           </div>
           <div>
-            <label className={microLabel}>Phone</label>
+            <label htmlFor="contact-phone" className={microLabel}>
+              Phone
+            </label>
             <input
+              id="contact-phone"
+              name="phone"
               type="tel"
+              autoComplete="tel"
+              aria-describedby="contact-reach"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className={inputCls}
             />
           </div>
         </div>
-        <p className="-mt-3 text-[11px] font-light text-ink-3">
+        <p id="contact-reach" className="-mt-3 text-[11px] font-light text-ink-3">
           An email or a phone number is all we need to reach you.
         </p>
 
         <div>
-          <label className={microLabel}>Message</label>
+          <label htmlFor="contact-message" className={microLabel}>
+            Message
+          </label>
           <textarea
+            id="contact-message"
+            name="message"
             rows={5}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
