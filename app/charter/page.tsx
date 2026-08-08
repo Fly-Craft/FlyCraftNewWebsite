@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import BookTabs from "@/components/charter/BookTabs";
+import { isTab, type Tab } from "@/lib/book-tabs";
 
 export const metadata: Metadata = {
   title: "Book | CRAFT",
@@ -8,13 +8,20 @@ export const metadata: Metadata = {
     "Three ways to start a trip with CRAFT — plan it yourself in the trip planner, send us a message, or call the team for a same-day departure.",
 };
 
-export default function CharterPage() {
-  // BookTabs reads ?tab= via useSearchParams, which needs a Suspense
-  // boundary on a prerendered route. The fallback holds the hero's height
-  // so the page doesn't jump as the tabs hydrate.
-  return (
-    <Suspense fallback={<div className="min-h-[70vh]" />}>
-      <BookTabs />
-    </Suspense>
-  );
+export default async function CharterPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  /* Resolve the tab on the SERVER rather than with useSearchParams. That
+     hook would push everything up to the nearest Suspense boundary into
+     client-side rendering, leaving the booking page empty in the initial
+     HTML — invisible to crawlers and to the agents this site is built to
+     serve. Reading it here costs the route its static rendering and keeps
+     the content server-rendered, which is the better trade for the page
+     that actually sells the product. */
+  const { tab } = await searchParams;
+  const initialTab: Tab = isTab(tab) ? tab : "planner";
+
+  return <BookTabs initialTab={initialTab} />;
 }

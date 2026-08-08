@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
 import SegmentedToggle, { type SegmentedOption } from "@/components/SegmentedToggle";
 import CharterBooking from "@/components/charter/CharterBooking";
 import ContactForm from "@/components/ContactForm";
 import AsapTeam from "@/components/AsapTeam";
-
-type Tab = "contact" | "planner" | "asap";
+import type { Tab } from "@/lib/book-tabs";
 
 const TABS: readonly SegmentedOption<Tab>[] = [
   { id: "contact", label: "Contact Us" },
@@ -45,22 +43,16 @@ const COPY: Record<Tab, { title: React.ReactNode; blurb: string }> = {
   },
 };
 
-const isTab = (v: string | null): v is Tab =>
-  v === "contact" || v === "planner" || v === "asap";
-
 /**
- * The three ways to start a trip, on one page. `?tab=` keeps a chosen tab
- * shareable and survives a reload; the URL is rewritten with replaceState
- * so switching tabs doesn't stack history entries between the visitor and
- * the page they arrived from.
+ * The three ways to start a trip, on one page. Switching rewrites `?tab=`
+ * with replaceState — the tab stays shareable and survives a reload
+ * without stacking history entries between the visitor and wherever they
+ * came from.
  */
-export default function BookTabs() {
-  // useSearchParams rather than reading location in an effect: the initial
-  // tab is known at first render, so there's no flash of the wrong panel
-  // and no setState-during-effect cascade.
-  const params = useSearchParams();
-  const fromUrl = params.get("tab");
-  const [tab, setTab] = useState<Tab>(isTab(fromUrl) ? fromUrl : "planner");
+export default function BookTabs({ initialTab }: { initialTab: Tab }) {
+  // The server already resolved ?tab= (see app/charter/page.tsx), so the
+  // correct panel is in the initial HTML — no effect, no wrong-panel flash.
+  const [tab, setTab] = useState<Tab>(initialTab);
 
   function select(next: Tab) {
     setTab(next);
