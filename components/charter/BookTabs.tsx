@@ -13,34 +13,14 @@ const TABS: readonly SegmentedOption<Tab>[] = [
   { id: "asap", label: "ASAP" },
 ];
 
-const COPY: Record<Tab, { title: React.ReactNode; blurb: string }> = {
-  contact: {
-    title: (
-      <>
-        Get in <span className="font-medium">Touch</span>
-      </>
-    ),
-    blurb:
-      "Reach Charter Sales directly, or send us a message and we'll follow up.",
-  },
-  planner: {
-    title: (
-      <>
-        Plan Your <span className="font-medium">Flight</span>
-      </>
-    ),
-    blurb:
-      "Pick your route and timing, tailor the details, and send it to our team — we'll come back with availability and a quote.",
-  },
-  asap: {
-    title: (
-      <>
-        Need It <span className="font-medium">ASAP?</span>
-      </>
-    ),
-    blurb:
-      "When a trip needs to move now, contact our team directly — Shaked and Paul will work to see if we can help.",
-  },
+/* One headline for all three tabs — only the blurb changes, so the title
+   and the toggle never shift as you slide between them. */
+const BLURBS: Record<Tab, string> = {
+  contact:
+    "Send us the outline of your trip and Charter Sales will come back with a quote — or reach them directly if you'd rather talk it through.",
+  planner:
+    "Tell us the route and timing, tailor the details, and our team comes back with availability and a price built for that specific trip.",
+  asap: "When a trip needs to move today, skip the form — call Shaked or Paul directly and they'll price whatever we have available right now.",
 };
 
 /**
@@ -62,23 +42,33 @@ export default function BookTabs({ initialTab }: { initialTab: Tab }) {
     window.history.replaceState(null, "", url);
   }
 
-  const copy = COPY[tab];
-
   return (
     <>
       <section className="flex flex-col px-6 pt-40 pb-8 sm:px-20">
-        <h1 className="max-w-3xl text-[clamp(40px,6vw,76px)] leading-[0.95] font-extralight tracking-tight text-navy">
-          {copy.title}
+        <h1 className="display-title max-w-3xl text-[clamp(40px,6vw,76px)] leading-title font-extralight tracking-tight text-navy">
+          Each Flight is{" "}
+          <span className="font-medium">Quoted Uniquely</span>
         </h1>
-        {/* keyed so the blurb cross-fades with the tab rather than snapping */}
-        <p
-          key={tab}
-          className="page-fade mt-6 max-w-xl text-[15px] font-light leading-relaxed text-ink-2"
-        >
-          {copy.blurb}
-        </p>
 
-        <div className="mt-10 w-full max-w-xl">
+        {/* All three blurbs share one grid cell, so the block is always as
+            tall as the longest one and the toggle below never moves when
+            you switch tabs. Only the active blurb is visible — and it
+            cross-fades rather than snapping. */}
+        <div className="mt-6 grid max-w-xl">
+          {TABS.map((t) => (
+            <p
+              key={t.id}
+              aria-hidden={t.id !== tab}
+              className={`col-start-1 row-start-1 text-[15px] leading-relaxed font-light text-ink-2 transition-opacity duration-300 ${
+                t.id === tab ? "opacity-100" : "pointer-events-none opacity-0"
+              }`}
+            >
+              {BLURBS[t.id]}
+            </p>
+          ))}
+        </div>
+
+        <div className="mt-10 w-full max-w-xl sm:mx-auto">
           <SegmentedToggle
             options={TABS}
             value={tab}

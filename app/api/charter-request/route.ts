@@ -3,6 +3,7 @@ import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { renderCharterRequestPdf } from "@/lib/pdf/render-charter-request-pdf";
 import type { LegPayload } from "@/lib/charter-request";
+import { sendMail, sendConfirmation } from "@/lib/notify";
 
 // Set CHARTER_TO_EMAIL=charter@flycraft.com in production; the fallback is
 // a personal inbox used while the site is being tested.
@@ -93,31 +94,23 @@ export async function POST(request: Request) {
   );
   const pdfFilename = `Charter-Request-${requestId}.pdf`;
 
-  const apiKey = process.env.RESEND_API_KEY;
-  if (apiKey) {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: process.env.CHARTER_FROM_EMAIL ?? "CRAFT Website <onboarding@resend.dev>",
-        to: [TO_EMAIL],
-        subject: `Charter request — ${name}`,
-        text,
-        attachments: [
-          { filename: pdfFilename, content: pdfBuffer.toString("base64") },
-        ],
-      }),
-    });
-    if (!res.ok) {
-      console.error("Resend error:", res.status, await res.text());
-      return NextResponse.json({ error: "Email delivery failed" }, { status: 502 });
-    }
-  } else {
+  const attachments = [
+    { filename: pdfFilename, content: pdfBuffer.toString("base64") },
+  ];
+
+  // The lead itself. A failure here fails the request.
+  const notify = await sendMail({
+    to: TO_EMAIL,
+    subject: `Charter request — ${name}`,
+    text,
+    attachments,
+    ...(typeof email === "string" && email.trim() ? { replyTo: email.trim() } : {}),
+  });
+  if (!notify.ok && !notify.skipped) {
+    return NextResponse.json({ error: "Email delivery failed" }, { status: 502 });
+  }
+  if (notify.skipped) {
     // TODO: set RESEND_API_KEY (and CHARTER_FROM_EMAIL) to enable delivery.
-    console.log(`--- Charter request (email delivery not configured) ---\n${text}`);
     // Dev convenience: drop the generated PDF on disk so it can be reviewed
     // without email delivery configured. Serverless filesystems (Vercel)
     // are read-only, so skip there rather than failing the request.
@@ -133,6 +126,29 @@ export async function POST(request: Request) {
       }
     }
   }
+
+  // Courtesy acknowledgement, with their own copy of the request PDF.
+  // Never fails the request — the lead is already delivered by this point.
+  await sendConfirmation({
+    lead: "charter request",
+    name,
+    email,
+    phone,
+    attachments,
+    summary: [
+      { label: "Reference", value: requestId },
+      ...(legs as LegPayload[]).map((l, i) => ({
+        label: (legs as LegPayload[]).length > 1 ? `Leg ${i + 1}` : "Route",
+        value: `${l.from} → ${l.to}\n${l.date} at ${l.time} (local)`,
+      })),
+      { label: "Passengers", value: String(body.passengers ?? "") },
+      {
+        label: "Options",
+        value: Array.isArray(body.options) ? body.options.join(", ") : "",
+      },
+      { label: "Notes", value: String(body.notes ?? "") },
+    ],
+  });
 
   return NextResponse.json({ ok: true });
 }

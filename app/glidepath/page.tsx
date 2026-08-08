@@ -92,7 +92,13 @@ export default function GlidepathPage() {
             <p className="mb-5 text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase">
               Glidepath — An Independent 721 Exchange Fund
             </p>
-            <h1 className="max-w-3xl text-[clamp(38px,5.5vw,72px)] leading-[0.95] font-extralight tracking-tight text-navy">
+            {/* Set smaller than the other display titles on purpose. This
+                one shares its row with Natan's card, so the heading column
+                is ~736px at desktop rather than the full width — and
+                "Compound everything." is the longest emphasis line on the
+                site. At 5.5vw/72px it needed 772px and broke onto a third
+                line; 4.6vw/64px keeps the two-line pattern intact. */}
+            <h1 className="display-title max-w-4xl text-[clamp(38px,4.1vw,58px)] leading-title font-extralight tracking-tight text-navy">
               Keep more. <span className="font-medium">Compound everything.</span>
             </h1>
             <p className="mt-6 max-w-xl text-[15px] font-light leading-relaxed text-ink-2">

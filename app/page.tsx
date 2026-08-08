@@ -77,8 +77,8 @@ export default function Home() {
 
         <div className="mx-auto w-full max-w-xl">
           <img
-            src="/fleet-window.jpg"
-            alt="Sunset view of the CRAFT Challenger fleet on the ramp"
+            src="/fleet-2x3-1200.jpg"
+            alt="A CRAFT Challenger on a snow-lined ramp with mountains behind"
             className="w-full rounded-3xl object-cover shadow-[0_24px_80px_rgba(12,29,61,0.18)]"
           />
         </div>

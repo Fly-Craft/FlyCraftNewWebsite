@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { sendMail, sendConfirmation } from "@/lib/notify";
 
 // Set CHARTER_TO_EMAIL=charter@flycraft.com in production; the fallback is
 // a personal inbox used while the site is being tested.
@@ -28,28 +29,30 @@ export async function POST(request: Request) {
   ];
   const text = lines.join("\n");
 
-  const apiKey = process.env.RESEND_API_KEY;
-  if (apiKey) {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: process.env.CHARTER_FROM_EMAIL ?? "CRAFT Website <onboarding@resend.dev>",
-        to: [TO_EMAIL],
-        subject: `Corporate program request — ${company}`,
-        text,
-      }),
-    });
-    if (!res.ok) {
-      console.error("Resend error:", res.status, await res.text());
-      return NextResponse.json({ error: "Email delivery failed" }, { status: 502 });
-    }
-  } else {
-    console.log(`--- Corporate program request (email delivery not configured) ---\n${text}`);
+  const notify = await sendMail({
+    to: TO_EMAIL,
+    subject: `Corporate program request — ${company}`,
+    text,
+    ...(typeof email === "string" && email.trim() ? { replyTo: email.trim() } : {}),
+  });
+  if (!notify.ok && !notify.skipped) {
+    return NextResponse.json({ error: "Email delivery failed" }, { status: 502 });
   }
+
+  // Courtesy acknowledgement — never fails the request.
+  await sendConfirmation({
+    lead: "corporate program request",
+    name,
+    email,
+    phone,
+    summary: [
+      { label: "Company", value: String(company) },
+      { label: "Main airport", value: String(mainAirport ?? "") },
+      { label: "Hours per year", value: String(hoursPerYear ?? "") },
+      { label: "Longest trip", value: String(longestTrip ?? "") },
+      { label: "Frequent trips", value: String(body.frequentTrips ?? "") },
+    ],
+  });
 
   return NextResponse.json({ ok: true });
 }

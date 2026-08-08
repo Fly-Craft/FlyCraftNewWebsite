@@ -24,7 +24,7 @@ export default function PageHero({
         {eyebrow}
       </p>
       <h1
-        className={`max-w-3xl text-[clamp(40px,7vw,88px)] leading-[0.95] font-extralight tracking-tight text-navy ${titleClassName}`}
+        className={`display-title max-w-3xl text-[clamp(40px,7vw,88px)] leading-title font-extralight tracking-tight text-navy ${titleClassName}`}
       >
         {title}
       </h1>

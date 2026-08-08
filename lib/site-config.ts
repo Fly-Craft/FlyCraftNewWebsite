@@ -37,9 +37,32 @@ export const landingLinks = [
   { href: "/company", label: "Company" },
 ];
 
-// The three cards on /programs, mirrored in the nav dropdown.
+/**
+ * Somewhere to go while you wait for a reply. Shown on every confirmation
+ * screen and repeated in the confirmation email, so all four surfaces say
+ * the same thing from one definition.
+ */
+export const exploreLinks = [
+  { href: "/fleet", label: "The Fleet" },
+  { href: "/reviews", label: "Reviews" },
+  { href: "/company", label: "Our Story" },
+  { href: "/faq", label: "FAQ" },
+];
+
+// The three tabs on /charter, mirrored in the nav dropdown. Planner is the
+// default tab and so carries no ?tab= — the Book tab itself lands there.
+export const bookLinks = [
+  { href: "/charter?tab=contact", label: "Contact" },
+  { href: "/charter", label: "Planner" },
+  { href: "/charter?tab=asap", label: "ASAP" },
+];
+
+// The four cards on /programs, mirrored in the nav dropdown, in the same
+// order they appear on the page. The Jet Card has no page of its own, so
+// it anchors to its card — see the note in app/programs/page.tsx.
 export const programLinks = [
   { href: "/programs/management", label: "Leaseback" },
-  { href: "/glidepath", label: "Glidepath" },
+  { href: "/programs#jet-card", label: "Jet Card" },
   { href: "/programs/corporate", label: "Corporate" },
+  { href: "/glidepath", label: "Glidepath" },
 ];

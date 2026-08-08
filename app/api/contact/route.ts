@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { sendMail, sendConfirmation } from "@/lib/notify";
 
 // Set CHARTER_TO_EMAIL=charter@flycraft.com in production; the fallback is
 // a personal inbox used while the site is being tested.
@@ -23,28 +24,28 @@ export async function POST(request: Request) {
     message,
   ].join("\n");
 
-  const apiKey = process.env.RESEND_API_KEY;
-  if (apiKey) {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: process.env.CHARTER_FROM_EMAIL ?? "CRAFT Website <onboarding@resend.dev>",
-        to: [TO_EMAIL],
-        subject: `Contact form — ${name}`,
-        text,
-      }),
-    });
-    if (!res.ok) {
-      console.error("Resend error:", res.status, await res.text());
-      return NextResponse.json({ error: "Email delivery failed" }, { status: 502 });
-    }
-  } else {
-    console.log(`--- Contact form (email delivery not configured) ---\n${text}`);
+  // The lead itself. A failure here fails the request, because the visitor
+  // needs to know their message didn't land.
+  const notify = await sendMail({
+    to: TO_EMAIL,
+    subject: `Contact form — ${name}`,
+    text,
+    // Replies from the team go straight back to the sender.
+    ...(typeof email === "string" && email.trim() ? { replyTo: email.trim() } : {}),
+  });
+  if (!notify.ok && !notify.skipped) {
+    return NextResponse.json({ error: "Email delivery failed" }, { status: 502 });
   }
+
+  // Courtesy acknowledgement. Never allowed to fail the request — the lead
+  // is already safely delivered by this point.
+  await sendConfirmation({
+    lead: "message",
+    name,
+    email,
+    phone,
+    summary: [{ label: "Message", value: String(message) }],
+  });
 
   return NextResponse.json({ ok: true });
 }

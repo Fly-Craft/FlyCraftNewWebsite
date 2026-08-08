@@ -108,7 +108,7 @@ export default function FaqPage() {
   return (
     <div>
       <section className="flex flex-col px-6 pt-40 pb-10 sm:px-20">
-        <h1 className="max-w-3xl text-[clamp(40px,6vw,76px)] leading-[0.95] font-extralight tracking-tight text-navy">
+        <h1 className="display-title max-w-3xl text-[clamp(40px,6vw,76px)] leading-title font-extralight tracking-tight text-navy">
           Frequently <span className="font-medium">Asked Questions</span>
         </h1>
         <p className="mt-6 max-w-xl text-[15px] font-light leading-relaxed text-ink-2">

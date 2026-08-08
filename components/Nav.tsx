@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AIRCRAFT } from "@/lib/fleet-aircraft";
-import { landingLinks, programLinks } from "@/lib/site-config";
+import { bookLinks, landingLinks, programLinks } from "@/lib/site-config";
 
 const linkCls =
   "relative z-10 text-[9px] font-medium tracking-[0.2em] whitespace-nowrap uppercase transition-colors duration-300 sm:text-[10px] sm:tracking-[0.25em] lg:text-[11px] lg:tracking-[0.3em]";
@@ -21,6 +21,15 @@ const DROPDOWNS: Record<
     items: { href: string; label: React.ReactNode }[];
   }
 > = {
+  // Narrowest of the three — the tab labels are one short word each. The
+  // pl-2 nudges all three right by the same 8px: left-aligned to each other
+  // (so the labels stack cleanly), but the block as a whole was sitting
+  // ~13px left of centre because the longest label doesn't fill its column.
+  "/charter": {
+    width: "w-[148px]",
+    itemWidth: "w-[76px] pl-2",
+    items: bookLinks,
+  },
   "/fleet": {
     width: "w-48",
     itemWidth: "w-[120px]",

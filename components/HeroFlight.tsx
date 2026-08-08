@@ -650,7 +650,7 @@ export default function HeroFlight() {
           <p className="mb-6 text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase">
             Welcome to
           </p>
-          <h1 className="text-[clamp(40px,7vw,96px)] leading-[0.95] font-bold tracking-[0.01em] text-navy uppercase">
+          <h1 className="text-[clamp(40px,7vw,96px)] leading-title font-bold tracking-[0.01em] text-navy uppercase">
             CRAFT
           </h1>
           <div className="mt-8 flex justify-center">

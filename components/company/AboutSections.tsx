@@ -108,8 +108,8 @@ export default function AboutSections() {
       <section className="grid grid-cols-1 items-center gap-12 px-6 py-24 sm:px-20 lg:grid-cols-2 lg:gap-20">
         <div className="mx-auto w-full max-w-xl max-lg:order-last">
           <img
-            src="/about/story-sunset.jpg"
-            alt="A CRAFT Challenger on the Opa-locka ramp at sunset"
+            src="/about/yan-1200.jpg"
+            alt="A CRAFT crew member in uniform beside a Challenger on the ramp"
             className="w-full rounded-3xl object-cover shadow-[0_24px_80px_rgba(12,29,61,0.18)]"
           />
         </div>

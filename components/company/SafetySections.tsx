@@ -15,8 +15,12 @@ export default function SafetySections() {
       >
         <div className="mx-auto w-full max-w-xl max-lg:order-last">
           <img
-            src="/safety/pedestal.jpg"
-            alt="Challenger center pedestal and flight displays"
+            /* Filename carries a hash of the source image. Replacing the
+               photo produces a new URL, so a browser that cached the old
+               one can't keep serving it — which is exactly what happened
+               the first two times this image changed. */
+            src="/about/part135-1200-412176be.jpg"
+            alt="A CRAFT Challenger taxiing head-on with the crew visible in the flight deck"
             className="w-full rounded-3xl object-cover shadow-[0_24px_80px_rgba(12,29,61,0.18)]"
           />
         </div>

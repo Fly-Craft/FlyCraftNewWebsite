@@ -34,7 +34,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/glidepath", 0.7),
     entry("/company", 0.7),
     entry("/contact", 0.7),
-    entry("/careers", 0.5),
     entry("/faq", 0.6),
     entry("/reviews", 0.5),
     entry("/legal", 0.3, "yearly"),

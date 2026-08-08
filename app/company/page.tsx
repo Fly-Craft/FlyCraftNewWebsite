@@ -20,6 +20,10 @@ export default function CompanyPage() {
           </>
         }
         subtitle="Founded in 2020 and based in Miami, CRAFT pairs an all-Challenger fleet with a warm, family-like standard of service."
+        /* The one title that stays on a single line — its emphasis sits in
+           the middle of the phrase, so the site-wide two-line pattern would
+           break it into "The / CRAFT / Family". */
+        titleClassName="display-title-inline"
         divider={false}
       />
 

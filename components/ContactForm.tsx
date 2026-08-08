@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { siteConfig } from "@/lib/site-config";
+import Link from "next/link";
+import { siteConfig, exploreLinks } from "@/lib/site-config";
 
 const inputCls =
   "w-full rounded-xl border border-border bg-white px-4 py-3.5 text-[14px] text-navy outline-none transition-colors focus:border-navy/40 placeholder:text-ink-3/70";
@@ -44,32 +45,67 @@ export default function ContactForm() {
     }
   }
 
+  /* The confirmation stands on its own — the office photo belongs beside a
+     form you're still filling in, not beside the answer to it. */
   if (status === "sent") {
     return (
-      <div className="grid grid-cols-1 items-stretch gap-12 lg:grid-cols-2 lg:gap-20">
-        <div className="flex max-w-xl flex-col items-center justify-center gap-5 rounded-3xl glass px-8 py-20 text-center">
-          <span className="flex h-14 w-14 items-center justify-center rounded-full bg-navy text-[20px] text-white">
-            ✓
-          </span>
-          <p className="text-[22px] font-light text-navy">Message received.</p>
-          <p className="max-w-sm text-[14px] font-light leading-relaxed text-ink-2">
-            Thanks — we&apos;ll be in touch shortly. For anything urgent, call{" "}
-            <a
-              href={`tel:${siteConfig.charterSalesPhone}`}
-              className="whitespace-nowrap text-navy underline underline-offset-4"
-            >
-              {siteConfig.charterSalesPhoneDisplay}
-            </a>
-            .
-          </p>
-        </div>
+      <div
+        className="mx-auto flex max-w-3xl flex-col items-center rounded-3xl glass px-8 py-20 text-center sm:px-16"
+        role="status"
+      >
+        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-navy text-[22px] text-white">
+          ✓
+        </span>
+        <p className="mt-8 text-[26px] font-light text-navy">
+          We&apos;ve received your form.
+        </p>
+        {/* break-words, not break-all: a visitor's address can be any length
+            and must not overflow, but it shouldn't be chopped mid-word when
+            it doesn't have to be. CRAFT's own address is short and known, so
+            it wraps as a unit. */}
+        <p className="mt-5 max-w-lg text-[15px] font-light leading-loose text-ink-2">
+          We&apos;ll reach back within the next 24 hours
+          {email.trim() ? (
+            <>
+              {" "}
+              — a confirmation is on its way to{" "}
+              <span className="break-words text-navy">{email.trim()}</span>
+            </>
+          ) : null}
+          . For anything urgent, call{" "}
+          <a
+            href={`tel:${siteConfig.charterSalesPhone}`}
+            className="whitespace-nowrap text-navy underline underline-offset-4"
+          >
+            {siteConfig.charterSalesPhoneDisplay}
+          </a>{" "}
+          or email{" "}
+          <a
+            href={`mailto:${siteConfig.contactEmail}`}
+            className="whitespace-nowrap text-navy underline underline-offset-4"
+          >
+            {siteConfig.contactEmail}
+          </a>
+          .
+        </p>
 
-        <div className="relative mx-auto w-full max-w-xl self-center">
-          <img
-            src="/contact/office.jpg"
-            alt="The CRAFT conference room"
-            className="w-full rounded-3xl object-cover shadow-[0_24px_80px_rgba(12,29,61,0.18)]"
-          />
+        {/* Full-width rule: the divider belongs to the card, not to the
+            label, so it can't hang off a centred line of text. */}
+        <div className="mt-14 w-full border-t border-border pt-10">
+          <p className="text-[10px] font-medium tracking-[0.3em] text-ink-3 uppercase">
+            In the meantime
+          </p>
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
+            {exploreLinks.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="glass-capsule glass-btn rounded-full px-6 py-3.5 text-[10px] font-medium tracking-[0.2em] text-navy uppercase"
+              >
+                {l.label}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -171,13 +207,6 @@ export default function ContactForm() {
             className="text-navy underline underline-offset-4"
           >
             Call Charter Sales
-          </a>{" "}
-          or email{" "}
-          <a
-            href={`mailto:${siteConfig.contactEmail}`}
-            className="text-navy underline underline-offset-4"
-          >
-            {siteConfig.contactEmail}
           </a>
         </p>
       </form>

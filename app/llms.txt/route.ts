@@ -69,7 +69,6 @@ with the charter desk after a quote is accepted.
   investors get preferred fleet rates — a separate company, not CRAFT
 - [Company](${siteUrl}/company): history, leadership, safety record
 - [FAQ](${siteUrl}/faq): cancellations, de-icing, luggage, ID requirements
-- [Careers](${siteUrl}/careers): flight deck, maintenance, office
 - [Contact](${siteUrl}/contact): phone, email, address
 - [Legal](${siteUrl}/legal): terms and privacy
 `;

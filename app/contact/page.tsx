@@ -12,7 +12,11 @@ export default function ContactPage() {
     <>
       <PageHero
         eyebrow="Contact"
-        title="Get in Touch"
+        title={
+          <>
+            Get in <span className="font-medium">Touch</span>
+          </>
+        }
         subtitle="Reach Charter Sales directly, or send us a message and we'll follow up."
         titleClassName="-ml-1.5"
         divider={false}

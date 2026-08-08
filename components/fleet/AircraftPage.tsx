@@ -78,10 +78,10 @@ export default function AircraftPage({ a }: { a: Aircraft }) {
           POD {a.pod} · {a.tail}
         </p>
         <h1 className="max-w-3xl text-navy uppercase">
-          <span className="block text-[clamp(40px,7vw,88px)] leading-[0.95] font-thin tracking-[0.05em]">
+          <span className="block text-[clamp(40px,7vw,88px)] leading-title font-thin tracking-[0.05em]">
             Challenger
           </span>
-          <span className="block text-[clamp(40px,7vw,88px)] leading-[0.95] font-extrabold tracking-tight">
+          <span className="block text-[clamp(40px,7vw,88px)] leading-title font-extrabold tracking-tight">
             {a.model}
           </span>
         </h1>
@@ -99,17 +99,20 @@ export default function AircraftPage({ a }: { a: Aircraft }) {
           >
             3D Virtual Tour
           </a>
-          {/* ?from carries the aircraft so the menu can offer a way back to
-              it — the menu is also reachable from the FAQ and directly, where
-              there is no aircraft to return to. */}
-          <Link href={`/fleet/menu?from=${a.slug}`} className={heroBtn}>
-            Inflight Menu
-          </Link>
+          {/* Request a Quote sits centre of the three — it's the primary
+              action, and the filled capsule reads strongest there rather
+              than trailing at the end of the row. */}
           <Link
             href="/charter"
             className="glass-selected rounded-full px-7 py-3.5 text-[11px] font-medium tracking-[0.24em] text-white uppercase transition-transform duration-300 hover:-translate-y-0.5"
           >
             Request a Quote
+          </Link>
+          {/* ?from carries the aircraft so the menu can offer a way back to
+              it — the menu is also reachable from the FAQ and directly, where
+              there is no aircraft to return to. */}
+          <Link href={`/fleet/menu?from=${a.slug}`} className={heroBtn}>
+            Inflight Menu
           </Link>
         </div>
       </section>

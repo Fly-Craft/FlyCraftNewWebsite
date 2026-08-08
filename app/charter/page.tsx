@@ -23,5 +23,12 @@ export default async function CharterPage({
   const { tab } = await searchParams;
   const initialTab: Tab = isTab(tab) ? tab : "planner";
 
-  return <BookTabs initialTab={initialTab} />;
+  /* Keyed on the resolved tab so navigating between ?tab= values — via the
+     nav dropdown, a shared link, or the back button — remounts BookTabs and
+     re-seeds its state. Without the key, React reuses the instance and
+     useState(initialTab) ignores the new prop, leaving the URL and the
+     visible panel disagreeing. Switching tabs *within* the page uses
+     replaceState, which doesn't re-render this component, so the key holds
+     steady and in-page state survives. */
+  return <BookTabs key={initialTab} initialTab={initialTab} />;
 }
