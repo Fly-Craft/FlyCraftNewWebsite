@@ -166,18 +166,26 @@ const COLUMNS = [
     label: "BOOK",
     href: "/charter",
     children: [
-      { label: "/asap", sub: "Urgent departures", tone: "page" },
+      { label: "/asap", sub: "Also its own page", tone: "page" },
     ],
-    note: "Itinerary builder\n+ quote request",
+    chips: {
+      title: "?tab=  ·  3 TABS, SERVER-RESOLVED",
+      items: ["Contact", "Trip Planner", "ASAP"],
+    },
   },
   {
     label: "PROGRAMS",
     href: "/programs",
     children: [
+      { label: "/programs/enquire", sub: "?program=  ·  noindex", tone: "page" },
       { label: "/programs/management", sub: "Leaseback", tone: "page" },
-      { label: "/glidepath", sub: "721 fund  ·  links out to glidepath.ai", tone: "page" },
       { label: "/programs/corporate", sub: "Corporate", tone: "page" },
+      { label: "/glidepath", sub: "721 fund  ·  links out to glidepath.ai", tone: "page" },
     ],
+    chips: {
+      title: "4 CARDS ON /programs",
+      items: ["Leaseback", "Jet Card", "Corporate", "Glidepath"],
+    },
   },
   {
     label: "FLEET",
@@ -185,20 +193,22 @@ const COLUMNS = [
     children: [
       { label: "/fleet/menu", sub: "Inflight menu", tone: "page" },
     ],
-    aircraft: ["N971MC", "N150MB", "N251FT", "N395PD", "N7PG"],
+    chips: {
+      title: "/fleet/[tail]  ·  5 AIRCRAFT",
+      items: ["N971MC", "N150MB", "N251FT", "N395PD", "N7PG"],
+    },
   },
   {
     label: "COMPANY",
     href: "/company",
     children: [],
-    note: "History, leadership,\nsafety record",
+    note: "History, leadership,\nsafety record, standards",
   },
 ];
 
 const FOOTER_PAGES = [
   { label: "/faq" },
   { label: "/reviews" },
-  { label: "/careers" },
   { label: "/contact" },
   { label: "/legal" },
 ];
@@ -208,6 +218,7 @@ const FORM_APIS = [
   { label: "/api/contact", sub: "from /contact" },
   { label: "/api/corporate-program", sub: "from /programs/corporate" },
   { label: "/api/management-inquiry", sub: "from /programs/management" },
+  { label: "/api/program-enquiry", sub: "from /programs/enquire" },
 ];
 
 const AGENT_APIS = [
@@ -219,7 +230,7 @@ const AGENT_APIS = [
 ];
 
 const MACHINE = [
-  { label: "/sitemap.xml", sub: "20 routes" },
+  { label: "/sitemap.xml", sub: "19 routes" },
   { label: "/robots.txt", sub: "AI crawlers named" },
   { label: "/llms.txt", sub: "Site summary" },
 ];
@@ -278,7 +289,7 @@ function TreePage() {
 
     // Children stack under each nav item
     col.children.forEach((child, j) => {
-      const y = ROW_Y.sub + j * (NODE_H + 9);
+      const y = ROW_Y.sub + j * (NODE_H + 6);
       wires.push(
         e(Elbow, {
           key: `w-sub-${i}-${j}`,
@@ -302,8 +313,8 @@ function TreePage() {
     });
 
     // Fleet's five aircraft as a compact grid
-    if (col.aircraft) {
-      const gridY = ROW_Y.sub + (col.children.length * (NODE_H + 9)) + 6;
+    if (col.chips) {
+      const gridY = ROW_Y.sub + (col.children.length * (NODE_H + 6)) + 6;
       wires.push(
         e(Elbow, {
           key: `w-ac-${i}`,
@@ -341,12 +352,12 @@ function TreePage() {
                 marginBottom: 4,
               },
             },
-            "/fleet/[tail]  ·  5 AIRCRAFT",
+            col.chips.title,
           ),
           e(
             View,
             { style: { flexDirection: "row", flexWrap: "wrap" } },
-            ...col.aircraft.map((t) =>
+            ...col.chips.items.map((t) =>
               e(
                 Text,
                 {
@@ -369,7 +380,7 @@ function TreePage() {
     }
 
     if (col.note) {
-      const noteY = ROW_Y.sub + col.children.length * (NODE_H + 9) + 4;
+      const noteY = ROW_Y.sub + col.children.length * (NODE_H + 6) + 4;
       nodes.push(
         e(
           Text,
@@ -394,8 +405,8 @@ function TreePage() {
   });
 
   // Footer row
-  const footerY = 452;
-  const fW = (usableW - COL_GAP * 4) / 5;
+  const footerY = 496;
+  const fW = (usableW - COL_GAP * 3) / 4;
   nodes.push(e(SectionLabel, { key: "flab", x: M, y: footerY - 14 }, "IN THE FOOTER, ON EVERY PAGE"));
   FOOTER_PAGES.forEach((p, i) => {
     nodes.push(
@@ -483,7 +494,7 @@ function TreePage() {
         style: {
           position: "absolute",
           left: M,
-          top: 520,
+          top: 538,
           flexDirection: "row",
           alignItems: "center",
         },
@@ -663,7 +674,7 @@ function ApiPage() {
       M,
       104,
       "FORM INTAKE",
-      "Each site form POSTs to its own route; all four send mail via Resend and need RESEND_API_KEY set.",
+      "Each site form POSTs to its own route; all five send mail via Resend and need RESEND_API_KEY set. Programme enquiries also copy that programme's own recipients.",
       FORM_APIS,
       "api",
     ),
@@ -690,7 +701,7 @@ function ApiPage() {
         style: {
           position: "absolute",
           left: M,
-          top: 300,
+          top: 356,
           width: colW,
           border: `0.8pt solid ${BORDER}`,
           borderRadius: 6,

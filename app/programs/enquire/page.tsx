@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import PageHero from "@/components/PageHero";
+import PreferToTalk from "@/components/PreferToTalk";
 import ProgramEnquiryForm from "@/components/programs/ProgramEnquiryForm";
 import { enquirableProgram } from "@/lib/programs";
 
@@ -39,6 +40,9 @@ export default async function ProgramEnquirePage({
           </>
         }
         subtitle={`Tell us how to reach you and someone from the ${found.label} team will take it from there.`}
+        /* Same top-right card as /programs and each programme page — someone
+           who'd rather call shouldn't have to go back to find the number. */
+        aside={<PreferToTalk />}
         divider={false}
       />
 
