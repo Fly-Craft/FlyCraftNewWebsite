@@ -7,6 +7,8 @@ import RangeMapCard from "./RangeMapCard";
 
 const card =
   "rounded-3xl glass p-8 sm:p-10";
+const heroBtn =
+  "glass-capsule glass-btn rounded-full px-7 py-3.5 text-[11px] font-medium tracking-[0.24em] text-navy uppercase";
 const cardLabel =
   "mb-6 block text-center text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase";
 
@@ -86,27 +88,26 @@ export default function AircraftPage({ a }: { a: Aircraft }) {
         <p className="mt-8 max-w-xl text-[15px] font-light leading-relaxed text-ink-2">
           The perfectly designed charter aircraft.
         </p>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-8">
+        {/* Glass capsules rather than underlined text: as links these read
+            as fine print under a display-size title and were being missed. */}
+        <div className="mt-9 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           <a
             href={a.tour}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[11px] font-medium tracking-[0.3em] text-navy uppercase underline underline-offset-4 transition-opacity hover:opacity-60"
+            className={heroBtn}
           >
             3D Virtual Tour
           </a>
           {/* ?from carries the aircraft so the menu can offer a way back to
               it — the menu is also reachable from the FAQ and directly, where
               there is no aircraft to return to. */}
-          <Link
-            href={`/fleet/menu?from=${a.slug}`}
-            className="text-[11px] font-medium tracking-[0.3em] text-navy uppercase underline underline-offset-4 transition-opacity hover:opacity-60"
-          >
+          <Link href={`/fleet/menu?from=${a.slug}`} className={heroBtn}>
             Inflight Menu
           </Link>
           <Link
             href="/charter"
-            className="text-[11px] font-medium tracking-[0.3em] text-navy uppercase underline underline-offset-4 transition-opacity hover:opacity-60"
+            className="glass-selected rounded-full px-7 py-3.5 text-[11px] font-medium tracking-[0.24em] text-white uppercase transition-transform duration-300 hover:-translate-y-0.5"
           >
             Request a Quote
           </Link>

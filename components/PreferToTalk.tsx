@@ -4,7 +4,7 @@ const NATAN = {
   role: "Brokerage Operation Lead",
   phone: "+13232159495",
   phoneDisplay: "+1 (323) 215-9495",
-  email: "nbenchimol@flycraft.com",
+  email: "natan@flycraft.com",
 };
 
 /**

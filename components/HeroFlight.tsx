@@ -653,31 +653,14 @@ export default function HeroFlight() {
           <h1 className="text-[clamp(40px,7vw,96px)] leading-[0.95] font-bold tracking-[0.01em] text-navy uppercase">
             CRAFT
           </h1>
-          <div className="mt-8 flex flex-col items-center justify-center gap-5 sm:flex-row">
+          <div className="mt-8 flex justify-center">
             <Link
               href="/charter"
               className="w-72 rounded-full glass px-10 py-5 text-center text-[13px] font-medium tracking-[0.3em] text-navy uppercase transition-colors hover:bg-navy-light"
             >
               Book
             </Link>
-            <Link
-              href="/asap"
-              className="w-72 rounded-full glass px-10 py-5 text-center text-[13px] font-medium tracking-[0.3em] text-navy uppercase transition-colors hover:bg-navy-light"
-            >
-              ASAP
-            </Link>
           </div>
-
-          {/* Operator, not a broker — the distinction charter buyers care
-              most about, and easy to miss anywhere further down the page.
-              Wording tracks the legal page's Part 135 language. */}
-          <p className="mx-auto mt-9 max-w-md text-[12px] leading-relaxed font-light text-ink-2">
-            <span className="font-medium text-navy">
-              We&apos;re the operator — not a brokerage.
-            </span>{" "}
-            Every trip is flown on our own Challengers, by our own crews,
-            under our own Part 135 certificate.
-          </p>
         </div>
 
         <div ref={hintRef} className="hf-hint">

@@ -4,7 +4,7 @@ import PreferToTalk from "@/components/PreferToTalk";
 import ManagementForm from "@/components/ManagementForm";
 
 export const metadata: Metadata = {
-  title: "Aircraft Management | CRAFT",
+  title: "Aircraft Leaseback | CRAFT",
   description:
     "A leaseback program: own the aircraft, capture the bonus depreciation tax benefit, and fly the entire CRAFT fleet — while we cover the costs of operating it.",
 };
@@ -13,7 +13,7 @@ export default function AircraftManagementPage() {
   return (
     <>
       <PageHero
-        eyebrow="Aircraft Management"
+        eyebrow="Aircraft Leaseback"
         title={
           <>
             Own the Jet. <span className="font-medium">Skip the Ops.</span>
