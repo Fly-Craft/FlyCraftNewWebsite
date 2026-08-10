@@ -7,7 +7,7 @@ import { PROGRAMS } from "@/lib/programs";
 export const metadata: Metadata = {
   title: "Programs | CRAFT",
   description:
-    "Aircraft Leaseback, the Fleet Jet Card, the Corporate Program, and the Glidepath exchange fund — four routes onto the CRAFT Challenger fleet.",
+    "Aircraft Leaseback, the Fleet Jet Card, the Corporate Program, and the Glidepath exchange fund. Four routes onto the CRAFT Challenger fleet.",
 };
 
 export default function ProgramsPage() {
@@ -20,7 +20,7 @@ export default function ProgramsPage() {
             One Fleet. <span className="font-medium">Many Ways In.</span>
           </>
         }
-        subtitle="Whether you own the aircraft, buy hours on the card, move a whole executive team, or come in through the fund, CRAFT builds the program around you — and flies only its own metal, never as a broker."
+        subtitle="Whether you own the aircraft, buy hours on the card, move a whole executive team, or come in through the fund, CRAFT builds the program around you. We fly only our own metal, never as a broker."
         divider={false}
         aside={<PreferToTalk />}
       />

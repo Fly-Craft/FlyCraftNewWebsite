@@ -18,7 +18,7 @@ export default function AsapPage() {
             Need It <span className="font-medium">ASAP?</span>
           </>
         }
-        subtitle="When a trip needs to move now, go ahead and contact our team directly — Shaked and Paul will work to see if we can help."
+        subtitle="When a trip needs to move now, contact our team directly. Shaked and Paul will work to see if we can help."
         divider={false}
       />
 

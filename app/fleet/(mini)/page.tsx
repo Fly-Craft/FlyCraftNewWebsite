@@ -5,7 +5,7 @@ import SkyBackdrop from '@/components/SkyBackdrop';
 
 export const metadata: Metadata = {
   title: 'The Fleet | Craft',
-  description: "Craft's curated fleet of private charter aircraft.",
+  description: "Craft's fleet of private charter aircraft.",
 };
 
 export default function HomePage() {

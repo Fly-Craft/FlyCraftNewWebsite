@@ -18,7 +18,7 @@ export async function GET() {
       name: "CRAFT",
       legalName: "Craft Charter, LLC",
       description:
-        "US Part 135 air carrier operating an all-Challenger fleet for private charter. CRAFT operates its own aircraft with its own crews under its own certificate — an operator, not a brokerage.",
+        "US Part 135 air carrier operating an all-Challenger fleet for private charter. CRAFT operates its own aircraft with its own crews under its own certificate. We're the operator, not a brokerage.",
       url: siteUrl,
       contact: {
         phone: siteConfig.charterSalesPhoneDisplay,

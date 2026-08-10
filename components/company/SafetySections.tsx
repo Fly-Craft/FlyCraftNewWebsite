@@ -6,7 +6,7 @@
 export default function SafetySections() {
   return (
     <>
-      {/* ── Part 135 + captains ─────────────────────────── */}
+      {/* ── Part 135 standards ──────────────────────────── */}
       {/* Carries the #safety anchor now that the section header above it is
           gone — the home page and FAQ both link here. */}
       <section
@@ -36,14 +36,16 @@ export default function SafetySections() {
           </h2>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
             Every CRAFT flight operates under FAA Part 135 commercial
-            regulations — including owner trips, where the rules would allow
-            less. We don&apos;t fly to two standards; we fly to the higher
-            one, every time.
+            regulations, including owner trips, where the rules would allow
+            less. We hold every flight to one standard, and it&apos;s the
+            higher one.
           </p>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
-            Our captains are highly experienced aviators who know our
-            aircraft, our routes, and our clients — and they hold the final
-            word on every go decision.
+            Part 135 sets the limits, and they hold even when a schedule would
+            rather they didn&apos;t. Every crew flies to FAA duty and rest
+            rules, with recurrent training and checkrides on a fixed cycle. The
+            same rules govern the weather we can launch in and the runways we
+            can use, leaving extra margin on every landing.
           </p>
         </div>
       </section>

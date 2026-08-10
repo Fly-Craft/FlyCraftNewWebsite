@@ -30,7 +30,7 @@ export const AIRCRAFT: Aircraft[] = [
     "pod": 1,
     "tail": "N971MC",
     "model": "300",
-    "about": "The finest aircraft in the super mid-size category. Renowned for its comfort, performance, and reliability — the Challenger 300 combines transcontinental range with a quiet, spacious cabin and the latest technology to deliver a refined travel experience.",
+    "about": "The finest aircraft in the super mid-size category. The Challenger 300 is known for its comfort, performance, and reliability. It combines transcontinental range with a quiet, spacious cabin and the latest technology.",
     "stats": [
       {
         "value": "6:30",
@@ -95,7 +95,7 @@ export const AIRCRAFT: Aircraft[] = [
     "pod": 2,
     "tail": "N150MB",
     "model": "300",
-    "about": "The finest aircraft in the super mid-size category. Renowned for its comfort, performance, and reliability — the Challenger 300 combines transcontinental range with a quiet, spacious cabin and the latest technology to deliver a refined travel experience.",
+    "about": "The finest aircraft in the super mid-size category. The Challenger 300 is known for its comfort, performance, and reliability. It combines transcontinental range with a quiet, spacious cabin and the latest technology.",
     "stats": [
       {
         "value": "6:30",
@@ -159,7 +159,7 @@ export const AIRCRAFT: Aircraft[] = [
     "pod": 3,
     "tail": "N251FT",
     "model": "300",
-    "about": "The finest aircraft in the super mid-size category. Renowned for its comfort, performance, and reliability — the Challenger 300 combines transcontinental range with a quiet, spacious cabin and the latest technology to deliver a refined travel experience.",
+    "about": "The finest aircraft in the super mid-size category. The Challenger 300 is known for its comfort, performance, and reliability. It combines transcontinental range with a quiet, spacious cabin and the latest technology.",
     "stats": [
       {
         "value": "6:30",
@@ -224,7 +224,7 @@ export const AIRCRAFT: Aircraft[] = [
     "pod": 5,
     "tail": "N395PD",
     "model": "350",
-    "about": "The finest aircraft in the super mid-size category. Renowned for its comfort, performance, and reliability — the Challenger 350 combines transcontinental range with a quiet, spacious cabin and the latest technology to deliver a refined travel experience.",
+    "about": "The finest aircraft in the super mid-size category. The Challenger 350 is known for its comfort, performance, and reliability. It combines transcontinental range with a quiet, spacious cabin and the latest technology.",
     "stats": [
       {
         "value": "7:00",
@@ -289,7 +289,7 @@ export const AIRCRAFT: Aircraft[] = [
     "pod": 6,
     "tail": "N7PG",
     "model": "350",
-    "about": "The finest aircraft in the super mid-size category. Renowned for its comfort, performance, and reliability — the Challenger 350 combines transcontinental range with a quiet, spacious cabin and the latest technology to deliver a refined travel experience.",
+    "about": "The finest aircraft in the super mid-size category. The Challenger 350 is known for its comfort, performance, and reliability. It combines transcontinental range with a quiet, spacious cabin and the latest technology.",
     "stats": [
       {
         "value": "7:00",

@@ -6,7 +6,7 @@ import ManagementForm from "@/components/ManagementForm";
 export const metadata: Metadata = {
   title: "Aircraft Leaseback | CRAFT",
   description:
-    "A leaseback program: own the aircraft, capture the bonus depreciation tax benefit, and fly the entire CRAFT fleet — while we cover the costs of operating it.",
+    "A leaseback program. You own the aircraft and capture the bonus depreciation tax benefit, we cover the costs of operating it, and you fly the entire CRAFT fleet.",
 };
 
 export default function AircraftManagementPage() {
@@ -19,7 +19,7 @@ export default function AircraftManagementPage() {
             Own the Jet. <span className="font-medium">Skip the Ops.</span>
           </>
         }
-        subtitle="Tell us about your aircraft and how you fly — we'll walk you through the leaseback: you own the jet and its tax benefits, we cover the operating costs, and the whole CRAFT fleet opens up to you."
+        subtitle="Tell us about your aircraft and how you fly. We'll walk you through the leaseback. You own the jet and its tax benefits, we cover the operating costs, and the whole CRAFT fleet opens up to you."
         divider={false}
         aside={<PreferToTalk />}
       />

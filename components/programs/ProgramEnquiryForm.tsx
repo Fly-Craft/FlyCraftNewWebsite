@@ -104,8 +104,7 @@ export default function ProgramEnquiryForm({
           24 hours
           {email.trim() ? (
             <>
-              {" "}
-              — a confirmation is on its way to{" "}
+              . A confirmation is on its way to{" "}
               <span className="break-words text-navy">{email.trim()}</span>
             </>
           ) : null}
@@ -239,7 +238,7 @@ export default function ProgramEnquiryForm({
           </div>
         </div>
         <p id="pe-reach" className="-mt-3 text-[11px] font-light text-ink-3">
-          One of the two is enough &mdash; whichever you&apos;d rather we used.
+          One of the two is enough, whichever you&apos;d rather we used.
         </p>
 
         {hoursField && (
@@ -268,7 +267,7 @@ export default function ProgramEnquiryForm({
               }`}
             >
               {hoursMin !== undefined
-                ? `Leave it blank if you're not sure — the program starts at ${hoursMin} hours a year.`
+                ? `Leave it blank if you're not sure. The program starts at ${hoursMin} hours a year.`
                 : "Leave it blank if you're not sure."}
             </p>
           </div>
@@ -299,7 +298,7 @@ export default function ProgramEnquiryForm({
 
         {status === "error" && (
           <p className="text-[13px] text-red-600">
-            Something went wrong &mdash; please try again.
+            Something went wrong. Please try again.
           </p>
         )}
       </form>

@@ -45,7 +45,7 @@ function resolve(input: string) {
     return { error: `No airport found for "${input}".` };
   }
   return {
-    error: `"${input}" is ambiguous — specify an airport code.`,
+    error: `"${input}" is ambiguous. Specify an airport code.`,
     candidates: hit.candidates.map((a) => ({
       code: a.iata || a.icao,
       icao: a.icao,
@@ -139,13 +139,13 @@ export async function POST(request: Request) {
 
     if (nm > MAX_LEG_NM) {
       warnings.push(
-        `${label} is ${nm} NM — beyond the Challenger's ${MAX_LEG_NM} NM planning range. A fuel stop will be required and is not reflected in the times below.`,
+        `${label} is ${nm} NM, beyond the Challenger's ${MAX_LEG_NM} NM planning range. A fuel stop will be required and is not reflected in the times below.`,
       );
     }
     const blackout = blackoutLabel(date);
     if (blackout) {
       warnings.push(
-        `${label} departs on ${blackout} — peak demand, availability is limited and pricing is higher.`,
+        `${label} departs on ${blackout}. Demand peaks then, so availability is limited and pricing is higher.`,
       );
     }
 

@@ -4,7 +4,7 @@ import PageHero from "@/components/PageHero";
 export const metadata: Metadata = {
   title: "Reviews | CRAFT",
   description:
-    "What clients, team members, and investors say about CRAFT — charter reviews, employee voices, and investor testimonials.",
+    "What clients, team members, and investors say about CRAFT. Charter reviews, employee voices, and investor testimonials.",
 };
 
 // Public client ratings — virtualhangar.com operator directory
@@ -52,7 +52,7 @@ const TEAM_REVIEWS = [
   {
     quote: "A place where pilots grow fast and thrive",
     role: "Check Airman",
-    detail: "With CRAFT since 2020 — upgraded to Captain within a year.",
+    detail: "With CRAFT since 2020. Upgraded to Captain within a year.",
   },
   {
     quote: "Demanding but rewarding",
@@ -67,7 +67,7 @@ const TEAM_REVIEWS = [
   {
     quote: "A supportive culture",
     role: "Pilot",
-    detail: "Colleagues who genuinely care about one another — and the travel.",
+    detail: "Colleagues who genuinely care about one another, and about the travel.",
   },
 ];
 
@@ -101,7 +101,7 @@ export default function ReviewsPage() {
             In Their <span className="font-medium">Words</span>
           </>
         }
-        subtitle="The people who fly with us and the team behind every flight — collected from public review platforms."
+        subtitle="The people who fly with us and the team behind every flight, collected from public review platforms."
         divider={false}
       />
 
@@ -139,9 +139,9 @@ export default function ReviewsPage() {
               </div>
             ))}
             <p className="mt-6 border-t border-border pt-5 text-[12px] font-light leading-relaxed text-ink-3">
-              CRAFT is ARGUS Platinum rated — the industry&apos;s highest
-              safety standard — and flies supplemental lift for the biggest
-              names in private aviation.
+              CRAFT is ARGUS Platinum rated, the industry&apos;s highest safety
+              standard, and flies supplemental lift for the biggest names in
+              private aviation.
             </p>
           </div>
         </div>

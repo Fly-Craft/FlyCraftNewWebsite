@@ -36,14 +36,14 @@ const FAQ_ITEMS: FaqItem[] = [
     question:
       "What is the closest time before departure that I can cancel or change the flight time or date?",
     answer:
-      "Reach out to our charter team as early as possible — cancellation and change windows depend on your specific trip, and the sooner we know, the more flexibility we can offer.",
+      "Reach out to our charter team as early as possible. Cancellation and change windows depend on your specific trip, and the sooner we know, the more flexibility we can offer.",
   },
   {
     question: "Can I choose if I want to charter the Challenger 300 or 350?",
     answer: (
       <>
-        Absolutely — each airplane offers a different cabin configuration,
-        though, and may limit availability.
+        Absolutely. Each airplane has a different cabin configuration, though,
+        so that can limit availability.
       </>
     ),
   },
@@ -70,7 +70,7 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "Do I need to bring an ID when I am flying private?",
     answer:
-      "Yes — according to TSA regulations, an adult (over 18) traveling on a domestic flight needs to carry a Real ID, and any person traveling internationally needs to carry a passport.",
+      "Yes. According to TSA regulations, an adult (over 18) traveling on a domestic flight needs to carry a Real ID, and any person traveling internationally needs to carry a passport.",
   },
   {
     question: "What is provided on board the airplane in terms of food and drinks?",
@@ -100,7 +100,7 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "Can I smoke on board since it is a private jet?",
     answer:
-      "No — even though it is a private flight, smoking any kind of substance on board is prohibited.",
+      "No. Even though it is a private flight, smoking any kind of substance on board is prohibited.",
   },
 ];
 

@@ -113,7 +113,7 @@ export default function ManagementForm() {
             type="text"
             value={aircraft}
             onChange={(e) => setAircraft(e.target.value)}
-            placeholder="e.g. Challenger 350 — tail number if you have one"
+            placeholder="e.g. Challenger 350, tail number if you have one"
             className={inputCls}
           />
         </div>
@@ -202,7 +202,7 @@ export default function ManagementForm() {
 
         {status === "error" && (
           <p className="text-[13px] text-red-600">
-            Something went wrong — please try again.
+            Something went wrong. Please try again.
           </p>
         )}
       </form>

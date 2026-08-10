@@ -5,7 +5,7 @@ import { isTab, type Tab } from "@/lib/book-tabs";
 export const metadata: Metadata = {
   title: "Book | CRAFT",
   description:
-    "Three ways to start a trip with CRAFT — plan it yourself in the trip planner, send us a message, or call the team for a same-day departure.",
+    "Three ways to start a trip with CRAFT. Plan it yourself in the trip planner, send us a message, or call the team for a same-day departure.",
 };
 
 export default async function CharterPage({

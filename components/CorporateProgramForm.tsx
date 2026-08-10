@@ -154,7 +154,7 @@ export default function CorporateProgramForm() {
           rows={3}
           value={frequentTrips}
           onChange={(e) => setFrequentTrips(e.target.value)}
-          placeholder="Routes your team flies often — e.g. OPF → TEB weekly, TEB → ASE in winter…"
+          placeholder="Routes your team flies often, e.g. OPF → TEB weekly, TEB → ASE in winter…"
           className={`${inputCls} resize-none`}
         />
       </div>
@@ -204,7 +204,7 @@ export default function CorporateProgramForm() {
 
       {status === "error" && (
         <p className="text-[13px] text-red-600">
-          Something went wrong — please try again.
+          Something went wrong. Please try again.
         </p>
       )}
     </form>

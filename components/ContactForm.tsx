@@ -67,8 +67,7 @@ export default function ContactForm() {
           We&apos;ll reach back within the next 24 hours
           {email.trim() ? (
             <>
-              {" "}
-              — a confirmation is on its way to{" "}
+              . A confirmation is on its way to{" "}
               <span className="break-words text-navy">{email.trim()}</span>
             </>
           ) : null}
@@ -196,7 +195,7 @@ export default function ContactForm() {
 
         {status === "error" && (
           <p className="text-[13px] text-red-600">
-            Something went wrong — please try again.
+            Something went wrong. Please try again.
           </p>
         )}
 

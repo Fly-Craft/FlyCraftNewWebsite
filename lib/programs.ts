@@ -55,9 +55,9 @@ export const PROGRAMS: Program[] = [
     titleLead: "Aircraft",
     titleEmphasis: "Leaseback",
     label: "Aircraft Leaseback",
-    body: "You own the airplane, and it flies on CRAFT's Part 135 certificate. We cover the costs of operating the aircraft — crew, maintenance, and compliance — while you capture the bonus depreciation tax benefit of ownership and get access to our entire fleet of Challenger 300, 350, and 3500 aircraft. You can always fly, even when your jet is down for its scheduled maintenance.",
+    body: "You own the airplane, and it flies on CRAFT's Part 135 certificate. We cover the costs of operating the aircraft, including crew, maintenance, and compliance. You capture the bonus depreciation tax benefit of ownership and get access to our entire fleet of Challenger 300, 350, and 3500 aircraft. You can always fly, even when your jet is down for its scheduled maintenance.",
     points: [
-      "You own the aircraft — and its bonus depreciation tax benefit",
+      "You own the aircraft and its bonus depreciation tax benefit",
       "We cover the costs of operating the aircraft",
       "Access to the entire CRAFT Challenger fleet",
     ],
@@ -77,11 +77,11 @@ export const PROGRAMS: Program[] = [
     titleLead: "Fleet",
     titleEmphasis: "Jet Card",
     label: "Fleet Jet Card",
-    body: "Fleet access at a discounted hourly rate — thousands of dollars an hour below what a broker charges, because there is no broker. You book and communicate directly with the operator flying the aircraft. In exchange, callouts run at least five days ahead, which makes this the right card for people who plan their travel rather than chase it.",
+    body: "Fleet access at a discounted hourly rate. It runs thousands of dollars an hour below what a broker charges, because there is no broker. You book and communicate directly with the operator flying the aircraft. In exchange, callouts run at least five days ahead. This is the card for people who plan their travel rather than chase it.",
     points: [
       "Thousands per hour less than booking through a broker",
       "Book and communicate directly with the operator",
-      "Five-day minimum callout — built for planning ahead",
+      "Five-day minimum callout, built for planning ahead",
       "Starting at 25 hours per year",
     ],
     // 25 is the programme's entry point, so the field can't take less.
@@ -102,7 +102,7 @@ export const PROGRAMS: Program[] = [
     titleLead: "Corporate",
     titleEmphasis: "Program",
     label: "Corporate Program",
-    body: "Tailored travel solutions for companies moving executives on their own schedule, with dedicated account management built for the way corporations operate. We stay flexible around last-minute changes, and because you fly the same fleet, your team builds a real, intimate relationship with our crews — one reason satisfaction runs so high among the companies already flying with us.",
+    body: "Travel built around companies that move executives on their own schedule, with dedicated account management for the way corporations operate. We stay flexible around last-minute changes, and because you fly the same fleet, your team gets to know our crews well. That's one reason satisfaction runs so high among the companies already flying with us.",
     points: [
       "Dedicated account manager",
       "Billing and reporting made easy for corporate structures",
@@ -125,7 +125,7 @@ export const PROGRAMS: Program[] = [
     titleLead: "Glidepath",
     titleEmphasis: "Exchange Fund",
     label: "Glidepath Exchange Fund",
-    body: "A way into private aviation that starts with your portfolio rather than an aircraft purchase. Investors contribute a concentrated stock position to an exchange fund and diversify it without triggering a taxable event — and membership opens the door to the CRAFT Challenger fleet at exceptionally low hourly rates, with all the access of ownership and none of the tail.",
+    body: "A way into private aviation that starts with your portfolio rather than an aircraft purchase. Investors contribute a concentrated stock position to an exchange fund and diversify it without triggering a taxable event. Membership also opens the door to the CRAFT Challenger fleet at exceptionally low hourly rates, with all the access of ownership and none of the tail.",
     points: [
       "Diversify a concentrated stock position without selling",
       "Fleet access at exceptionally low hourly rates",

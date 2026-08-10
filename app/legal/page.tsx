@@ -18,7 +18,7 @@ const SECTIONS = [
     label: "Air Carrier Disclosure",
     paragraphs: [
       "Craft Charter, LLC is an FAA-certificated direct air carrier operating under Part 135 of the Federal Aviation Regulations. All flights operated by Craft Charter, LLC are conducted under its air carrier certificate and are subject to the operational control of Craft Charter, LLC.",
-      "From time to time, CRAFT may arrange flights on aircraft operated by other FAA-certificated direct air carriers. In those cases, the operating carrier — not CRAFT — exercises full operational control of the flight, and CRAFT acts solely as an authorized agent in arranging the transportation. The identity of the operating carrier will be disclosed prior to flight.",
+      "From time to time, CRAFT may arrange flights on aircraft operated by other FAA-certificated direct air carriers. In those cases, the operating carrier, not CRAFT, exercises full operational control of the flight, and CRAFT acts solely as an authorized agent in arranging the transportation. The identity of the operating carrier will be disclosed prior to flight.",
     ],
   },
   {
@@ -43,19 +43,19 @@ const SECTIONS = [
   {
     label: "Intellectual Property",
     paragraphs: [
-      "All content on this website — including text, photography, graphics, logos, and the CRAFT name and marks — is the property of Craft Charter, LLC or its licensors and is protected by applicable intellectual property laws. No content may be reproduced, distributed, or used for commercial purposes without prior written permission.",
+      "All content on this website, including text, photography, graphics, logos, and the CRAFT name and marks, is the property of Craft Charter, LLC or its licensors and is protected by applicable intellectual property laws. No content may be reproduced, distributed, or used for commercial purposes without prior written permission.",
     ],
   },
   {
     label: "Disclaimer & Limitation of Liability",
     paragraphs: [
-      "This website is provided “as is” and “as available” without warranties of any kind, express or implied. While we work to keep the information on this site accurate and current — including aircraft specifications, range figures, and performance data — it is provided for general reference only and may change without notice. To the fullest extent permitted by law, Craft Charter, LLC shall not be liable for any indirect, incidental, or consequential damages arising from the use of, or inability to use, this website. Nothing in these terms limits any liability that cannot be limited under applicable law, including liability arising under the terms of a signed charter agreement.",
+      "This website is provided “as is” and “as available” without warranties of any kind, express or implied. While we work to keep the information on this site accurate and current (including aircraft specifications, range figures, and performance data), it is provided for general reference only and may change without notice. To the fullest extent permitted by law, Craft Charter, LLC shall not be liable for any indirect, incidental, or consequential damages arising from the use of, or inability to use, this website. Nothing in these terms limits any liability that cannot be limited under applicable law, including liability arising under the terms of a signed charter agreement.",
     ],
   },
   {
     label: "Privacy",
     paragraphs: [
-      "Information you submit through this website — such as your name, contact details, and trip preferences — is used solely to respond to your request and provide our services. We do not sell your personal information. For any privacy questions, or to request access to or deletion of your information, contact us at the email below.",
+      "Information you submit through this website, such as your name, contact details, and trip preferences, is used solely to respond to your request and provide our services. We do not sell your personal information. For any privacy questions, or to request access to or deletion of your information, contact us at the email below.",
     ],
   },
   {
@@ -104,7 +104,7 @@ export default function LegalPage() {
           </ul>
 
           <p className="mt-10 text-[13px] font-light leading-relaxed text-ink-3">
-            Questions about any of the above? Contact us at{" "}
+            For questions about any of the above, contact us at{" "}
             <a
               href={`mailto:${siteConfig.contactEmail}`}
               className="text-navy underline underline-offset-4 transition-opacity hover:opacity-60"

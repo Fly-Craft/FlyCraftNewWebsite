@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   // "| CRAFT", so a template would render "Contact | CRAFT | CRAFT".
   title: "CRAFT | Private Jet Charter",
   description:
-    "CRAFT is a Part 135 air carrier operating an all-Challenger fleet for private charter from Miami — the operator, not a brokerage.",
+    "CRAFT is a Part 135 air carrier operating an all-Challenger fleet for private charter from Miami. We're the operator, not a brokerage.",
   applicationName: "CRAFT",
   alternates: { canonical: "/" },
   openGraph: {
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     url: siteUrl,
     title: "CRAFT | Private Jet Charter",
     description:
-      "A Part 135 air carrier operating its own all-Challenger fleet from Miami. We're the operator — not a brokerage.",
+      "A Part 135 air carrier operating its own all-Challenger fleet from Miami. We're the operator, not a brokerage.",
   },
   twitter: {
     card: "summary_large_image",

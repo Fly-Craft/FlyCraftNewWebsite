@@ -6,7 +6,7 @@ const a = AIRCRAFT.find((x) => x.slug === "n150mb")!;
 
 export const metadata: Metadata = {
   title: `POD ${a.pod} — ${a.tail} | Challenger ${a.model} | CRAFT`,
-  description: `CRAFT's Challenger ${a.model} — ${a.tail}. Super mid-size charter aircraft with transcontinental range and premium amenities.`,
+  description: `CRAFT's Challenger ${a.model}, tail ${a.tail}. Super-midsize charter aircraft with transcontinental range and premium amenities.`,
 };
 
 export default function Page() {

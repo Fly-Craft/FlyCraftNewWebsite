@@ -32,15 +32,15 @@ export default function AboutSections() {
             <span className="font-medium">Then a fleet of them.</span>
           </h2>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
-            CRAFT started in 2020 in Miami with a single Challenger 300 and a
-            simple conviction: private aviation should feel personal, not
-            transactional. Flight after flight, that conviction earned the
-            company its next aircraft — and the one after that.
+            CRAFT started in 2020 in Miami with a single Challenger 300 and
+            one belief: private aviation should feel personal, not
+            transactional. Flight after flight, that belief earned the
+            company its next aircraft, and then the one after that.
           </p>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
             More than 45,000 flight hours later, CRAFT operates a streamlined
-            all-Challenger fleet, every cabin fully renovated and equipped
-            with Starlink internet, Live TV, and Apple TV — so the office, or
+            all-Challenger fleet. Every cabin is fully renovated and equipped
+            with Starlink internet, Live TV, and Apple TV, so the office, or
             the movie night, comes with you.
           </p>
         </div>
@@ -59,13 +59,13 @@ export default function AboutSections() {
           </h2>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
             Since 2020, CRAFT has flown tens of thousands of hours without an
-            accident. That record isn&apos;t luck — it&apos;s the product of
-            standards we refuse to bend, audited and verified by the two most
-            respected independent safety authorities in aviation.
+            accident. That record comes from standards we refuse to bend,
+            audited and verified by the two most respected independent safety
+            authorities in aviation.
           </p>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
-            CRAFT is ARGUS Platinum rated — a distinction earned by a small
-            fraction of charter operators worldwide — and Wyvern certified.
+            CRAFT is ARGUS Platinum rated and Wyvern certified. Only a small
+            fraction of charter operators worldwide hold the Platinum rating.
           </p>
           <div className="mt-2 flex w-full items-center justify-center gap-8">
             <a
@@ -125,14 +125,14 @@ export default function AboutSections() {
           </h2>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
             At CRAFT, we hire for character before anything else. We believe
-            the personality and human quality of our people is what truly
-            builds a healthy, functioning company — the kind of dynamic where
-            colleagues look out for one another, and that care carries all the
-            way through to how we treat the people we fly.
+            the personality and human quality of our people is what builds a
+            healthy, functioning company, one where colleagues look out for
+            one another. That care carries all the way through to how we
+            treat the people we fly.
           </p>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
             None of that comes at the expense of professionalism. Our team
-            holds itself to the highest standards in the business — but we
+            holds itself to the highest standards in the business. But we
             never forget that behind every flight, and every relationship, are
             real people who take genuine pride in getting it right.
           </p>
@@ -158,7 +158,7 @@ export default function AboutSections() {
           </h2>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
             CRAFT runs in-house maintenance at our Opa-locka home base. The
-            same technicians see the same airframes week after week — they
+            same technicians see the same airframes week after week. They
             know every aircraft&apos;s history because they wrote it.
           </p>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">

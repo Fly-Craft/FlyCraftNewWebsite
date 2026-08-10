@@ -565,7 +565,7 @@ export default function CharterBooking() {
         legs: legList(overRange),
         text: `${
           overRange.length > 1 ? "These legs exceed" : "This leg exceeds"
-        } the airplane's range — a fuel stop will be required.`,
+        } the airplane's range. A fuel stop will be required.`,
       });
     } else if (longLegs.length > 0) {
       ns.push({
@@ -583,7 +583,7 @@ export default function CharterBooking() {
       ns.push({
         id: "dca",
         title: "Expert Tip",
-        text: "Additional security and coordination costs are required at DCA — the best option is to land in IAD.",
+        text: "Additional security and coordination costs are required at DCA. The best option is to land in IAD.",
       });
     }
     // Generic Class B tip (DCA gets its own, more specific note above)
@@ -599,7 +599,7 @@ export default function CharterBooking() {
         legs: classB.join(" · "),
         text: `Airport fees and fuel prices may be expensive at ${
           classB.length > 1 ? "these large international airports" : classB[0]
-        } — consider selecting a smaller airport nearby for cost saving.`,
+        }. Consider selecting a smaller airport nearby for cost saving.`,
       });
     }
 
@@ -626,13 +626,13 @@ export default function CharterBooking() {
       ns.push({
         id: "blackout",
         title: "Blackout Date",
-        text: `${hits[0]} is considered a blackout date — prices and demand are higher than usual.`,
+        text: `${hits[0]} is considered a blackout date. Prices and demand are higher than usual.`,
       });
     } else if (hits.length > 1) {
       ns.push({
         id: "blackout",
         title: "Blackout Dates",
-        text: `${hits.slice(0, -1).join(", ")} and ${hits[hits.length - 1]} are considered blackout dates — prices and demand are higher than usual.`,
+        text: `${hits.slice(0, -1).join(", ")} and ${hits[hits.length - 1]} are considered blackout dates. Prices and demand are higher than usual.`,
       });
     }
 
@@ -880,7 +880,7 @@ export default function CharterBooking() {
           legs: legPayload,
           passengers:
             showAllTripsToggle && !paxAllTrips
-              ? "Varies by leg — see below"
+              ? "Varies by leg (see below)"
               : paxTbd
                 ? "TBD"
                 : pax,
@@ -1079,7 +1079,7 @@ export default function CharterBooking() {
                 {returnTurnViolation && returnMinDep && (
                   <p className="text-[11px] font-light text-red-600">
                     The return can&apos;t depart within {TURN_MINUTES} minutes
-                    of the outbound landing — earliest{" "}
+                    of the outbound landing. The earliest{" "}
                     {retTimeMode === "arrive" ? "arrival" : "departure"} is{" "}
                     {fmtMinDeparture(returnMinDep)} local.
                   </p>
@@ -1192,7 +1192,7 @@ export default function CharterBooking() {
                 {legTurnViolations[i] && minDeps[i] && (
                   <p className="text-[11px] font-light text-red-600">
                     Leg {i + 1} can&apos;t depart within {TURN_MINUTES} minutes
-                    of leg {i} landing — earliest{" "}
+                    of leg {i} landing. The earliest{" "}
                     {leg.timeMode === "arrive" ? "arrival" : "departure"} is{" "}
                     {fmtMinDeparture(minDeps[i]!)} local.
                   </p>
@@ -1429,8 +1429,8 @@ export default function CharterBooking() {
                     </span>
                   </div>
                   <p className="text-[11px] font-light text-ink-3">
-                    Of your total passenger count — at least one adult must stay
-                    on board.
+                    Part of your total passenger count. At least one adult must
+                    stay on board.
                   </p>
                 </div>
               )}
@@ -1467,8 +1467,8 @@ export default function CharterBooking() {
                     </span>
                   </div>
                   <p className="text-[11px] font-light text-ink-3">
-                    Under-2s may sit in an infant seat or on an adult&apos;s lap —
-                    a minor can&apos;t hold one.
+                    Under-2s may sit in an infant seat or on an adult&apos;s lap.
+                    A minor can&apos;t hold one.
                   </p>
                 </div>
               )}
@@ -1558,7 +1558,7 @@ export default function CharterBooking() {
                 </div>
               ))}
               <p className="text-[11px] font-light text-ink-3">
-                Select at least one request per leg — or TBD if you&apos;d
+                Select at least one request per leg, or TBD if you&apos;d
                 rather decide later.
               </p>
             </div>
@@ -1823,7 +1823,7 @@ export default function CharterBooking() {
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               rows={4}
-              placeholder="Anything else we should know — catering preferences, ground transport details, special requests…"
+              placeholder="Anything else we should know: catering preferences, ground transport details, special requests…"
               className={`${inputCls} resize-none placeholder:text-ink-3/60`}
             />
           </div>
@@ -1839,7 +1839,7 @@ export default function CharterBooking() {
 
         {status === "error" && (
           <p className="text-center text-[12px] text-red-600">
-            Something went wrong — please try again, or call{" "}
+            Something went wrong. Please try again, or call{" "}
             {siteConfig.charterSalesPhoneDisplay}.
           </p>
         )}
@@ -1859,7 +1859,7 @@ export default function CharterBooking() {
       <div className="order-1 lg:sticky lg:top-28 lg:order-2">
         <RouteMap routes={mapRoutes} pending={pendingAirports} notices={mapNotices} />
         <p className="mt-4 text-center text-[11px] font-light tracking-[0.06em] text-ink-3">
-          Estimated flight time is shown — weather and airspace restrictions
+          Estimated flight time is shown. Weather and airspace restrictions
           may impact it.
         </p>
       </div>

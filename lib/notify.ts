@@ -246,7 +246,7 @@ function buildHtml(name: string, lead: string, rows: SummaryRow[]): string {
         <tr><td style="font:300 26px/1.25 Helvetica,Arial,sans-serif;color:${NAVY};padding-bottom:14px;">We&rsquo;ve received your ${escapeHtml(lead)}.</td></tr>
 
         <tr><td style="font:300 15px/1.7 Helvetica,Arial,sans-serif;color:${INK2};padding-bottom:8px;">
-          ${escapeHtml(name)} &mdash; thank you. A member of our team will reach back within the next 24 hours.
+          ${escapeHtml(name)}, thank you. A member of our team will reach back within the next 24 hours.
         </td></tr>
         <tr><td style="font:300 15px/1.7 Helvetica,Arial,sans-serif;color:${INK2};padding-bottom:30px;">
           If it&rsquo;s urgent, call Charter Sales on
@@ -265,7 +265,7 @@ function buildHtml(name: string, lead: string, rows: SummaryRow[]): string {
 
         <tr><td style="padding-top:30px;border-top:1px solid ${BORDER};font:300 12px/1.6 Helvetica,Arial,sans-serif;color:${INK3};">
           CRAFT &middot; ${escapeHtml(siteConfig.address)}<br>
-          This is an automated confirmation &mdash; replying to it reaches our team.
+          This is an automated confirmation. Replying to it reaches our team.
         </td></tr>
       </table>
     </td></tr>
@@ -282,7 +282,7 @@ function buildText(name: string, lead: string, rows: SummaryRow[]): string {
     ``,
     `We've received your ${lead}.`,
     ``,
-    `${name} — thank you. A member of our team will reach back within the next 24 hours.`,
+    `${name}, thank you. A member of our team will reach back within the next 24 hours.`,
     `If it's urgent, call Charter Sales on ${siteConfig.charterSalesPhoneDisplay}.`,
     ...(body.length ? [``, `What you sent us`, ``, ...body] : []),
     ``,
@@ -290,7 +290,7 @@ function buildText(name: string, lead: string, rows: SummaryRow[]): string {
     ...EXPLORE.map((l) => `  ${l.label}: ${siteUrl}${l.href}`),
     ``,
     `CRAFT · ${siteConfig.address}`,
-    `This is an automated confirmation — replying to it reaches our team.`,
+    `This is an automated confirmation. Replying to it reaches our team.`,
   ].join("\n");
 }
 
@@ -333,7 +333,7 @@ export async function sendConfirmation(args: ConfirmationArgs): Promise<{
     } else {
       email = await sendMail({
         to,
-        subject: `We've received your ${args.lead} — CRAFT`,
+        subject: `CRAFT: we've received your ${args.lead}`,
         text: buildText(name, args.lead, rows),
         html: buildHtml(name, args.lead, rows),
         replyTo: siteConfig.contactEmail,

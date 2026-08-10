@@ -7,7 +7,7 @@ import { siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "Glidepath | CRAFT",
   description:
-    "Glidepath is an independent 721 exchange fund — diversify a concentrated stock position with no tax event, and unlock the CRAFT fleet at a preferred hourly rate.",
+    "Glidepath is an independent 721 exchange fund. Diversify a concentrated stock position with no tax event, and fly the CRAFT fleet at a preferred hourly rate.",
 };
 
 /* ── Published figures ─────────────────────────────────────────
@@ -22,7 +22,7 @@ const PROOF = [
   },
   {
     value: "$0",
-    label: "tax due at contribution — and no management fee, ever",
+    label: "tax due at contribution. No management fee, ever",
   },
   {
     value: "§721",
@@ -33,7 +33,7 @@ const PROOF = [
 const MOVES = [
   {
     label: "Contribute In-Kind",
-    text: "Appreciated stock goes into the fund under Section 721. That's not a sale — no tax event, and 100% of your pre-tax balance keeps compounding.",
+    text: "Appreciated stock goes into the fund under Section 721. That's not a sale, so there's no tax event and 100% of your pre-tax balance keeps compounding.",
   },
   {
     label: "Diversify Day One",
@@ -41,7 +41,7 @@ const MOVES = [
   },
   {
     label: "Redeem After 7 Years + 1 Day",
-    text: "Exit into liquid ETF shares with carryover basis — the deferral holds until you actually need the cash.",
+    text: "Exit into liquid ETF shares with carryover basis. The deferral holds until you actually need the cash.",
   },
 ];
 
@@ -90,7 +90,7 @@ export default function GlidepathPage() {
         <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-16">
           <div className="flex flex-col">
             <p className="mb-5 text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase">
-              Glidepath — An Independent 721 Exchange Fund
+              Glidepath: An Independent 721 Exchange Fund
             </p>
             {/* Set smaller than the other display titles on purpose. This
                 one shares its row with Natan's card, so the heading column
@@ -102,8 +102,8 @@ export default function GlidepathPage() {
               Keep more. <span className="font-medium">Compound everything.</span>
             </h1>
             <p className="mt-6 max-w-xl text-[15px] font-light leading-relaxed text-ink-2">
-              Exchange a concentrated stock position — no sale, no tax event —
-              and unlock the CRAFT fleet at a preferred hourly rate.
+              Exchange a concentrated stock position. No sale, no tax event, and
+              access to the CRAFT fleet at a preferred hourly rate.
             </p>
           </div>
           <div className="lg:shrink-0">
@@ -116,7 +116,7 @@ export default function GlidepathPage() {
       <section className="px-6 pb-6 sm:px-20">
         <DivergenceChart />
         <div className="mt-10 flex flex-col items-center gap-4 text-center">
-          <GlidepathCta label="See Your Numbers — 30 Seconds" />
+          <GlidepathCta label="See Your Numbers In 30 Seconds" />
           <p className="max-w-md text-[12px] font-light text-ink-3">
             Projections, eligibility, and closings live at glidepath.ai.
           </p>
@@ -195,7 +195,7 @@ export default function GlidepathPage() {
         <div className="mt-14 flex flex-col items-center gap-4 text-center">
           <GlidepathCta label="Run It With Your Ticker" />
           <p className="text-[12px] font-light text-ink-3">
-            glidepath.ai — your projection in 30 seconds.
+            glidepath.ai. Your projection in 30 seconds.
           </p>
         </div>
       </section>
@@ -209,7 +209,7 @@ export default function GlidepathPage() {
                 The Operator
               </p>
               <p className="text-[15px] font-light leading-relaxed text-ink-2">
-                <span className="font-medium text-navy">CRAFT</span> — a Part
+                <span className="font-medium text-navy">CRAFT</span> is a Part
                 135 air carrier flying an all-Challenger fleet. When you fly,
                 CRAFT is the company operating your aircraft.
               </p>
@@ -219,16 +219,16 @@ export default function GlidepathPage() {
                 The Fund
               </p>
               <p className="text-[15px] font-light leading-relaxed text-ink-2">
-                <span className="font-medium text-navy">Glidepath</span> — a
+                <span className="font-medium text-navy">Glidepath</span> is a
                 fully independent 721 exchange fund that holds the CRAFT fleet
                 among its assets.
               </p>
             </div>
           </div>
           <p className="mt-8 border-t border-border pt-6 text-[15px] font-light leading-relaxed text-ink-2">
-            The overlap is the perk —{" "}
+            The overlap is the perk.{" "}
             <span className="font-medium text-navy">
-              fund investors fly the CRAFT fleet at a preferred hourly rate
+              Fund investors fly the CRAFT fleet at a preferred hourly rate
             </span>{" "}
             below public charter pricing. Use it weekly or never; the fund
             works either way.
@@ -248,8 +248,8 @@ export default function GlidepathPage() {
             <span className="font-medium">Reserve yours.</span>
           </h2>
           <p className="max-w-xl text-[15px] font-light leading-relaxed text-white/80">
-            Eligibility, live projections, and the current closing all run at
-            glidepath.ai.
+            Eligibility and live projections run at glidepath.ai, along with the
+            current closing.
           </p>
           <a
             href={siteConfig.glidepathUrl}
@@ -270,7 +270,7 @@ export default function GlidepathPage() {
           </a>
           <p className="max-w-xl text-[11px] font-light leading-relaxed text-white/50">
             Glidepath is not owned or offered by Craft Charter, LLC. Nothing on
-            this page is an offer of securities — any offer is made solely
+            this page is an offer of securities. Any offer is made solely
             through the fund&apos;s official documents at glidepath.ai.
           </p>
         </div>

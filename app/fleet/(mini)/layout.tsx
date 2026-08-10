@@ -4,7 +4,7 @@ import FleetShell from "@/components/fleet/FleetShell";
 
 export const metadata: Metadata = {
   title: "The Fleet | CRAFT",
-  description: "CRAFT's curated fleet of private charter aircraft.",
+  description: "CRAFT's fleet of private charter aircraft.",
 };
 
 export default function FleetLayout({

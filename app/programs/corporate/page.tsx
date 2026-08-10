@@ -6,7 +6,7 @@ import CorporateProgramForm from "@/components/CorporateProgramForm";
 export const metadata: Metadata = {
   title: "Corporate Program | CRAFT",
   description:
-    "Tell us how your team flies and we'll build a corporate program around it — dedicated account management, predictable billing, and concierge service.",
+    "Tell us how your team flies and we'll build a corporate program around it. Dedicated account management, predictable billing, and concierge service.",
 };
 
 export default function CorporateProgramPage() {
@@ -19,7 +19,7 @@ export default function CorporateProgramPage() {
             Build Your <span className="font-medium">Program</span>
           </>
         }
-        subtitle="Tell us how your team flies — where you're based, how much you fly, and where you go — and we'll shape a program around it."
+        subtitle="Tell us where your team is based, how much you fly, and where you go. We'll shape a program around that."
         divider={false}
         aside={<PreferToTalk />}
       />

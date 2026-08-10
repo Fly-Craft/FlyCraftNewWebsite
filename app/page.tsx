@@ -30,14 +30,15 @@ export default function Home() {
             <span className="font-medium">Flown like family ever since.</span>
           </h2>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
-            CRAFT was founded in 2020 and has built a strong track record in
-            the charter industry — flight after flight, year after year.
+            CRAFT was founded in 2020 and has grown flight by flight ever
+            since, but the way we work hasn&apos;t changed. We&apos;re a
+            small, tight-knit team, and the people who plan your trip are the
+            same people who answer when your plans change at the last minute.
           </p>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
-            We hold ourselves to the highest safety standards in the business,
-            and we pair that discipline with something rarer: a warm,
-            family-like service where our team knows you, your preferences,
-            and what it takes to make every trip feel effortless.
+            That&apos;s what we mean by flying like family. We learn how you
+            like to fly and we remember it, so you never have to explain
+            yourself twice.
           </p>
           <Link
             href="/company"
@@ -59,13 +60,15 @@ export default function Home() {
             <span className="font-medium">Challenger Fleet</span>
           </h2>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
-            We operate Challenger 300 and 350 aircraft, all equipped with
-            Starlink internet, Live TV, and Bluetooth speakers.
+            We fly an all-Challenger fleet of 300s and 350s, the most common
+            super-midsize jets in the sky. Every cabin is fitted with Starlink
+            internet, Live TV, and Bluetooth audio.
           </p>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
-            The Challenger fleet is the perfect charter aircraft for North
-            America — perfect range, a flat floor, and the ability to land at
-            almost any airport.
+            Super-midsize is the right aircraft for North America. The
+            Challenger crosses the continent nonstop, with a flat floor and a
+            stand-up cabin for the hours in between, and it can use almost any
+            airport, including the small ones nearest your destination.
           </p>
           <Link
             href="/fleet"
@@ -109,8 +112,8 @@ export default function Home() {
           </p>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
             We run a risk assessment before every trip and debrief anything
-            that didn&apos;t go according to plan — a habit many of our
-            pilots carry over from flying in the Air Force. It&apos;s part
+            that didn&apos;t go according to plan. Many of our pilots carry
+            that habit over from flying in the Air Force. It&apos;s part
             of an open discussion culture that puts safety first, and gives
             us full faith in our crews to fly every trip as safely as
             possible.
@@ -135,13 +138,15 @@ export default function Home() {
             <span className="font-medium">Glidepath</span>
           </h2>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
-            Glidepath is a revolutionary way to access aircraft ownership
-            while diversifying a concentrated stock position — by joining
-            the CRAFT Exchange Fund.
+            Glidepath solves one problem, which is having too much of your net
+            worth riding on a single stock. It&apos;s an independent 721
+            exchange fund, so you contribute appreciated shares in-kind with no
+            sale and no tax event.
           </p>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
-            It&apos;s a first-of-its-kind solution in the private aviation
-            space, and it has already attracted a lot of interest.
+            The added benefit comes from what the fund holds. The CRAFT fleet
+            is among its assets, so investors fly these same Challengers at a
+            preferred hourly rate, below public charter pricing.
           </p>
           <a
             href={siteConfig.glidepathUrl}

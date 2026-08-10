@@ -51,13 +51,13 @@ export default async function MenuPage({
 
         {/* Right: snack grid */}
         <div className="snack-grid-bg">
-          <p className="snack-grid-intro">Partnering with Luxury Gourmet Sweets, we&apos;ve developed bespoke snack offerings tailored exclusively for our clients, elevating the in-flight experience with thoughtfully curated, premium treats.</p>
+          <p className="snack-grid-intro">Partnering with Luxury Gourmet Sweets, we&apos;ve developed a snack selection made specifically for our clients. Each item is chosen for quality, and the whole range is served on board.</p>
         <div className="menu-page-right">
 
           <div className="snack-card">
             <div className="snack-card-title">Classic Gummy Bears</div>
             <img src="/assets/Snacks/Gummy.png" alt="Classic Gummy Bears" className="snack-card-img" />
-            <p className="snack-card-desc">Soft, fruity, and colorful — a timeless treat served in a generous 110g jar.</p>
+            <p className="snack-card-desc">Soft, fruity, and colorful. A timeless treat served in a generous 110g jar.</p>
           </div>
 
           <div className="snack-card">
@@ -77,7 +77,7 @@ export default async function MenuPage({
           <div className="snack-card">
             <div className="snack-card-title">Premium Nut Blend</div>
             <img src="/assets/Snacks/Nuts.png" alt="Premium Nut Blend" className="snack-card-img" />
-            <p className="snack-card-desc">A curated mix of roasted cashews, almonds, and pistachios for a satisfying savory bite.</p>
+            <p className="snack-card-desc">A roasted mix of cashews, almonds, and pistachios for a satisfying savory bite.</p>
             <span className="snack-card-kosher">Kosher</span>
           </div>
 

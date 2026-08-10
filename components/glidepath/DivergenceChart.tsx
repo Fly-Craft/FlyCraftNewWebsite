@@ -118,7 +118,7 @@ export default function DivergenceChart() {
     <div
       className="w-full"
       role="img"
-      aria-label={`Chart: exchanging a $1,000,000 position under Section 721 instead of selling it leaves ${fmt(DELTA)} more value at year seven. Illustrative — assumptions at glidepath.ai.`}
+      aria-label={`Chart: exchanging a $1,000,000 position under Section 721 instead of selling it leaves ${fmt(DELTA)} more value at year seven. Illustrative. Assumptions at glidepath.ai.`}
     >
       {/* The delta readout sits above the plot rather than inside it —
           overlaid, its third line landed on the exchange curve's tip.
@@ -135,7 +135,7 @@ export default function DivergenceChart() {
           More at year 7 · $1M NVDA position
         </span>
         <span className="mt-1.5 block text-[10px] font-light text-ink-3">
-          Illustrative — assumptions at glidepath.ai
+          Illustrative. Assumptions at glidepath.ai
         </span>
       </div>
 
@@ -269,7 +269,7 @@ export default function DivergenceChart() {
           Year 7 + 1 Day
         </span>
         <span className="absolute left-[4%] top-[91%] hidden text-[11px] font-light text-ink-3 sm:block">
-          the tax hit — capital gains due the day you sell
+          the tax hit: capital gains due the day you sell
         </span>
         <span
           className={`absolute left-[56%] top-[78%] hidden sm:block ${micro}`}

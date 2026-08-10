@@ -6,7 +6,7 @@ const EXECS = [
     mobileOrder: "max-lg:order-4",
     name: "Tania Ureta",
     role: "Accounting & Finance Lead",
-    bio: "A CPA with a background at Univision and Big Language Solutions, Tania has led CRAFT's finance and accounting for the past three years — from charter billing to the reporting that keeps a growing fleet on the books.",
+    bio: "A CPA with a background at Univision and Big Language Solutions, Tania has led CRAFT's finance and accounting for the past three years, from charter billing to the reporting that keeps a growing fleet on the books.",
   },
   {
     img: "/faces/natan.webp",
@@ -20,21 +20,21 @@ const EXECS = [
     mobileOrder: "max-lg:order-1",
     name: "Israel Slodowitz",
     role: "Founder & CEO",
-    bio: "A former IDF combat soldier and USC Marshall graduate, Izzy founded CRAFT in 2020 and built it into an all-Challenger operator trusted by the industry's biggest names — flying everyone from heads of state to touring artists.",
+    bio: "A former IDF combat soldier and USC Marshall graduate, Izzy founded CRAFT in 2020 and built it into an all-Challenger operator trusted by the industry's biggest names, flying everyone from heads of state to touring artists.",
   },
   {
     img: "/faces/roy.webp",
     mobileOrder: "max-lg:order-3",
     name: "Roy Naor",
     role: "Flight Operation Lead",
-    bio: "Roy leads flight operations across the fleet — crews, scheduling, and dispatch — upholding the day-to-day standards that keep every CRAFT flight safe, on time, and flown to spec.",
+    bio: "Roy leads flight operations across the fleet, including crews, scheduling, and dispatch. He upholds the day-to-day standards that keep every CRAFT flight safe, on time, and flown to spec.",
   },
   {
     img: "/faces/shaked.webp",
     mobileOrder: "max-lg:order-5",
     name: "Shaked Rogovsky",
     role: "Client Services Lead",
-    bio: "Shaked came to CRAFT from Israel's Ministry of Defense and the Israeli Air Force, bringing a service mindset forged under pressure. He leads client services — the team that owns every trip from first quote to touchdown.",
+    bio: "Shaked came to CRAFT from Israel's Ministry of Defense and the Israeli Air Force, bringing a service mindset forged under pressure. He leads client services, the team that owns every trip from first quote to touchdown.",
   },
 ];
 

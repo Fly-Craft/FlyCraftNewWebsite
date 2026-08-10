@@ -6,7 +6,7 @@ import SafetySections from "@/components/company/SafetySections";
 export const metadata: Metadata = {
   title: "Company | CRAFT",
   description:
-    "CRAFT is a Miami-based private jet operator founded in 2020 — an all-Challenger fleet, 45,000+ flight hours, ARGUS Platinum rated and Wyvern certified, with a warm, family-like standard of service.",
+    "CRAFT is a Miami-based private jet operator founded in 2020. All-Challenger fleet, 45,000+ flight hours, ARGUS Platinum rated and Wyvern certified, with a warm, family-like standard of service.",
 };
 
 export default function CompanyPage() {

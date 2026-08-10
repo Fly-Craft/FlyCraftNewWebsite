@@ -17,10 +17,10 @@ const TABS: readonly SegmentedOption<Tab>[] = [
    and the toggle never shift as you slide between them. */
 const BLURBS: Record<Tab, string> = {
   contact:
-    "Send us the outline of your trip and Charter Sales will come back with a quote — or reach them directly if you'd rather talk it through.",
+    "Send us the outline of your trip and Charter Sales will come back with a quote. If you'd rather talk it through, reach them directly.",
   planner:
-    "Tell us the route and timing, tailor the details, and our team comes back with availability and a price built for that specific trip.",
-  asap: "When a trip needs to move today, skip the form — call Shaked or Paul directly and they'll price whatever we have available right now.",
+    "Tell us the route and timing, fill in the details, and our team comes back with availability and a price built for that specific trip.",
+  asap: "When a trip needs to move today, skip the form. Call Shaked or Paul directly and they'll price whatever we have available right now.",
 };
 
 /**

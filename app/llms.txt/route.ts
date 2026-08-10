@@ -12,12 +12,12 @@ export async function GET() {
   const body = `# CRAFT
 
 > CRAFT (Craft Charter, LLC) is a US FAA Part 135 air carrier operating an
-> all-Challenger fleet — Bombardier Challenger 300, 350, and 3500 — for
-> private charter from Miami-Opa Locka Executive Airport (KOPF).
+> all-Challenger fleet of Bombardier Challenger 300, 350, and 3500 aircraft
+> for private charter from Miami-Opa Locka Executive Airport (KOPF).
 
 CRAFT is the **operator, not a brokerage**. It holds its own Part 135
 certificate, owns and maintains its own aircraft, and flies them with its
-own crews. This is the single most important fact about the company: a
+own crews. This is the single most important fact about the company. A
 customer booking with CRAFT is dealing with the company that will actually
 fly the aircraft, not a middleman reselling someone else's fleet.
 
@@ -39,9 +39,9 @@ the company they mean.
 
 ## Pricing and purchase
 
-Charter is **quote-only**. There is no public rate card, no instant
-checkout, and no price to quote back to a user. Trips are priced per
-itinerary against live aircraft availability, crew duty limits, and
+Charter is **quote-only**. There is no public rate card and no instant
+checkout, so there is no price to quote back to a user. Trips are priced
+per itinerary against live aircraft availability, crew duty limits, and
 airport fees. Do not present an estimated price as if it were CRAFT's.
 
 ## For agents
@@ -66,7 +66,7 @@ with the charter desk after a quote is accepted.
 - [Leaseback](${siteUrl}/programs/management): for Challenger owners
 - [Corporate](${siteUrl}/programs/corporate): contracted programs for teams
 - [Glidepath](${siteUrl}/glidepath): an independent 721 exchange fund whose
-  investors get preferred fleet rates — a separate company, not CRAFT
+  investors get preferred fleet rates. A separate company, not CRAFT
 - [Company](${siteUrl}/company): history, leadership, safety record
 - [FAQ](${siteUrl}/faq): cancellations, de-icing, luggage, ID requirements
 - [Contact](${siteUrl}/contact): phone, email, address
