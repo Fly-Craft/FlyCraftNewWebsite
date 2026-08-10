@@ -59,10 +59,16 @@ export const bookLinks = [
 
 // The four cards on /programs, mirrored in the nav dropdown, in the same
 // order they appear on the page. The Jet Card has no page of its own, so
-// it anchors to its card — see the note in app/programs/page.tsx.
-export const programLinks = [
+// the menu goes straight to its enquiry form. Glidepath is a separate
+// company, so that entry leaves the site — `external` tells the nav to
+// render an <a target="_blank"> instead of a client-side <Link>.
+export const programLinks: {
+  href: string;
+  label: string;
+  external?: true;
+}[] = [
   { href: "/programs/management", label: "Leaseback" },
-  { href: "/programs#jet-card", label: "Jet Card" },
+  { href: "/programs/enquire?program=jet-card", label: "Jet Card" },
   { href: "/programs/corporate", label: "Corporate" },
-  { href: "/glidepath", label: "Glidepath" },
+  { href: siteConfig.glidepathUrl, label: "Glidepath", external: true },
 ];

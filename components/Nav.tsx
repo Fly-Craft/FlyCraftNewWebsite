@@ -18,7 +18,7 @@ const DROPDOWNS: Record<
   {
     width: string;
     itemWidth: string;
-    items: { href: string; label: React.ReactNode }[];
+    items: { href: string; label: React.ReactNode; external?: true }[];
   }
 > = {
   // Narrowest of the three — the tab labels are one short word each. The
@@ -231,15 +231,30 @@ export default function Nav() {
                   <div
                     className={`glass ${menu.width} divide-y divide-navy/10 overflow-hidden rounded-3xl`}
                   >
-                    {menu.items.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className="flex justify-center px-4 py-3 text-[10px] font-medium tracking-[0.2em] text-ink-2 uppercase transition-colors hover:bg-navy/5 hover:text-navy"
-                      >
+                    {menu.items.map((item) => {
+                      const itemCls =
+                        "flex justify-center px-4 py-3 text-[10px] font-medium tracking-[0.2em] text-ink-2 uppercase transition-colors hover:bg-navy/5 hover:text-navy";
+                      const inner = (
                         <span className={menu.itemWidth}>{item.label}</span>
-                      </Link>
-                    ))}
+                      );
+                      // Off-site entries (Glidepath) open in a new tab, the
+                      // same as every other Glidepath link on the site.
+                      return item.external ? (
+                        <a
+                          key={item.href}
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={itemCls}
+                        >
+                          {inner}
+                        </a>
+                      ) : (
+                        <Link key={item.href} href={item.href} className={itemCls}>
+                          {inner}
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
