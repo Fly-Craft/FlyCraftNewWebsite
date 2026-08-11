@@ -84,7 +84,7 @@ export default function ProgramEnquiryDialog({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto overscroll-contain p-4 py-10 sm:p-8 sm:py-14"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 sm:py-8"
       role="dialog"
       aria-modal="true"
       aria-labelledby={titleId}
@@ -96,28 +96,35 @@ export default function ProgramEnquiryDialog({
         aria-hidden="true"
       />
 
+      {/* Capped to the space between the container's padding so the panel
+          can never run off the top or bottom of the screen. The form is
+          sized to fit inside that on a normal laptop or phone; on anything
+          shorter the inner div takes the scroll, which keeps the close
+          button and the programme name pinned in view. */}
       <div
         ref={panelRef}
         tabIndex={-1}
-        className="glass relative my-auto w-full max-w-xl rounded-3xl p-6 pt-14 outline-none sm:p-10 sm:pt-16"
+        className="glass relative flex max-h-full w-full max-w-xl flex-col rounded-3xl outline-none"
       >
         <button
           type="button"
           onClick={close}
           aria-label="Close"
-          className="glass-capsule glass-btn absolute top-5 right-5 flex h-9 w-9 items-center justify-center rounded-full text-[15px] leading-none text-navy sm:top-6 sm:right-6"
+          className="glass-capsule glass-btn absolute top-4 right-4 z-10 flex h-9 w-9 items-center justify-center rounded-full text-[15px] leading-none text-navy sm:top-5 sm:right-5"
         >
           <span aria-hidden="true">&times;</span>
         </button>
 
-        <ProgramEnquiryForm
-          program={program.slug}
-          programLabel={program.label}
-          fields={program.fields}
-          variant="modal"
-          titleId={titleId}
-          onDone={close}
-        />
+        <div className="overflow-y-auto overscroll-contain px-5 pt-12 pb-5 sm:px-8 sm:pt-12 sm:pb-8">
+          <ProgramEnquiryForm
+            program={program.slug}
+            programLabel={program.label}
+            fields={program.fields}
+            variant="modal"
+            titleId={titleId}
+            onDone={close}
+          />
+        </div>
       </div>
     </div>,
     document.body,

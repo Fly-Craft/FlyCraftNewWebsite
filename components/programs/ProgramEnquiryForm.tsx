@@ -5,10 +5,13 @@ import Link from "next/link";
 import { siteConfig, exploreLinks } from "@/lib/site-config";
 import type { Program, ProgramSlug } from "@/lib/programs";
 
-const inputCls =
-  "w-full rounded-xl border border-border bg-white px-4 py-3.5 text-[14px] text-navy outline-none transition-colors focus:border-navy/40 placeholder:text-ink-3/70";
-const microLabel =
-  "mb-2 block text-[10px] font-medium tracking-[0.25em] text-ink-3 uppercase";
+/* Split so the dialog can run tighter than the full-page layout. The whole
+   form has to clear the viewport there without scrolling, and the fields
+   are the only place left to find the room. */
+const inputBase =
+  "w-full rounded-xl border border-border bg-white px-4 text-[14px] text-navy outline-none transition-colors focus:border-navy/40 placeholder:text-ink-3/70";
+const labelBase =
+  "block text-[10px] font-medium tracking-[0.25em] text-ink-3 uppercase";
 
 /**
  * The programme enquiry form. Deliberately separate from the site-wide
@@ -104,6 +107,9 @@ export default function ProgramEnquiryForm({
   }
 
   const isModal = variant === "modal";
+  const inputCls = `${inputBase} ${isModal ? "py-2.5" : "py-3.5"}`;
+  const microLabel = `${isModal ? "mb-1.5" : "mb-2"} ${labelBase}`;
+  const fieldGap = isModal ? "gap-3.5 sm:gap-4" : "gap-6";
 
   if (status === "sent") {
     return (
@@ -192,12 +198,48 @@ export default function ProgramEnquiryForm({
     );
   }
 
+  const companyField = (
+    <div>
+      <label htmlFor="pe-company" className={microLabel}>
+        Company <span className="text-ink-3/60">(required)</span>
+      </label>
+      <input
+        id="pe-company"
+        name="company"
+        type="text"
+        autoComplete="organization"
+        required
+        value={company}
+        onChange={(e) => setCompany(e.target.value)}
+        className={inputCls}
+      />
+    </div>
+  );
+
+  const nameField = (
+    <div>
+      <label htmlFor="pe-name" className={microLabel}>
+        Name <span className="text-ink-3/60">(required)</span>
+      </label>
+      <input
+        id="pe-name"
+        name="name"
+        type="text"
+        autoComplete="name"
+        required
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className={inputCls}
+      />
+    </div>
+  );
+
   const form = (
     <form
       onSubmit={handleSubmit}
       className={
         isModal
-          ? "flex w-full flex-col gap-6"
+          ? "flex w-full flex-col gap-3.5 sm:gap-4"
           : "flex w-full max-w-xl flex-col gap-6 rounded-3xl glass p-8 sm:p-12"
       }
     >
@@ -217,52 +259,30 @@ export default function ProgramEnquiryForm({
       </p>
 
       {/* Company leads on the programmes that ask for it — the enquiry is
-            from the business first and the person second. */}
-      {wantsCompany && (
-        <div>
-          <label htmlFor="pe-company" className={microLabel}>
-            Company <span className="text-ink-3/60">(required)</span>
-          </label>
-          <input
-            id="pe-company"
-            name="company"
-            type="text"
-            autoComplete="organization"
-            required
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-            className={inputCls}
-          />
+            from the business first and the person second. It shares a row
+            with the name on wide screens rather than taking one of its own,
+            which is what pushed the Corporate form past the fold. */}
+      {wantsCompany ? (
+        <div className={`grid grid-cols-1 ${fieldGap} sm:grid-cols-2`}>
+          {companyField}
+          {nameField}
         </div>
+      ) : (
+        nameField
       )}
 
-      <div>
-        <label htmlFor="pe-name" className={microLabel}>
-          Name <span className="text-ink-3/60">(required)</span>
-        </label>
-        <input
-          id="pe-name"
-          name="name"
-          type="text"
-          autoComplete="name"
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className={inputCls}
-        />
-      </div>
-
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div className={`grid grid-cols-1 ${fieldGap} sm:grid-cols-2`}>
         <div>
+          {/* Either one reaches you, so the labels say so. This used to be
+              a line of its own under the pair; the dialog can't spare it. */}
           <label htmlFor="pe-email" className={microLabel}>
-            Email
+            Email <span className="text-ink-3/60">(or phone)</span>
           </label>
           <input
             id="pe-email"
             name="email"
             type="email"
             autoComplete="email"
-            aria-describedby="pe-reach"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className={inputCls}
@@ -270,28 +290,32 @@ export default function ProgramEnquiryForm({
         </div>
         <div>
           <label htmlFor="pe-phone" className={microLabel}>
-            Phone
+            Phone <span className="text-ink-3/60">(or email)</span>
           </label>
           <input
             id="pe-phone"
             name="phone"
             type="tel"
             autoComplete="tel"
-            aria-describedby="pe-reach"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             className={inputCls}
           />
         </div>
       </div>
-      <p id="pe-reach" className="-mt-3 text-[11px] font-light text-ink-3">
-        One of the two is enough, whichever you&apos;d rather we used.
-      </p>
 
       {hoursField && (
         <div>
+          {/* The entry point sits in the label and the reassurance sits in
+              the placeholder, so the normal case costs no extra line. The
+              paragraph below is now only there to carry an error. */}
           <label htmlFor="pe-hours" className={microLabel}>
-            Hours per year <span className="text-ink-3/60">(optional)</span>
+            Hours per year{" "}
+            <span className="text-ink-3/60">
+              {hoursMin !== undefined
+                ? `(optional · from ${hoursMin})`
+                : "(optional)"}
+            </span>
           </label>
           <input
             id="pe-hours"
@@ -300,23 +324,23 @@ export default function ProgramEnquiryForm({
             inputMode="numeric"
             min={hoursMin ?? 1}
             step={1}
-            aria-describedby="pe-hours-help"
+            aria-describedby={hoursInvalid ? "pe-hours-help" : undefined}
             aria-invalid={hoursInvalid || undefined}
             value={hours}
             onChange={(e) => setHours(e.target.value)}
-            placeholder="How many hours do you fly in a year?"
+            placeholder="Leave blank if you're not sure"
             className={`${inputCls} ${hoursInvalid ? "border-red-400" : ""}`}
           />
-          <p
-            id="pe-hours-help"
-            className={`mt-2 text-[11px] font-light ${
-              hoursInvalid ? "text-red-600" : "text-ink-3"
-            }`}
-          >
-            {hoursMin !== undefined
-              ? `Leave it blank if you're not sure. The program starts at ${hoursMin} hours a year.`
-              : "Leave it blank if you're not sure."}
-          </p>
+          {hoursInvalid && (
+            <p
+              id="pe-hours-help"
+              className="mt-2 text-[11px] font-light text-red-600"
+            >
+              {hoursMin !== undefined
+                ? `The program starts at ${hoursMin} hours a year.`
+                : "Enter a number of hours, or leave it blank."}
+            </p>
+          )}
         </div>
       )}
 
@@ -327,7 +351,7 @@ export default function ProgramEnquiryForm({
         <textarea
           id="pe-message"
           name="message"
-          rows={5}
+          rows={isModal ? 3 : 5}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Tell us what you're looking for."
