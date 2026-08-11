@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import OrbitScene from '@/components/fleet/OrbitScene';
-import Footer from '@/components/fleet/Footer';
 import SkyBackdrop from '@/components/SkyBackdrop';
 
 export const metadata: Metadata = {
@@ -13,7 +12,6 @@ export default function HomePage() {
     <>
       <SkyBackdrop />
       <OrbitScene />
-      <Footer variant="light" />
     </>
   );
 }

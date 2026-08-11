@@ -98,20 +98,6 @@ export default async function MenuPage({
         </div>
       </div>
 
-      {/* ── FOOTER ─────────────────────────────────────────────── */}
-      <footer className="footer footer--white">
-        <div className="footer-copy-group">
-          <div className="footer-copy">&copy; 2026 CRAFT. All rights reserved.</div>
-          <div className="footer-links">
-            <Link href="/faq" className="footer-link">FAQ</Link>
-            <Link href="/legal" className="footer-link">Legal</Link>
-            <Link href="/reviews" className="footer-link">Reviews</Link>
-          </div>
-        </div>
-        <div className="footer-logo">
-          <img src="/assets/Logo No.png" alt="Craft" className="footer-logo-img" />
-        </div>
-      </footer>
     </>
   );
 }
