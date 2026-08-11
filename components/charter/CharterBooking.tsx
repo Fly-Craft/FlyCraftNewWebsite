@@ -14,7 +14,6 @@ import {
   zonedToUtc,
 } from "@/lib/flight";
 import AirportSearch from "@/components/charter/AirportSearch";
-import { blackoutLabel } from "@/lib/blackout-dates";
 import { DateField, TimeField } from "@/components/charter/DateTimeFields";
 import RouteMap, { type MapNotice, type MapRoute } from "@/components/charter/RouteMap";
 import SegmentedToggle, { type SegmentedOption } from "@/components/SegmentedToggle";
@@ -603,41 +602,8 @@ export default function CharterBooking() {
       });
     }
 
-    // Peak-period blackout dates (holidays etc.) — list every date that hits one
-    const dates = [
-      ...new Set(
-        [
-          ...legs.map((l) => l.date),
-          ...(tripType === "roundtrip" ? [retDate] : []),
-        ].filter(Boolean)
-      ),
-    ];
-    const hits = dates
-      .map((d) => ({ d, label: blackoutLabel(d) }))
-      .filter((h) => h.label)
-      .map(
-        (h) =>
-          `${new Date(`${h.d}T00:00:00`).toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-          })} (${h.label})`
-      );
-    if (hits.length === 1) {
-      ns.push({
-        id: "blackout",
-        title: "Blackout Date",
-        text: `${hits[0]} is considered a blackout date. Prices and demand are higher than usual.`,
-      });
-    } else if (hits.length > 1) {
-      ns.push({
-        id: "blackout",
-        title: "Blackout Dates",
-        text: `${hits.slice(0, -1).join(", ")} and ${hits[hits.length - 1]} are considered blackout dates. Prices and demand are higher than usual.`,
-      });
-    }
-
     return ns;
-  }, [calcs, returnCalc, legs, tripType, retDate]);
+  }, [calcs, returnCalc, legs, tripType]);
 
   function swapAirports() {
     const l = legs[0];

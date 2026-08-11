@@ -10,7 +10,6 @@ import {
   formatInZone,
   dayShift,
 } from "@/lib/flight";
-import { blackoutLabel } from "@/lib/blackout-dates";
 import { siteConfig, siteUrl } from "@/lib/site-config";
 
 /** Matches the booking form: 9 seats, one must stay free if a crew member rides. */
@@ -140,12 +139,6 @@ export async function POST(request: Request) {
     if (nm > MAX_LEG_NM) {
       warnings.push(
         `${label} is ${nm} NM, beyond the Challenger's ${MAX_LEG_NM} NM planning range. A fuel stop will be required and is not reflected in the times below.`,
-      );
-    }
-    const blackout = blackoutLabel(date);
-    if (blackout) {
-      warnings.push(
-        `${label} departs on ${blackout}. Demand peaks then, so availability is limited and pricing is higher.`,
       );
     }
 
