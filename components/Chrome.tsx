@@ -1,6 +1,7 @@
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import BookNowFab from "@/components/BookNowFab";
+import RouteSky from "@/components/RouteSky";
 
 /**
  * Site-wide chrome. The fleet orbit selector and menu pages used to ship
@@ -11,6 +12,9 @@ import BookNowFab from "@/components/BookNowFab";
 export default function Chrome({ children }: { children: React.ReactNode }) {
   return (
     <>
+      {/* Sits outside <main> so it isn't trapped by the page wrapper's
+          transform — see RouteSky. */}
+      <RouteSky />
       <Nav />
       {/* Content stops widening past 16:9 so ultrawide monitors don't
           stretch the layout — the page background fills the sides. See
