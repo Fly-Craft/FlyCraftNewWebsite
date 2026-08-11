@@ -9,31 +9,17 @@ export const metadata: Metadata = {
 
 const linkCls = "text-navy underline underline-offset-4 hover:opacity-70";
 
+/* Ordered by what a client needs settled first: whether we're safe to fly
+   with, then what happens when a trip goes sideways, then who pays for
+   what, then the practical details of the day itself. */
 const FAQ_ITEMS: FaqItem[] = [
   {
-    question: "What happens if the flight is cancelled?",
-    answer:
-      "Reach out to our charter team as soon as possible and we'll walk you through your options, including rescheduling or a refund depending on the circumstances.",
-  },
-  {
-    question:
-      "If we land at an alternate airport due to reasons beyond my control (mechanical or weather), who pays the difference?",
-    answer:
-      "CRAFT covers any additional cost associated with diverting to an alternate airport for mechanical or weather reasons beyond your control.",
-  },
-  {
-    question: "Who pays the bill if the airplane needs to be de-iced?",
-    answer:
-      "The client is responsible for the bill in an instance such as this. Having said that, our crew will only take the necessary fluid amount to ensure a safe operation, as it is quite a large expense.",
-  },
-  {
-    question: "How do I know that you are a safe and reliable operator?",
+    question: "How do I know CRAFT is a safe operator?",
     answer: (
       <>
-        CRAFT has operated charter flights since 2020 with an impeccable
-        safety record. We operate all of our flights under Part 135
-        regulations, and have obtained safety certificates from the leading
-        audit companies in the industry.{" "}
+        We have flown charter since 2020 without an accident. Every flight
+        operates under FAA Part 135 rules, including owner trips, and we hold
+        both an ARGUS Platinum rating and Wyvern certification.{" "}
         <Link href="/company#safety" className={linkCls}>
           Read more here
         </Link>
@@ -42,28 +28,46 @@ const FAQ_ITEMS: FaqItem[] = [
     ),
   },
   {
-    question: "Do I need to bring an ID when I am flying private?",
+    question: "What happens if my flight is cancelled?",
     answer:
-      "Yes. According to TSA regulations, an adult (over 18) traveling on a domestic flight needs to carry a Real ID, and any person traveling internationally needs to carry a passport.",
+      "Call the charter team as soon as you know. We'll go through the options with you, which can include rescheduling or a refund depending on the circumstances.",
   },
   {
-    question: "What is provided on board the airplane in terms of food and drinks?",
+    question:
+      "If weather or a mechanical issue sends us to a different airport, who covers the cost?",
+    answer:
+      "CRAFT does. When a diversion is down to weather or maintenance, the additional cost is ours.",
+  },
+  {
+    question: "Who pays if the aircraft needs de-icing?",
+    answer:
+      "De-icing is billed to the client. It is an expensive service, so our crews order only the fluid the conditions actually call for.",
+  },
+  {
+    question: "Do I need to bring ID on a private flight?",
+    answer:
+      "Yes. TSA rules require passengers over 18 to carry a Real ID on domestic flights, and anyone flying internationally to carry a passport.",
+  },
+  {
+    question: "What food and drink are on board?",
     answer: (
       <>
-        We provide a variety of snacks, drinks, and liquor on board. All can
-        be found{" "}
+        Every flight carries snacks, soft drinks, and liquor. The full
+        selection is on our{" "}
         <Link href="/fleet/menu" className={linkCls}>
-          here
+          menu
         </Link>
         .
       </>
     ),
   },
   {
-    question: "How old are the airplanes?",
+    question: "How old are the aircraft?",
     answer: (
       <>
-        Information regarding specific tails can be found on our{" "}
+        The fleet was built between 2008 and 2015, with cabin refurbishments
+        as recent as 2022. Year of manufacture and refurbishment for each tail
+        are listed on the{" "}
         <Link href="/fleet" className={linkCls}>
           fleet page
         </Link>
