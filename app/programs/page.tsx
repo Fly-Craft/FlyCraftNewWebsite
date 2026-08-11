@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import PreferToTalk from "@/components/PreferToTalk";
-import ProgramEnquiryModal from "@/components/programs/ProgramEnquiryModal";
-import { PROGRAMS } from "@/lib/programs";
+import {
+  ProgramEnquiryProvider,
+  ProgramEnquireButton,
+} from "@/components/programs/ProgramEnquiry";
+import { PROGRAMS, enquirableProgram } from "@/lib/programs";
 
 export const metadata: Metadata = {
   title: "Programs | CRAFT",
@@ -11,9 +14,21 @@ export const metadata: Metadata = {
     "Aircraft Leaseback, the Fleet Jet Card, the Corporate Program, and the Glidepath exchange fund. Four routes onto the CRAFT Challenger fleet.",
 };
 
-export default function ProgramsPage() {
+export default async function ProgramsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const { enquire } = await searchParams;
+
+  /* The Programs nav menu links here with ?enquire=<slug> to open a card's
+     form on arrival. Resolved against the known list on the server, so an
+     unrecognised value simply opens nothing — the raw parameter is never
+     handed to the client or used to build anything. */
+  const initialSlug = enquirableProgram(enquire)?.slug;
+
   return (
-    <>
+    <ProgramEnquiryProvider initialSlug={initialSlug}>
       <PageHero
         eyebrow="Programs"
         title={
@@ -59,14 +74,14 @@ export default function ProgramsPage() {
             </ul>
 
             {/* Contact Us opens the enquiry form in a dialog rather than
-                sending you to another page, so you keep your place among the
-                cards. The standalone /programs/enquire route still exists
-                behind the Programs nav menu and shares the same form.
-                Glidepath opts out (`enquire: false`): it's a separate
-                company, so its card sends people to Glidepath rather than
-                to CRAFT's inbox. */}
+                sending you to another page, so you keep your place among
+                the cards. Glidepath opts out (`enquire: false`): it's a
+                separate company, so its card sends people to Glidepath
+                rather than to CRAFT's inbox. */}
             <div className="mt-auto flex flex-wrap items-center justify-center gap-3 pt-8">
-              {p.enquire !== false ? <ProgramEnquiryModal program={p} /> : null}
+              {p.enquire !== false ? (
+                <ProgramEnquireButton slug={p.slug} />
+              ) : null}
               {p.href && p.cta ? (
                 <Link
                   href={p.href}
@@ -79,6 +94,6 @@ export default function ProgramsPage() {
           </div>
         ))}
       </section>
-    </>
+    </ProgramEnquiryProvider>
   );
 }

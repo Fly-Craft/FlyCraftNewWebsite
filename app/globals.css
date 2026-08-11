@@ -9,7 +9,12 @@
   --border: rgba(12, 29, 61, 0.12);
   --border-2: rgba(12, 29, 61, 0.06);
   --accent: #85b5d8;
-  --sky-gradient: linear-gradient(180deg, #fdfeff 0%, #f6fafc 45%, #edf4f9 100%);
+  --sky-gradient: linear-gradient(
+    180deg,
+    #fdfeff 0%,
+    #f6fafc 45%,
+    #edf4f9 100%
+  );
   --background: #f6f6f6;
   --foreground: #0c1d3d;
 }
@@ -348,7 +353,9 @@ body::before {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   opacity: 0;
-  transition: stroke-dashoffset 0.6s ease-out, opacity 0.6s ease-out;
+  transition:
+    stroke-dashoffset 0.6s ease-out,
+    opacity 0.6s ease-out;
 }
 
 .hf-trips-title {
@@ -530,8 +537,8 @@ body::before {
 /* Inner wrapper carries the idle drift so it never fights the
    JS-driven split transform on the outer element. */
 .hf-cloud-drift {
-  animation: hfCloudDrift var(--drift-dur, 22s) ease-in-out var(--drift-delay, 0s)
-    infinite alternate;
+  animation: hfCloudDrift var(--drift-dur, 22s) ease-in-out
+    var(--drift-delay, 0s) infinite alternate;
 }
 
 /* Once the deck has fully faded (~30% into the intro), stop paying for
@@ -656,8 +663,15 @@ body::before {
 }
 
 @keyframes hfLive {
-  0% { transform: scale(1); opacity: 0.6; }
-  70%, 100% { transform: scale(3.4); opacity: 0; }
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  70%,
+  100% {
+    transform: scale(3.4);
+    opacity: 0;
+  }
 }
 
 .hf-hint {
@@ -673,10 +687,18 @@ body::before {
      real contrast and real size. */
   font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.38em;
+  --hint-tracking: 0.38em;
+  letter-spacing: var(--hint-tracking);
   text-transform: uppercase;
   color: rgba(12, 29, 61, 0.58);
   z-index: 4;
+}
+
+/* Letter-spacing also trails the final letter, so centring the box leaves
+   the ink sitting half a space left of centre — and left of the chevron
+   below it. Pull that trailing space back off. */
+.hf-hint-label {
+  margin-right: calc(var(--hint-tracking) * -1);
 }
 
 /* A chevron that falls and resets reads as "keep going" far better than
@@ -686,8 +708,15 @@ body::before {
 }
 
 @keyframes hfHint {
-  0%, 100% { transform: translateY(0); opacity: 0.4; }
-  50% { transform: translateY(7px); opacity: 1; }
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
 }
 
 .hf-dot-halo {
@@ -697,8 +726,15 @@ body::before {
 }
 
 @keyframes hfPulse {
-  0%, 100% { transform: scale(1); opacity: 0.35; }
-  50% { transform: scale(1.8); opacity: 0.08; }
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: scale(1.8);
+    opacity: 0.08;
+  }
 }
 
 /* ── Mobile hero: fewer layers to composite (perf), and the map goes
@@ -742,19 +778,29 @@ body::before {
      Drop the far cloud layer entirely (small, slow, least missed at
      phone size) — with the evens already gone that leaves one mid and
      the three near clouds that actually carry the split. */
-  .hf-cloud:nth-child(even) { display: none; }
+  .hf-cloud:nth-child(even) {
+    display: none;
+  }
   .hf-cloud:nth-child(1),
-  .hf-cloud:nth-child(3) { display: none; }
-  .hf-frame { display: none; }
+  .hf-cloud:nth-child(3) {
+    display: none;
+  }
+  .hf-frame {
+    display: none;
+  }
   /* Release the parked deck's layers on phones only — the re-raster on
      scroll-up is four small 700w textures here. Desktop keeps its twelve
      full-size layers resident instead of re-rasterizing them mid-gesture
      every time the deck returns. */
-  .hf-clouds-off .hf-cloud { will-change: auto; }
+  .hf-clouds-off .hf-cloud {
+    will-change: auto;
+  }
   /* The trips layer is ~1,800 animated paths — far too many for phone
      GPUs. Show every 4th; at this scale the density still reads as the
      full picture. */
-  .hf-trip:not(:nth-child(4n + 1)) { display: none; }
+  .hf-trip:not(:nth-child(4n + 1)) {
+    display: none;
+  }
   /* Static route layer on phones: every route pre-drawn, nothing mutated
      during scroll — the GPU composites one cached texture while only the
      month counter animates. The JS reveal loop is skipped on mobile. */
@@ -764,10 +810,14 @@ body::before {
     opacity: 0.3;
     transition: none;
   }
-  .hf-city { opacity: 1 !important; }
+  .hf-city {
+    opacity: 1 !important;
+  }
   /* The halo pulse is an infinite animation on the tilted map layer —
      it forces recompositing every frame, forever. Off on phones. */
-  .hf-dot-halo { animation: none; }
+  .hf-dot-halo {
+    animation: none;
+  }
   .hf-map {
     width: 150vw;
     max-width: none;
@@ -777,14 +827,22 @@ body::before {
     will-change: transform, opacity;
   }
   /* Title clears the fixed nav pill (~10vh tall); map sits below the title */
-  .hf-map-persp { padding-top: 19vh; }
-  .hf-trips-title { top: 12vh; }
+  .hf-map-persp {
+    padding-top: 19vh;
+  }
+  .hf-trips-title {
+    top: 12vh;
+  }
   /* The two CTA buttons stack on phones, so the block is taller here than
      on desktop — its clearance term grows to match. */
-  .hf-title { top: max(50%, calc(15vh + 92vw * 0.2353 + 168px)); }
+  .hf-title {
+    top: max(50%, calc(15vh + 92vw * 0.2353 + 168px));
+  }
   /* Same anchor, phone geometry: map-persp pads 19vh and the map is
      150vw wide, so its height is 150vw · 0.64 = 96vw. */
-  .hf-trips-counter { top: calc(19vh + 96vw + 44px); }
+  .hf-trips-counter {
+    top: calc(19vh + 96vw + 44px);
+  }
   /* The counter's contents mutate every frame during the trips phase, so
      even a reduced-radius backdrop-filter never settles — solid fill on
      phones, where the frosted read is least visible anyway. */
@@ -795,15 +853,44 @@ body::before {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
-  .hf-counter-track { margin-top: 10px; }
+  .hf-counter-track {
+    margin-top: 10px;
+  }
+
+  /* The hero is pinned at 100vh — the *large* viewport — so on phones its
+     bottom edge sits behind the browser's address bar, and the scroll cue
+     went with it. `100vh - 100svh` is exactly the strip the bar covers, so
+     lifting the cue by that much keeps it on screen whether the bar is
+     showing or not, and the safe-area inset clears the home indicator.
+     Browsers without svh fall back to the 2.5vh rule above. */
+  .hf-hint {
+    bottom: calc(100vh - 100svh + env(safe-area-inset-bottom, 0px) + 24px);
+    font-size: 11px;
+    --hint-tracking: 0.3em;
+    gap: 7px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hf-section { height: auto; }
-  .hf-sticky { position: relative; height: auto; min-height: 100vh; }
-  .hf-hint-chevron, .hf-dot-halo, .hf-cloud-drift { animation: none; }
-  .hf-live-dot::after { animation: none; }
-  .hf-clouds { display: none; }
+  .hf-section {
+    height: auto;
+  }
+  .hf-sticky {
+    position: relative;
+    height: auto;
+    min-height: 100vh;
+  }
+  .hf-hint-chevron,
+  .hf-dot-halo,
+  .hf-cloud-drift {
+    animation: none;
+  }
+  .hf-live-dot::after {
+    animation: none;
+  }
+  .hf-clouds {
+    display: none;
+  }
 }
 
 /* ============================================================
@@ -817,9 +904,14 @@ body::before {
 }
 
 @keyframes rmDraw {
-  to { stroke-dashoffset: 0; }
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rm-arc { animation: none; stroke-dashoffset: 0; }
+  .rm-arc {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
 }

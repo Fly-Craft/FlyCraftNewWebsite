@@ -664,7 +664,7 @@ export default function HeroFlight() {
         </div>
 
         <div ref={hintRef} className="hf-hint">
-          Scroll
+          <span className="hf-hint-label">Scroll</span>
           <svg
             className="hf-hint-chevron"
             width="18"

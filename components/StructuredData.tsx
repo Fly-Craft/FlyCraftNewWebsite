@@ -144,7 +144,7 @@ export const siteGraph: object[] = [
       {
         "@type": "Offer",
         name: "Aircraft Leaseback Program",
-        url: `${siteUrl}/programs/management`,
+        url: `${siteUrl}/programs#leaseback`,
         itemOffered: {
           "@type": "Service",
           name: "Aircraft Leaseback",
@@ -156,7 +156,7 @@ export const siteGraph: object[] = [
       {
         "@type": "Offer",
         name: "Corporate Program",
-        url: `${siteUrl}/programs/corporate`,
+        url: `${siteUrl}/programs#corporate`,
         itemOffered: {
           "@type": "Service",
           name: "Corporate Flight Program",

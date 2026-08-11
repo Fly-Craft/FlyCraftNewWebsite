@@ -35,10 +35,10 @@ export default function ProgramEnquiryForm({
   /** Extra questions for this programme — see lib/programs.ts. */
   fields?: Program["fields"];
   /**
-   * "page" is the standalone /programs/enquire route: form on the left,
-   * picture on the right. "modal" is the dialog opened from a programme
-   * card, which shows the form on its own — the dialog supplies the
-   * surface and padding, so the form drops its own.
+   * "modal" is how this ships today: the dialog opened from a programme
+   * card, showing the form on its own, with the dialog supplying the
+   * surface and padding. "page" keeps the standalone layout (form left,
+   * picture right) for whenever a programme wants its own route again.
    */
   variant?: "page" | "modal";
   /** Modal only: dismiss the dialog from the confirmation screen. */
@@ -203,10 +203,15 @@ export default function ProgramEnquiryForm({
     >
       {/* Quiet label rather than a heading — the page title already says
           what this is; this just anchors the form to its programme. In the
-          dialog it doubles as the accessible name. */}
+          dialog it doubles as the accessible name, and it centres, since
+          there's no page title above it to align to.
+          The right padding offsets the trailing letter-space so the ink
+          centres rather than the box. */}
       <p
         id={titleId}
-        className="text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase"
+        className={`text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase ${
+          isModal ? "pr-[0.35em] text-center" : ""
+        }`}
       >
         {programLabel}
       </p>

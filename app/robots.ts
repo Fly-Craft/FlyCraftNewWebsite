@@ -56,8 +56,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: [
           "/api/charter-request",
           "/api/contact",
-          "/api/corporate-program",
-          "/api/management-inquiry",
+          "/api/program-enquiry",
         ],
       },
     ],

@@ -62,9 +62,9 @@ with the charter desk after a quote is accepted.
 - [Book](${siteUrl}/charter): itinerary builder and quote request
 - [ASAP](${siteUrl}/asap): same-day and urgent departures
 - [Fleet](${siteUrl}/fleet): the five aircraft, with cabin detail and range
-- [Programs](${siteUrl}/programs): leaseback, Glidepath, corporate
-- [Leaseback](${siteUrl}/programs/management): for Challenger owners
-- [Corporate](${siteUrl}/programs/corporate): contracted programs for teams
+- [Programs](${siteUrl}/programs): leaseback for Challenger owners, the
+  fleet jet card, contracted corporate programs, and Glidepath. Each card
+  opens its own enquiry form
 - [Glidepath](${siteUrl}/glidepath): an independent 721 exchange fund whose
   investors get preferred fleet rates. A separate company, not CRAFT
 - [Company](${siteUrl}/company): history, leadership, safety record
