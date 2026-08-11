@@ -17,9 +17,9 @@ const FAQ_ITEMS: FaqItem[] = [
     question: "How do I know CRAFT is a safe operator?",
     answer: (
       <>
-        We have flown charter since 2020 without an accident. Every flight
-        operates under FAA Part 135 rules, including owner trips, and we hold
-        both an ARGUS Platinum rating and Wyvern certification.{" "}
+        We have flown charter since 2020 with a clean safety record. Every
+        flight operates under FAA Part 135 rules, including owner trips, and
+        we hold both an ARGUS Platinum rating and Wyvern certification.{" "}
         <Link href="/company#safety" className={linkCls}>
           Read more here
         </Link>
@@ -65,9 +65,8 @@ const FAQ_ITEMS: FaqItem[] = [
     question: "How old are the aircraft?",
     answer: (
       <>
-        The fleet was built between 2008 and 2015, with cabin refurbishments
-        as recent as 2022. Year of manufacture and refurbishment for each tail
-        are listed on the{" "}
+        Year of manufacture and refurbishment for each tail are listed on
+        the{" "}
         <Link href="/fleet" className={linkCls}>
           fleet page
         </Link>
