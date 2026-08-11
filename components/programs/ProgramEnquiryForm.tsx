@@ -24,6 +24,9 @@ export default function ProgramEnquiryForm({
   programLabel,
   image,
   fields,
+  variant = "page",
+  onDone,
+  titleId,
 }: {
   program: ProgramSlug;
   programLabel: string;
@@ -31,6 +34,17 @@ export default function ProgramEnquiryForm({
   image?: { src: string; alt: string };
   /** Extra questions for this programme — see lib/programs.ts. */
   fields?: Program["fields"];
+  /**
+   * "page" is the standalone /programs/enquire route: form on the left,
+   * picture on the right. "modal" is the dialog opened from a programme
+   * card, which shows the form on its own — the dialog supplies the
+   * surface and padding, so the form drops its own.
+   */
+  variant?: "page" | "modal";
+  /** Modal only: dismiss the dialog from the confirmation screen. */
+  onDone?: () => void;
+  /** Modal only: ties the programme label to the dialog's accessible name. */
+  titleId?: string;
 }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -39,7 +53,7 @@ export default function ProgramEnquiryForm({
   const [hours, setHours] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
-    "idle"
+    "idle",
   );
 
   const wantsCompany = fields?.company === true;
@@ -77,7 +91,9 @@ export default function ProgramEnquiryForm({
           phone: phone.trim(),
           message: message.trim(),
           ...(wantsCompany ? { company: company.trim() } : {}),
-          ...(hoursField && hoursNum !== null ? { hoursPerYear: hoursNum } : {}),
+          ...(hoursField && hoursNum !== null
+            ? { hoursPerYear: hoursNum }
+            : {}),
         }),
       });
       if (!res.ok) throw new Error("Request failed");
@@ -87,10 +103,16 @@ export default function ProgramEnquiryForm({
     }
   }
 
+  const isModal = variant === "modal";
+
   if (status === "sent") {
     return (
       <div
-        className="mx-auto flex max-w-3xl flex-col items-center rounded-3xl glass px-8 py-20 text-center sm:px-16"
+        className={
+          isModal
+            ? "flex flex-col items-center text-center"
+            : "mx-auto flex max-w-3xl flex-col items-center rounded-3xl glass px-8 py-20 text-center sm:px-16"
+        }
         role="status"
       >
         <span className="flex h-16 w-16 items-center justify-center rounded-full bg-navy text-[22px] text-white">
@@ -127,7 +149,11 @@ export default function ProgramEnquiryForm({
 
         {/* Same block as the charter confirmation — one definition in
             site-config feeds this, that screen, and the email. */}
-        <div className="mt-14 w-full border-t border-border pt-10">
+        <div
+          className={`w-full border-t border-border ${
+            isModal ? "mt-10 pt-8" : "mt-14 pt-10"
+          }`}
+        >
           <p className="text-[10px] font-medium tracking-[0.3em] text-ink-3 uppercase">
             In the meantime
           </p>
@@ -143,165 +169,192 @@ export default function ProgramEnquiryForm({
             ))}
           </div>
 
-          <Link
-            href="/programs"
-            className="mt-8 inline-block text-[12px] font-light text-navy underline underline-offset-4 transition-opacity hover:opacity-60"
-          >
-            Back to Programs
-          </Link>
+          {/* In the dialog you're already on /programs, so the way out is
+              to close it rather than navigate back to where you are. */}
+          {isModal ? (
+            <button
+              type="button"
+              onClick={onDone}
+              className="mt-8 text-[12px] font-light text-navy underline underline-offset-4 transition-opacity hover:opacity-60"
+            >
+              Close
+            </button>
+          ) : (
+            <Link
+              href="/programs"
+              className="mt-8 inline-block text-[12px] font-light text-navy underline underline-offset-4 transition-opacity hover:opacity-60"
+            >
+              Back to Programs
+            </Link>
+          )}
         </div>
       </div>
     );
   }
+
+  const form = (
+    <form
+      onSubmit={handleSubmit}
+      className={
+        isModal
+          ? "flex w-full flex-col gap-6"
+          : "flex w-full max-w-xl flex-col gap-6 rounded-3xl glass p-8 sm:p-12"
+      }
+    >
+      {/* Quiet label rather than a heading — the page title already says
+          what this is; this just anchors the form to its programme. In the
+          dialog it doubles as the accessible name. */}
+      <p
+        id={titleId}
+        className="text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase"
+      >
+        {programLabel}
+      </p>
+
+      {/* Company leads on the programmes that ask for it — the enquiry is
+            from the business first and the person second. */}
+      {wantsCompany && (
+        <div>
+          <label htmlFor="pe-company" className={microLabel}>
+            Company <span className="text-ink-3/60">(required)</span>
+          </label>
+          <input
+            id="pe-company"
+            name="company"
+            type="text"
+            autoComplete="organization"
+            required
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+            className={inputCls}
+          />
+        </div>
+      )}
+
+      <div>
+        <label htmlFor="pe-name" className={microLabel}>
+          Name <span className="text-ink-3/60">(required)</span>
+        </label>
+        <input
+          id="pe-name"
+          name="name"
+          type="text"
+          autoComplete="name"
+          required
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className={inputCls}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div>
+          <label htmlFor="pe-email" className={microLabel}>
+            Email
+          </label>
+          <input
+            id="pe-email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            aria-describedby="pe-reach"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={inputCls}
+          />
+        </div>
+        <div>
+          <label htmlFor="pe-phone" className={microLabel}>
+            Phone
+          </label>
+          <input
+            id="pe-phone"
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            aria-describedby="pe-reach"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className={inputCls}
+          />
+        </div>
+      </div>
+      <p id="pe-reach" className="-mt-3 text-[11px] font-light text-ink-3">
+        One of the two is enough, whichever you&apos;d rather we used.
+      </p>
+
+      {hoursField && (
+        <div>
+          <label htmlFor="pe-hours" className={microLabel}>
+            Hours per year <span className="text-ink-3/60">(optional)</span>
+          </label>
+          <input
+            id="pe-hours"
+            name="hoursPerYear"
+            type="number"
+            inputMode="numeric"
+            min={hoursMin ?? 1}
+            step={1}
+            aria-describedby="pe-hours-help"
+            aria-invalid={hoursInvalid || undefined}
+            value={hours}
+            onChange={(e) => setHours(e.target.value)}
+            placeholder="How many hours do you fly in a year?"
+            className={`${inputCls} ${hoursInvalid ? "border-red-400" : ""}`}
+          />
+          <p
+            id="pe-hours-help"
+            className={`mt-2 text-[11px] font-light ${
+              hoursInvalid ? "text-red-600" : "text-ink-3"
+            }`}
+          >
+            {hoursMin !== undefined
+              ? `Leave it blank if you're not sure. The program starts at ${hoursMin} hours a year.`
+              : "Leave it blank if you're not sure."}
+          </p>
+        </div>
+      )}
+
+      <div>
+        <label htmlFor="pe-message" className={microLabel}>
+          Anything else <span className="text-ink-3/60">(optional)</span>
+        </label>
+        <textarea
+          id="pe-message"
+          name="message"
+          rows={5}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="Tell us what you're looking for."
+          className={`${inputCls} resize-none`}
+        />
+      </div>
+
+      <button
+        type="submit"
+        disabled={!canSubmit || status === "sending"}
+        className="mt-2 glass-selected rounded-full px-8 py-4 text-[11px] font-medium tracking-[0.3em] text-white uppercase transition-opacity hover:opacity-85 disabled:opacity-40"
+      >
+        {status === "sending" ? "Sending\u2026" : "Send"}
+      </button>
+
+      {status === "error" && (
+        <p className="text-[13px] text-red-600">
+          Something went wrong. Please try again.
+        </p>
+      )}
+    </form>
+  );
+
+  // The dialog shows the form on its own — no picture column to balance.
+  if (isModal) return form;
 
   return (
     /* Form left, picture right. The image column is deliberately rendered
        even when there's no image yet, so the form keeps its half of the
        page and the layout doesn't shift once one is added. */
     <div className="grid grid-cols-1 items-stretch gap-12 lg:grid-cols-2 lg:gap-16">
-      <form
-        onSubmit={handleSubmit}
-        className="flex w-full max-w-xl flex-col gap-6 rounded-3xl glass p-8 sm:p-12"
-      >
-        {/* Quiet label rather than a heading — the page title already says
-            what this is; this just anchors the form to its programme. */}
-        <p className="text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase">
-          {programLabel}
-        </p>
-
-        {/* Company leads on the programmes that ask for it — the enquiry is
-            from the business first and the person second. */}
-        {wantsCompany && (
-          <div>
-            <label htmlFor="pe-company" className={microLabel}>
-              Company <span className="text-ink-3/60">(required)</span>
-            </label>
-            <input
-              id="pe-company"
-              name="company"
-              type="text"
-              autoComplete="organization"
-              required
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
-              className={inputCls}
-            />
-          </div>
-        )}
-
-        <div>
-          <label htmlFor="pe-name" className={microLabel}>
-            Name <span className="text-ink-3/60">(required)</span>
-          </label>
-          <input
-            id="pe-name"
-            name="name"
-            type="text"
-            autoComplete="name"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className={inputCls}
-          />
-        </div>
-
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          <div>
-            <label htmlFor="pe-email" className={microLabel}>
-              Email
-            </label>
-            <input
-              id="pe-email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              aria-describedby="pe-reach"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={inputCls}
-            />
-          </div>
-          <div>
-            <label htmlFor="pe-phone" className={microLabel}>
-              Phone
-            </label>
-            <input
-              id="pe-phone"
-              name="phone"
-              type="tel"
-              autoComplete="tel"
-              aria-describedby="pe-reach"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className={inputCls}
-            />
-          </div>
-        </div>
-        <p id="pe-reach" className="-mt-3 text-[11px] font-light text-ink-3">
-          One of the two is enough, whichever you&apos;d rather we used.
-        </p>
-
-        {hoursField && (
-          <div>
-            <label htmlFor="pe-hours" className={microLabel}>
-              Hours per year <span className="text-ink-3/60">(optional)</span>
-            </label>
-            <input
-              id="pe-hours"
-              name="hoursPerYear"
-              type="number"
-              inputMode="numeric"
-              min={hoursMin ?? 1}
-              step={1}
-              aria-describedby="pe-hours-help"
-              aria-invalid={hoursInvalid || undefined}
-              value={hours}
-              onChange={(e) => setHours(e.target.value)}
-              placeholder="How many hours do you fly in a year?"
-              className={`${inputCls} ${hoursInvalid ? "border-red-400" : ""}`}
-            />
-            <p
-              id="pe-hours-help"
-              className={`mt-2 text-[11px] font-light ${
-                hoursInvalid ? "text-red-600" : "text-ink-3"
-              }`}
-            >
-              {hoursMin !== undefined
-                ? `Leave it blank if you're not sure. The program starts at ${hoursMin} hours a year.`
-                : "Leave it blank if you're not sure."}
-            </p>
-          </div>
-        )}
-
-        <div>
-          <label htmlFor="pe-message" className={microLabel}>
-            Anything else <span className="text-ink-3/60">(optional)</span>
-          </label>
-          <textarea
-            id="pe-message"
-            name="message"
-            rows={5}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Tell us what you're looking for."
-            className={`${inputCls} resize-none`}
-          />
-        </div>
-
-        <button
-          type="submit"
-          disabled={!canSubmit || status === "sending"}
-          className="mt-2 glass-selected rounded-full px-8 py-4 text-[11px] font-medium tracking-[0.3em] text-white uppercase transition-opacity hover:opacity-85 disabled:opacity-40"
-        >
-          {status === "sending" ? "Sending\u2026" : "Send"}
-        </button>
-
-        {status === "error" && (
-          <p className="text-[13px] text-red-600">
-            Something went wrong. Please try again.
-          </p>
-        )}
-      </form>
+      {form}
 
       {/* Picture slot. Matches the form's height on desktop so the two
           columns read as a pair; empty until a programme gets an image. */}

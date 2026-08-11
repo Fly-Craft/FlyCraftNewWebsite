@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import PreferToTalk from "@/components/PreferToTalk";
+import ProgramEnquiryModal from "@/components/programs/ProgramEnquiryModal";
 import { PROGRAMS } from "@/lib/programs";
 
 export const metadata: Metadata = {
@@ -57,20 +58,15 @@ export default function ProgramsPage() {
               ))}
             </ul>
 
-            {/* Contact Us is the only way into the programme enquiry form —
-                it carries which card you came from, and the form redirects
-                to /programs if that slug doesn't resolve. Glidepath opts out
-                (`enquire: false`): it's a separate company, so its card
-                sends people to Glidepath rather than to CRAFT's inbox. */}
+            {/* Contact Us opens the enquiry form in a dialog rather than
+                sending you to another page, so you keep your place among the
+                cards. The standalone /programs/enquire route still exists
+                behind the Programs nav menu and shares the same form.
+                Glidepath opts out (`enquire: false`): it's a separate
+                company, so its card sends people to Glidepath rather than
+                to CRAFT's inbox. */}
             <div className="mt-auto flex flex-wrap items-center justify-center gap-3 pt-8">
-              {p.enquire !== false ? (
-                <Link
-                  href={`/programs/enquire?program=${p.slug}`}
-                  className="glass-selected glass-btn rounded-full px-7 py-3.5 text-[11px] font-medium tracking-[0.24em] text-white uppercase"
-                >
-                  Contact Us
-                </Link>
-              ) : null}
+              {p.enquire !== false ? <ProgramEnquiryModal program={p} /> : null}
               {p.href && p.cta ? (
                 <Link
                   href={p.href}
