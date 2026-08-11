@@ -17,12 +17,6 @@ const FAQ_ITEMS: FaqItem[] = [
   },
   {
     question:
-      "What happens if we agreed on a departure time and I am late?",
-    answer:
-      "We'll do our best to accommodate a short delay, but crew duty-time limits and downstream schedules mean a late arrival can push back your departure or, in some cases, require rescheduling the flight.",
-  },
-  {
-    question:
       "If we land at an alternate airport due to reasons beyond my control (mechanical or weather), who pays the difference?",
     answer:
       "CRAFT covers any additional cost associated with diverting to an alternate airport for mechanical or weather reasons beyond your control.",
@@ -31,26 +25,6 @@ const FAQ_ITEMS: FaqItem[] = [
     question: "Who pays the bill if the airplane needs to be de-iced?",
     answer:
       "The client is responsible for the bill in an instance such as this. Having said that, our crew will only take the necessary fluid amount to ensure a safe operation, as it is quite a large expense.",
-  },
-  {
-    question:
-      "What is the closest time before departure that I can cancel or change the flight time or date?",
-    answer:
-      "Reach out to our charter team as early as possible. Cancellation and change windows depend on your specific trip, and the sooner we know, the more flexibility we can offer.",
-  },
-  {
-    question: "Can I choose if I want to charter the Challenger 300 or 350?",
-    answer: (
-      <>
-        Absolutely. Each airplane has a different cabin configuration, though,
-        so that can limit availability.
-      </>
-    ),
-  },
-  {
-    question: "What happens if my luggage doesn't fit in the baggage compartment?",
-    answer:
-      "Any luggage that doesn't fit in the baggage compartment and is not a personal handbag will have to be left behind.",
   },
   {
     question: "How do I know that you are a safe and reliable operator?",
@@ -96,11 +70,6 @@ const FAQ_ITEMS: FaqItem[] = [
         .
       </>
     ),
-  },
-  {
-    question: "Can I smoke on board since it is a private jet?",
-    answer:
-      "No. Even though it is a private flight, smoking any kind of substance on board is prohibited.",
   },
 ];
 

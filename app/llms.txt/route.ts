@@ -68,7 +68,7 @@ with the charter desk after a quote is accepted.
 - [Glidepath](${siteUrl}/glidepath): an independent 721 exchange fund whose
   investors get preferred fleet rates. A separate company, not CRAFT
 - [Company](${siteUrl}/company): history, leadership, safety record
-- [FAQ](${siteUrl}/faq): cancellations, de-icing, luggage, ID requirements
+- [FAQ](${siteUrl}/faq): cancellations, diversions, de-icing, ID requirements
 - [Contact](${siteUrl}/contact): phone, email, address
 - [Legal](${siteUrl}/legal): terms and privacy
 `;
