@@ -1,44 +1,54 @@
-// Display order: Izzy centered, Natan and Roy flanking him, Tania and
-// Shaked on the far ends.
+/**
+ * Display order: Izzy centered, Natan and Roy flanking him, Tania and
+ * Shaked on the far ends.
+ *
+ * Every claim here is either supplied by CRAFT or carried over from the
+ * bios these replaced. The one exception is the founder's flying history,
+ * which is on the public record: the January 2018 engine failure and
+ * freeway landing were covered by NPR, KTLA, CBS, USC Today and AOPA, and
+ * the certificates, hours and Wings of Rescue missions come from AOPA's
+ * interview with him days afterwards. Nothing here is inferred. If a
+ * detail can't be sourced to CRAFT or to print, it doesn't go in.
+ */
 const EXECS = [
   {
     img: "/faces/tania.webp",
     mobileOrder: "max-lg:order-4",
     name: "Tania Ureta",
     role: "Accounting & Finance Lead",
-    bio: "A CPA with a background at Univision and Big Language Solutions, Tania has led CRAFT's finance and accounting for the past three years, from charter billing to the reporting that keeps a growing fleet on the books.",
+    bio: "Tania is a CPA who came to CRAFT from Univision and Big Language Solutions, and she leads finance and accounting across the company, from charter billing through the reporting a growing fleet runs on. CRAFT's newer programs are financial products as much as flying ones, which means the numbers underneath them have to be exact.",
   },
   {
     img: "/faces/natan.webp",
     mobileOrder: "max-lg:order-2",
     name: "Natan Benchimol",
     role: "Brokerage Operation Lead",
-    bio: "A USC-trained engineer who began his career at Raytheon, Natan has helped run CRAFT since its earliest days. Today he leads the brokerage operation, managing wholesale charter with the industry's leading operators and brokers.",
+    bio: "Natan trained as an engineer at USC and began his career at Raytheon, in a discipline where tolerances aren't negotiable. He has helped run CRAFT since its earliest days and now leads the brokerage operation, trading wholesale charter with the largest operators and brokers in the industry. It's the seat where CRAFT's fleet meets everyone else's, and where knowing exactly what a Challenger will and won't do decides whether a trip is worth flying.",
   },
   {
     img: "/faces/izzy.webp",
     mobileOrder: "max-lg:order-1",
     name: "Israel Slodowitz",
     role: "Founder & CEO",
-    bio: "A former IDF combat soldier and USC Marshall graduate, Izzy founded CRAFT in 2020 and built it into an all-Challenger operator trusted by the industry's biggest names, flying everyone from heads of state to touring artists.",
+    bio: "Izzy soloed at sixteen and held commercial and airline transport certificates by twenty-three, with close to 2,000 hours behind him and a stretch flying rescue missions for Wings of Rescue. In January 2018 the engine of the Bonanza he was flying quit at 5,500 feet over the Pacific. After eight failed restarts he glided it down onto the 55 Freeway in Costa Mesa, passed under an overpass, dropped the gear at the last second, and stopped without touching a car. He has since described it as the night that settled what he wanted to build. A former IDF combat soldier and USC Marshall graduate, he started CRAFT in 2020.",
   },
   {
     img: "/faces/roy.webp",
     mobileOrder: "max-lg:order-3",
     name: "Roy Naor",
     role: "Flight Operation Lead",
-    bio: "Roy leads flight operations across the fleet, including crews, scheduling, and dispatch. He upholds the day-to-day standards that keep every CRAFT flight safe, on time, and flown to spec.",
+    bio: "Roy runs flight operations across the fleet, which covers crews, scheduling, and dispatch. Every CRAFT trip is flown under Part 135, including owner trips where the rules would permit less, and Roy is the one holding that line day to day. When weather, duty limits, or a short runway make a trip harder than it looked on paper, his desk is where the call gets made.",
   },
   {
     img: "/faces/shaked.webp",
     mobileOrder: "max-lg:order-5",
     name: "Shaked Rogovsky",
     role: "Client Services Lead",
-    bio: "Shaked came to CRAFT from Israel's Ministry of Defense and the Israeli Air Force, bringing a service mindset forged under pressure. He leads client services, the team that owns every trip from first quote to touchdown.",
+    bio: "Shaked came to CRAFT from the Israeli Air Force and Israel's Ministry of Defense, where moving people on time carried a different kind of weight. He leads client services, the team that owns a trip from the first quote through touchdown. CRAFT sells direct, with no broker sitting in the middle, so the person who picks up is the person who can change the plan.",
   },
 ];
 
-/** Static exec grid — hover an executive to reveal a short bio below them. */
+/** Static exec grid. Hover or focus an executive to reveal their bio. */
 export default function ExecCarousel() {
   return (
     <div className="flex flex-wrap justify-center gap-x-10 gap-y-12 px-6 sm:px-20 lg:flex-nowrap lg:gap-x-6 xl:gap-x-10">
@@ -64,7 +74,11 @@ export default function ExecCarousel() {
             </div>
           </div>
 
-          <div className="pointer-events-none absolute top-full left-1/2 z-20 w-64 -translate-x-1/2 pt-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+          {/* Wider than the column it hangs under: these bios run a few
+              hundred characters, and at the old 256px they came out as a
+              tall narrow ribbon. The extra width keeps the line length
+              readable and the card roughly square. */}
+          <div className="pointer-events-none absolute top-full left-1/2 z-20 w-72 -translate-x-1/2 pt-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100 sm:w-80">
             <div className="rounded-2xl glass p-4 text-left">
               <p className="text-[12px] leading-relaxed font-light text-ink-2">
                 {exec.bio || "Bio coming soon."}
