@@ -55,7 +55,7 @@ export const PROGRAMS: Program[] = [
     titleLead: "Aircraft",
     titleEmphasis: "Leaseback",
     label: "Aircraft Leaseback",
-    body: "You own the airplane, and it flies on CRAFT's Part 135 certificate. We cover the costs of operating the aircraft, including crew, maintenance, and compliance. You capture the bonus depreciation tax benefit of ownership and get access to our entire fleet of Challenger 300, 350, and 3500 aircraft. You can always fly, even when your jet is down for its scheduled maintenance.",
+    body: "You own the airplane, and it flies on CRAFT's Part 135 certificate. We cover the costs of operating the aircraft, including crew, maintenance, and compliance. You capture the bonus depreciation tax benefit of ownership and get access to our entire fleet of Challenger 300 and 350 aircraft. You can always fly, even when your jet is down for its scheduled maintenance.",
     points: [
       "You own the aircraft and its bonus depreciation tax benefit",
       "We cover the costs of operating the aircraft",

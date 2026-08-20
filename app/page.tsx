@@ -1,7 +1,6 @@
 import Link from "next/link";
 import HeroFlight from "@/components/HeroFlight";
 import FpsMeter from "@/components/FpsMeter";
-import { siteConfig } from "@/lib/site-config";
 
 export default function Home() {
   return (
@@ -130,38 +129,47 @@ export default function Home() {
       <section className="grid grid-cols-1 items-center gap-12 px-6 py-24 sm:px-20 lg:grid-cols-2 lg:gap-20">
         <div className="mx-auto flex max-w-xl flex-col items-start gap-6">
           <p className="text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase">
-            Key Program
+            Programs
           </p>
           <h2 className="text-[clamp(28px,4vw,44px)] leading-tight font-extralight text-navy">
-            Meet
+            Four ways
             <br />
-            <span className="font-medium">Glidepath</span>
+            <span className="font-medium">onto the fleet.</span>
           </h2>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
-            Glidepath solves one problem, which is having too much of your net
-            worth riding on a single stock. It&apos;s an independent 721
-            exchange fund, so you contribute appreciated shares in-kind with no
-            sale and no tax event.
+            Charter a trip outright and pay for the flights you take. Put your
+            own aircraft on our certificate with Leaseback, and we carry crew,
+            maintenance, and compliance while the ownership benefits stay
+            yours. Buy hours up front with the Fleet Jet Card and fly at a rate
+            thousands an hour below a broker&apos;s. Or set your company up on
+            the Corporate Program, with a dedicated account manager and billing
+            built for how companies actually run.
           </p>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
-            The added benefit comes from what the fund holds. The CRAFT fleet
-            is among its assets, so investors fly these same Challengers at a
-            preferred hourly rate, below public charter pricing.
+            All four fly the same Challengers, with the same crews, under the
+            same Part 135 rules. What changes is how you pay for it and how far
+            ahead you plan.
           </p>
-          <a
-            href={siteConfig.glidepathUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-2 text-[11px] font-medium tracking-[0.3em] text-navy uppercase underline underline-offset-4 transition-opacity hover:opacity-60"
-          >
-            Visit Glidepath ↗
-          </a>
+          <div className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-3">
+            <Link
+              href="/programs"
+              className="text-[11px] font-medium tracking-[0.3em] text-navy uppercase underline underline-offset-4 transition-opacity hover:opacity-60"
+            >
+              See All Programs →
+            </Link>
+            <Link
+              href="/charter"
+              className="text-[11px] font-medium tracking-[0.3em] text-navy uppercase underline underline-offset-4 transition-opacity hover:opacity-60"
+            >
+              Book a Flight →
+            </Link>
+          </div>
         </div>
 
         <div className="mx-auto w-full max-w-xl">
           <img
-            src="/glidepath-exchange.jpg"
-            alt="Glidepath Exchange Fund — diversify without selling"
+            src="/programs/leaseback-1200.jpg"
+            alt="A CRAFT Challenger on the ramp at sunset"
             className="w-full rounded-3xl object-cover shadow-[0_24px_80px_rgba(12,29,61,0.18)]"
           />
         </div>

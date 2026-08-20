@@ -9,15 +9,14 @@ export const metadata: Metadata = {
 
 const linkCls = "text-navy underline underline-offset-4 hover:opacity-70";
 
-/* Ordered by what a client needs settled first: whether we're safe to fly
-   with, then what happens when a trip goes sideways, then who pays for
-   what, then the practical details of the day itself. */
+/* Safety first, then the practical shape of the day itself: when to turn
+   up, what to bring, and what's waiting in the cabin. */
 const FAQ_ITEMS: FaqItem[] = [
   {
-    question: "How do I know CRAFT is a safe operator?",
+    question: "What safety standards does CRAFT fly to?",
     answer: (
       <>
-        We have flown charter since 2020 with a clean safety record. Every
+        We have flown charter since 2020 with a spotless safety record. Every
         flight operates under FAA Part 135 rules, including owner trips, and
         we hold both an ARGUS Platinum rating and Wyvern certification.{" "}
         <Link href="/company#safety" className={linkCls}>
@@ -28,25 +27,19 @@ const FAQ_ITEMS: FaqItem[] = [
     ),
   },
   {
-    question: "What happens if my flight is cancelled?",
+    question: "How early do I need to be at the airport?",
     answer:
-      "Call the charter team as soon as you know. We'll go through the options with you, which can include rescheduling or a refund depending on the circumstances.",
-  },
-  {
-    question:
-      "If weather or a mechanical issue sends us to a different airport, who covers the cost?",
-    answer:
-      "CRAFT does. When a diversion is down to weather or maintenance, the additional cost is ours.",
-  },
-  {
-    question: "Who pays if the aircraft needs de-icing?",
-    answer:
-      "De-icing is billed to the client. It is an expensive service, so our crews order only the fluid the conditions actually call for.",
+      "Far less early than you're used to. Plan on about fifteen minutes before departure domestically, and closer to thirty for an international trip. You park steps from the aircraft, and there is no terminal to cross and no line to stand in. Your exact time comes with your itinerary.",
   },
   {
     question: "Do I need to bring ID on a private flight?",
     answer:
       "Yes. TSA rules require passengers over 18 to carry a Real ID on domestic flights, and anyone flying internationally to carry a passport.",
+  },
+  {
+    question: "Is there a flight attendant on board?",
+    answer:
+      "One can be added to any trip when you book. The attendant takes a cabin seat, so a flight with one on board seats eight passengers rather than nine.",
   },
   {
     question: "What food and drink are on board?",
@@ -57,22 +50,19 @@ const FAQ_ITEMS: FaqItem[] = [
         <Link href="/fleet/menu" className={linkCls}>
           menu
         </Link>
-        .
+        . Catering beyond that can be arranged with your trip.
       </>
     ),
   },
   {
-    question: "How old are the aircraft?",
-    answer: (
-      <>
-        Year of manufacture and refurbishment for each tail are listed on
-        the{" "}
-        <Link href="/fleet" className={linkCls}>
-          fleet page
-        </Link>
-        .
-      </>
-    ),
+    question: "Can I get online during the flight?",
+    answer:
+      "Yes. Every cabin has Starlink internet, along with Live TV and Apple TV, so the working day or the movie carries on at altitude.",
+  },
+  {
+    question: "Can my dog come with me?",
+    answer:
+      "Pets are welcome. Add them when you book and tell us how many are coming, so the crew can set the cabin up for them.",
   },
 ];
 

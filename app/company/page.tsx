@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 import AboutSections from "@/components/company/AboutSections";
-import SafetySections from "@/components/company/SafetySections";
 
 export const metadata: Metadata = {
   title: "Company | CRAFT",
@@ -28,7 +27,6 @@ export default function CompanyPage() {
       />
 
       <AboutSections />
-      <SafetySections />
     </>
   );
 }

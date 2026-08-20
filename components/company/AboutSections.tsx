@@ -16,8 +16,11 @@ export default function AboutSections() {
       <section className="grid grid-cols-1 items-center gap-12 px-6 py-24 sm:px-20 lg:grid-cols-2 lg:gap-20">
         <div className="mx-auto w-full max-w-xl max-lg:order-last">
           <img
-            src="/about/homebase.jpg"
-            alt="A CRAFT team member marshalling a Challenger at Opa-locka Executive Airport"
+            /* Filename carries a hash of the source image, so replacing the
+               photo produces a new URL and a browser holding the old one
+               can't keep serving it. */
+            src="/about/part135-1200-412176be.jpg"
+            alt="A CRAFT Challenger taxiing head-on with the crew visible in the flight deck"
             className="w-full rounded-3xl object-cover shadow-[0_24px_80px_rgba(12,29,61,0.18)]"
           />
         </div>
@@ -47,7 +50,12 @@ export default function AboutSections() {
       </section>
 
       {/* ── Track record + ratings ──────────────────────── */}
-      <section className="grid grid-cols-1 items-center gap-12 px-6 py-24 sm:px-20 lg:grid-cols-2 lg:gap-20">
+      {/* Carries the #safety anchor, inherited from the Part 135 section
+          that used to sit below. The FAQ links here for the credentials. */}
+      <section
+        id="safety"
+        className="grid grid-cols-1 scroll-mt-28 items-center gap-12 px-6 py-24 sm:px-20 lg:grid-cols-2 lg:gap-20"
+      >
         <div className="mx-auto flex max-w-xl flex-col items-start gap-6">
           <p className="text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase">
             Track Record
@@ -55,13 +63,13 @@ export default function AboutSections() {
           <h2 className="text-[clamp(28px,4vw,44px)] leading-tight font-extralight text-navy">
             Tens of thousands of hours.
             <br />
-            <span className="font-medium">Zero accidents.</span>
+            <span className="font-medium">A spotless record.</span>
           </h2>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
-            Since 2020, CRAFT has flown tens of thousands of hours without an
-            accident. That record comes from standards we refuse to bend,
-            audited and verified by the two most respected independent safety
-            authorities in aviation.
+            Since 2020, CRAFT has flown tens of thousands of hours and kept
+            that record clean the whole way. It comes from standards we refuse
+            to bend, audited and verified by the two most respected
+            independent safety authorities in aviation.
           </p>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
             CRAFT is ARGUS Platinum rated and Wyvern certified. Only a small
@@ -162,8 +170,8 @@ export default function AboutSections() {
             know every aircraft&apos;s history because they wrote it.
           </p>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
-            Nothing is deferred that shouldn&apos;t be, and nothing flies
-            until the people who know it best are satisfied.
+            An aircraft leaves the hangar when the people who know it best
+            say it is ready, and not an hour sooner.
           </p>
         </div>
 
