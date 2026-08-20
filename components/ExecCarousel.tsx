@@ -22,8 +22,8 @@ const EXECS = [
     img: "/faces/natan.webp",
     mobileOrder: "max-lg:order-2",
     name: "Natan Benchimol",
-    role: "Brokerage Operation Lead",
-    bio: "Natan trained as an engineer at USC and began his career at Raytheon, in a discipline where tolerances aren't negotiable. He has helped run CRAFT since its earliest days and now leads the brokerage operation, trading wholesale charter with the largest operators and brokers in the industry. It's the seat where CRAFT's fleet meets everyone else's, and where knowing exactly what a Challenger will and won't do decides whether a trip is worth flying.",
+    role: "Executive Vice President",
+    bio: "Natan trained as an engineer at USC and began his career at Raytheon, in a discipline where tolerances aren't negotiable. He has helped run CRAFT since its earliest days and now works across strategic planning and partnerships while staying close to the day-to-day. He also leads CRAFT's programs — Corporate, Jet Card, and the structures behind how clients fly with us. Outside of work: new cities, good coffee, the gym, and family.",
   },
   {
     img: "/faces/izzy.webp",
