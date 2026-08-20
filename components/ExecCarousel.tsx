@@ -19,11 +19,13 @@ const EXECS = [
     bio: "Tania is a CPA who came to CRAFT from Univision and Big Language Solutions, and she leads finance and accounting across the company, from charter billing through the reporting a growing fleet runs on. CRAFT's newer programs are financial products as much as flying ones, which means the numbers underneath them have to be exact.",
   },
   {
-    img: "/faces/natan.webp",
+    /* Filename carries a hash of the image, so a browser holding the
+       old portrait can't keep serving it after the swap. */
+    img: "/faces/natan-e3d3ae55.webp",
     mobileOrder: "max-lg:order-2",
     name: "Natan Benchimol",
     role: "Executive Vice President",
-    bio: "Natan trained as an engineer at USC and began his career at Raytheon, in a discipline where tolerances aren't negotiable. He has helped run CRAFT since its earliest days and now works across strategic planning and partnerships while staying close to the day-to-day. He also leads CRAFT's programs — Corporate, Jet Card, and the structures behind how clients fly with us. Outside of work: new cities, good coffee, the gym, and family.",
+    bio: "Natan trained as an engineer at USC and began his career at Raytheon, in a discipline where tolerances aren't negotiable. He has helped run CRAFT since its earliest days and now works across strategic planning and partnerships while staying close to the day-to-day. He also leads CRAFT's programs: Corporate, Jet Card, and the structures behind how clients fly with us. Outside of work: new cities, good coffee, the gym, and family.",
   },
   {
     img: "/faces/izzy.webp",

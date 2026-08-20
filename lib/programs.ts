@@ -130,7 +130,7 @@ export const PROGRAMS: Program[] = [
     titleLead: "Glidepath",
     titleEmphasis: "Exchange Fund",
     label: "Glidepath Exchange Fund",
-    body: "CRAFT is the exclusive operator for Glidepath — the most innovative way to access private aircraft available today. It starts with your portfolio rather than an aircraft purchase: investors contribute a concentrated stock position to the fund and diversify it without triggering a taxable event. Membership then opens the door to the CRAFT Challenger fleet at exceptionally low hourly rates. All the access of ownership and none of the tail.",
+    body: "CRAFT is the exclusive operator for Glidepath, the most innovative way to access private aircraft available today. It starts with your portfolio rather than an aircraft purchase: investors contribute a concentrated stock position to the fund and diversify it without triggering a taxable event. Membership then opens the door to the CRAFT Challenger fleet at exceptionally low hourly rates. All the access of ownership and none of the tail.",
     points: [
       "Diversify a concentrated stock position without selling",
       "Challenger fleet access at exceptionally low hourly rates",

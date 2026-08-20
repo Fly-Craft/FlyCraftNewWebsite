@@ -1,7 +1,7 @@
 const NATAN = {
-  img: "/faces/natan.webp",
+  img: "/faces/natan-e3d3ae55.webp",
   name: "Natan Benchimol",
-  role: "Brokerage Operation Lead",
+  role: "Executive Vice President",
   phone: "+13232159495",
   phoneDisplay: "+1 (323) 215-9495",
   email: "natan@flycraft.com",
