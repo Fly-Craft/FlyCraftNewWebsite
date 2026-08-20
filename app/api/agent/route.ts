@@ -26,7 +26,7 @@ export async function GET() {
         base: "Miami-Opa Locka Executive Airport (KOPF), Opa-locka, FL",
       },
       fleet: {
-        types: ["Bombardier Challenger 300", "Challenger 350", "Challenger 3500"],
+        types: ["Bombardier Challenger 300", "Challenger 350"],
         maxPassengers: 9,
         cabinCrewThreshold:
           "A flight attendant reduces usable seats to 8 and may add cost.",

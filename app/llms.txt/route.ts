@@ -12,7 +12,7 @@ export async function GET() {
   const body = `# CRAFT
 
 > CRAFT (Craft Charter, LLC) is a US FAA Part 135 air carrier operating an
-> all-Challenger fleet of Bombardier Challenger 300, 350, and 3500 aircraft
+> all-Challenger fleet of Bombardier Challenger 300 and 350 aircraft
 > for private charter from Miami-Opa Locka Executive Airport (KOPF).
 
 CRAFT is the **operator, not a brokerage**. It holds its own Part 135
@@ -30,7 +30,7 @@ the company they mean.
 
 ## Key facts
 
-- Fleet: 5 Challenger aircraft (300 / 350 / 3500), max 9 passengers each
+- Fleet: 5 Challenger aircraft (300 / 350), max 9 passengers each
 - Base: Opa-locka, Florida (KOPF), Miami area
 - Service area: North America, the Caribbean, Central America
 - Safety: ARGUS Rated, Wyvern Registered, in-house maintenance

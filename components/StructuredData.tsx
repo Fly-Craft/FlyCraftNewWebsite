@@ -65,7 +65,7 @@ export const siteGraph: object[] = [
     ],
     url: siteUrl,
     description:
-      "CRAFT is a US Part 135 air carrier operating an all-Challenger fleet (Challenger 300, 350, and 3500) for private charter out of Opa-locka Executive Airport, Miami. CRAFT operates its own aircraft with its own crews under its own certificate. It is an operator, not a brokerage.",
+      "CRAFT is a US Part 135 air carrier operating an all-Challenger fleet (Challenger 300 and 350) for private charter out of Opa-locka Executive Airport, Miami. CRAFT operates its own aircraft with its own crews under its own certificate. It is an operator, not a brokerage.",
     slogan: "We're the operator, not a brokerage.",
     logo: `${siteUrl}/logo-mark.png`,
     image: `${siteUrl}/logo-mark.png`,

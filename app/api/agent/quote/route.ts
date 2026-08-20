@@ -187,7 +187,7 @@ export async function POST(request: Request) {
     totalFlightTime: formatDuration(totalMinutes),
     passengers: passengers ?? "TBD",
     passengersSpecified: paxGiven,
-    aircraft: "Bombardier Challenger 300 / 350 / 3500",
+    aircraft: "Bombardier Challenger 300 / 350",
     operator: "CRAFT — Craft Charter, LLC (FAA Part 135)",
     // Never imply a price exists. An agent must not infer "free" or "TBD
     // means proceed" — it means a human has to quote it.
