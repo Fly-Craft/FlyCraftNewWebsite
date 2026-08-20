@@ -77,13 +77,6 @@ export default function ContactForm() {
             className="whitespace-nowrap text-navy underline underline-offset-4"
           >
             {siteConfig.charterSalesPhoneDisplay}
-          </a>{" "}
-          or email{" "}
-          <a
-            href={`mailto:${siteConfig.contactEmail}`}
-            className="whitespace-nowrap text-navy underline underline-offset-4"
-          >
-            {siteConfig.contactEmail}
           </a>
           .
         </p>
