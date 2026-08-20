@@ -83,12 +83,50 @@ export default async function ProgramsPage({
                 <ProgramEnquireButton slug={p.slug} />
               ) : null}
               {p.href && p.cta ? (
-                <Link
-                  href={p.href}
-                  className="glass-capsule glass-btn rounded-full px-7 py-3.5 text-[11px] font-medium tracking-[0.24em] text-navy uppercase"
-                >
-                  {p.cta}
-                </Link>
+                p.externalHref ? (
+                  /* Leaves the site, so it says so: a new tab, the outbound
+                     arrow, and a note for anyone on a screen reader, who
+                     gets no warning from the icon alone. */
+                  <a
+                    href={p.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="glass-capsule glass-btn inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-[11px] font-medium tracking-[0.24em] text-navy uppercase"
+                  >
+                    {p.cta}
+                    <svg
+                      width="11"
+                      height="11"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      aria-hidden="true"
+                      className="shrink-0"
+                    >
+                      <path
+                        d="M5.5 2.5H2.5v9h9v-3"
+                        stroke="currentColor"
+                        strokeWidth="1.4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M8.5 2.5h3v3M11.5 2.5 6.75 7.25"
+                        stroke="currentColor"
+                        strokeWidth="1.4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    <span className="sr-only">(opens in a new tab)</span>
+                  </a>
+                ) : (
+                  <Link
+                    href={p.href}
+                    className="glass-capsule glass-btn rounded-full px-7 py-3.5 text-[11px] font-medium tracking-[0.24em] text-navy uppercase"
+                  >
+                    {p.cta}
+                  </Link>
+                )
               ) : null}
             </div>
           </div>

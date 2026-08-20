@@ -7,6 +7,8 @@
  * module would drag React into the route handler — keeping the data here
  * lets every one of those places validate a slug against the same list.
  */
+import { siteConfig } from "@/lib/site-config";
+
 export type ProgramSlug = "leaseback" | "jet-card" | "corporate" | "glidepath";
 
 export type Program = {
@@ -19,9 +21,12 @@ export type Program = {
   label: string;
   body: string;
   points: string[];
-  /** Only Glidepath has a page behind it; the rest are brochures. */
+  /** Only Glidepath has a link behind it; the rest are brochures. */
   href?: string;
   cta?: string;
+  /** Opens in a new tab and gets the outbound arrow. Glidepath is a
+      separate company on its own domain, so its card leaves the site. */
+  externalHref?: true;
   /** false hides the Contact Us button and blocks the enquiry route. */
   enquire?: false;
   /** Sits beside the enquiry form. Absent renders an empty slot. */
@@ -125,14 +130,16 @@ export const PROGRAMS: Program[] = [
     titleLead: "Glidepath",
     titleEmphasis: "Exchange Fund",
     label: "Glidepath Exchange Fund",
-    body: "A way into private aviation that starts with your portfolio rather than an aircraft purchase. Investors contribute a concentrated stock position to an exchange fund and diversify it without triggering a taxable event. Membership also opens the door to the CRAFT Challenger fleet at exceptionally low hourly rates, with all the access of ownership and none of the tail.",
+    body: "CRAFT is the exclusive operator for Glidepath — the most innovative way to access private aircraft available today. It starts with your portfolio rather than an aircraft purchase: investors contribute a concentrated stock position to the fund and diversify it without triggering a taxable event. Membership then opens the door to the CRAFT Challenger fleet at exceptionally low hourly rates. All the access of ownership and none of the tail.",
     points: [
       "Diversify a concentrated stock position without selling",
-      "Fleet access at exceptionally low hourly rates",
-      "A separate company from CRAFT",
+      "Challenger fleet access at exceptionally low hourly rates",
+      "Every member flight flown by CRAFT, exclusively",
+      "Offered by our partners at Glidepath",
     ],
-    href: "/glidepath",
-    cta: "Explore Glidepath →",
+    href: siteConfig.glidepathUrl,
+    externalHref: true,
+    cta: "Visit Glidepath",
     enquire: false,
   },
 ];

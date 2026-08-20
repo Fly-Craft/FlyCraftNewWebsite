@@ -65,8 +65,9 @@ with the charter desk after a quote is accepted.
 - [Programs](${siteUrl}/programs): leaseback for Challenger owners, the
   fleet jet card, contracted corporate programs, and Glidepath. Each card
   opens its own enquiry form
-- [Glidepath](${siteUrl}/glidepath): an independent 721 exchange fund whose
-  investors get preferred fleet rates. A separate company, not CRAFT
+- [Glidepath](https://glidepath.ai): a 721 exchange fund whose investors get
+  preferred fleet rates, operated exclusively by CRAFT. Offered by Glidepath,
+  a separate company, and lives on its own site rather than here
 - [Company](${siteUrl}/company): history, leadership, safety record
 - [FAQ](${siteUrl}/faq): cancellations, diversions, de-icing, ID requirements
 - [Contact](${siteUrl}/contact): phone, email, address

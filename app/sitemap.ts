@@ -29,7 +29,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/fleet/menu", 0.5),
     ...AIRCRAFT.map((a) => entry(`/fleet/${a.slug}`, 0.6)),
     entry("/programs", 0.8),
-    entry("/glidepath", 0.7),
     entry("/company", 0.7),
     entry("/contact", 0.7),
     entry("/faq", 0.6),
