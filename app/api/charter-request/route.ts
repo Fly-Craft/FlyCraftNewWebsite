@@ -110,7 +110,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Email delivery failed" }, { status: 502 });
   }
   if (notify.skipped) {
-    // TODO: set RESEND_API_KEY (and CHARTER_FROM_EMAIL) to enable delivery.
+    // TODO: set POSTMARK_SERVER_TOKEN (and CHARTER_FROM_EMAIL) to enable delivery.
     // Dev convenience: drop the generated PDF on disk so it can be reviewed
     // without email delivery configured. Serverless filesystems (Vercel)
     // are read-only, so skip there rather than failing the request.

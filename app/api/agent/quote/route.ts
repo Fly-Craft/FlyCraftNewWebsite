@@ -11,6 +11,7 @@ import {
   dayShift,
 } from "@/lib/flight";
 import { siteConfig, siteUrl } from "@/lib/site-config";
+import { sendMail } from "@/lib/notify";
 
 /** Matches the booking form: 9 seats, one must stay free if a crew member rides. */
 const MAX_PAX = 9;
@@ -242,55 +243,36 @@ export async function POST(request: Request) {
     `Notes: ${String(body.notes ?? "").trim() || "—"}`,
   ].join("\n");
 
-  const apiKey = process.env.RESEND_API_KEY;
-  if (apiKey) {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from:
-          process.env.CHARTER_FROM_EMAIL ??
-          "CRAFT Website <onboarding@resend.dev>",
-        to: [process.env.CHARTER_TO_EMAIL ?? "nivtesler8@gmail.com"],
-        subject: `Charter request (agent) — ${name}`,
-        text,
-      }),
-    });
-    if (!res.ok) {
-      console.error("Resend error:", res.status, await res.text());
-      // Tell the agent the truth: this did NOT reach a human.
-      return NextResponse.json(
-        {
-          ok: false,
-          submitted: false,
-          error:
-            "The request could not be delivered. Contact the charter desk directly.",
-          humanFallback: {
-            phone: siteConfig.charterSalesPhoneDisplay,
-            email: siteConfig.contactEmail,
-          },
-        },
-        { status: 502, headers: cors },
-      );
-    }
-  } else {
-    console.log(`--- Agent charter request (delivery not configured) ---\n${text}`);
+  /* Goes through the same sender as every other form. This route used to
+     call the mail provider itself, which meant the provider was configured
+     in two places and only one of them got changed at a time. */
+  const delivery = await sendMail({
+    to: process.env.CHARTER_TO_EMAIL ?? siteConfig.contactEmail,
+    subject: `Charter request (agent) — ${name}`,
+    text,
+    ...(email ? { replyTo: email } : {}),
+  });
+
+  if (!delivery.ok) {
+    /* `skipped` is the difference between "never attempted" and "tried and
+       failed", and the agent gets a different status for each: 503 means
+       intake is switched off, 502 means it broke. Either way, tell the
+       agent the truth — this did NOT reach a human. */
+    const notConfigured = delivery.skipped;
     return NextResponse.json(
       {
         ok: false,
         submitted: false,
-        error:
-          "Request intake is not currently delivering mail. Contact the charter desk directly so this trip is not lost.",
+        error: notConfigured
+          ? "Request intake is not currently delivering mail. Contact the charter desk directly so this trip is not lost."
+          : "The request could not be delivered. Contact the charter desk directly.",
         humanFallback: {
           phone: siteConfig.charterSalesPhoneDisplay,
           email: siteConfig.contactEmail,
         },
         quote,
       },
-      { status: 503, headers: cors },
+      { status: notConfigured ? 503 : 502, headers: cors },
     );
   }
 

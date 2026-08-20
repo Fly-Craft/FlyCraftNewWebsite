@@ -15,10 +15,31 @@
  */
 import { siteUrl, siteConfig, exploreLinks } from "@/lib/site-config";
 
-const RESEND_ENDPOINT = "https://api.resend.com/emails";
+const POSTMARK_ENDPOINT = "https://api.postmarkapp.com/email";
 
+/* Postmark has no shared sandbox sender the way Resend did, so there is no
+   generic address to fall back to: From has to be one Postmark has verified
+   for this domain. Defaulting to the company's own address means an
+   unverified setup fails loudly with Postmark's "sender signature not
+   confirmed" instead of quietly sending from a provider's domain. */
 const FROM =
-  process.env.CHARTER_FROM_EMAIL ?? "CRAFT Website <onboarding@resend.dev>";
+  process.env.CHARTER_FROM_EMAIL ?? `CRAFT <${siteConfig.contactEmail}>`;
+
+/* Resend took { filename, content }. Postmark wants { Name, Content,
+   ContentType } and will not guess the type. Everything attached today is a
+   generated PDF, so the extension is enough to name it. */
+const ATTACHMENT_TYPES: Record<string, string> = {
+  pdf: "application/pdf",
+};
+
+function toPostmarkAttachment(a: { filename: string; content: string }) {
+  const ext = a.filename.split(".").pop()?.toLowerCase() ?? "";
+  return {
+    Name: a.filename,
+    Content: a.content,
+    ContentType: ATTACHMENT_TYPES[ext] ?? "application/octet-stream",
+  };
+}
 
 /**
  * `skipped` is present on every variant so callers can branch on it without
@@ -129,38 +150,49 @@ export async function sendMail(args: MailArgs): Promise<SendResult> {
     return { ok: false, skipped: true, reason: "no recipients" };
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
+  const serverToken = process.env.POSTMARK_SERVER_TOKEN;
+  if (!serverToken) {
     console.log(
-      `--- Email not configured (RESEND_API_KEY unset) ---\nTo: ${to.join(", ")}\nSubject: ${args.subject}\n\n${args.text}`
+      `--- Email not configured (POSTMARK_SERVER_TOKEN unset) ---\nTo: ${to.join(", ")}\nSubject: ${args.subject}\n\n${args.text}`
     );
-    return { ok: false, skipped: true, reason: "RESEND_API_KEY unset" };
+    return { ok: false, skipped: true, reason: "POSTMARK_SERVER_TOKEN unset" };
   }
   try {
-    const res = await fetch(RESEND_ENDPOINT, {
+    const res = await fetch(POSTMARK_ENDPOINT, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${apiKey}`,
+        "X-Postmark-Server-Token": serverToken,
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify({
-        from: FROM,
-        to,
-        subject: args.subject,
-        text: args.text,
-        ...(args.html ? { html: args.html } : {}),
-        ...(args.replyTo ? { reply_to: [args.replyTo] } : {}),
-        ...(args.attachments ? { attachments: args.attachments } : {}),
+        From: FROM,
+        /* One comma-separated string rather than an array, capped at 50
+           recipients per message. The dedupe above keeps us well under. */
+        To: to.join(", "),
+        Subject: args.subject,
+        TextBody: args.text,
+        /* The default transactional stream. Postmark rejects the send if
+           this names a stream the server does not have. */
+        MessageStream: "outbound",
+        ...(args.html ? { HtmlBody: args.html } : {}),
+        ...(args.replyTo ? { ReplyTo: args.replyTo } : {}),
+        ...(args.attachments
+          ? { Attachments: args.attachments.map(toPostmarkAttachment) }
+          : {}),
       }),
     });
     if (!res.ok) {
+      /* Postmark puts an ErrorCode and a human-readable Message in the body
+         (406 = recipient suppressed, 300 = sender signature unverified), so
+         the body is worth more than the status on its own. */
       const detail = await res.text();
-      console.error("Resend error:", res.status, detail);
-      return { ok: false, skipped: false, reason: `Resend ${res.status}` };
+      console.error("Postmark error:", res.status, detail);
+      return { ok: false, skipped: false, reason: `Postmark ${res.status}` };
     }
     return { ok: true, skipped: false };
   } catch (err) {
-    console.error("Resend request threw:", err);
+    console.error("Postmark request threw:", err);
     return { ok: false, skipped: false, reason: "network" };
   }
 }
