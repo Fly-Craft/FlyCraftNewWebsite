@@ -166,12 +166,19 @@ export default function AboutSections() {
           </h2>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
             CRAFT runs in-house maintenance at our Opa-locka home base. The
-            same technicians see the same airframes week after week. They
-            know every aircraft&apos;s history because they wrote it.
+            same technicians see the same airframes week after week, so they
+            know every nick and every scratch on every aircraft, because they
+            logged it themselves. A contractor closes a squawk and moves on to
+            the next customer&apos;s airplane. Our team lives with these
+            cabins for years, and it shows in the condition they keep them in.
           </p>
           <p className="text-[15px] font-light leading-relaxed text-ink-2">
-            An aircraft leaves the hangar when the people who know it best
-            say it is ready, and not an hour sooner.
+            The same thinking runs through our cabin interior committee, where
+            technicians, pilots, and leadership decide together what gets
+            addressed, refreshed, or replaced. The people who maintain the
+            aircraft, the people who fly it, and the people accountable for
+            the experience all have a say. That is how the cabin you step into
+            stays pristine.
           </p>
         </div>
 
