@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sendMail, sendConfirmation } from "@/lib/notify";
+import { renderEnquiryPdf } from "@/lib/pdf/render-enquiry-pdf";
 
 // Set CHARTER_TO_EMAIL=charter@flycraft.com in production; the fallback is
 // a personal inbox used while the site is being tested.
@@ -24,12 +25,36 @@ export async function POST(request: Request) {
     message,
   ].join("\n");
 
+  /* Same treatment the charter request gets: the lead arrives as a document
+     rather than as a wall of text. The plain-text body stays as the email's
+     own content, so a phone previewing the message still shows the details
+     without opening an attachment. */
+  const reference = `CE-${Date.now().toString(36).toUpperCase()}`;
+  const generatedAt = new Date().toLocaleString("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
+  const pdf = await renderEnquiryPdf(
+    {
+      kind: "Contact Enquiry",
+      name: String(name),
+      email: typeof email === "string" ? email : undefined,
+      phone: typeof phone === "string" ? phone : undefined,
+      message: String(message),
+    },
+    reference,
+    generatedAt
+  );
+
   // The lead itself. A failure here fails the request, because the visitor
   // needs to know their message didn't land.
   const notify = await sendMail({
     to: TO_EMAIL,
     subject: `Contact form — ${name}`,
     text,
+    attachments: [
+      { filename: `Contact-Enquiry-${reference}.pdf`, content: pdf.toString("base64") },
+    ],
     // Replies from the team go straight back to the sender.
     ...(typeof email === "string" && email.trim() ? { replyTo: email.trim() } : {}),
   });

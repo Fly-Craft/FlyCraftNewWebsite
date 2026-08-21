@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { sendMail, sendConfirmation } from "@/lib/notify";
 import { enquirableProgram } from "@/lib/programs";
+import { renderEnquiryPdf } from "@/lib/pdf/render-enquiry-pdf";
 
 // Set CHARTER_TO_EMAIL=charter@flycraft.com in production; the fallback is
 // a personal inbox used while the site is being tested.
@@ -59,6 +60,30 @@ export async function POST(request: Request) {
     message?.trim() ? message.trim() : "—",
   ].join("\n");
 
+  /* The same document treatment the charter request gets. The programme's
+     own questions ride along as extra fields, so whoever runs that programme
+     sees the answers without hunting through the email body. */
+  const reference = `PE-${Date.now().toString(36).toUpperCase()}`;
+  const generatedAt = new Date().toLocaleString("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
+  const pdf = await renderEnquiryPdf(
+    {
+      kind: `${found.label} Enquiry`,
+      name: String(name),
+      email: typeof email === "string" ? email : undefined,
+      phone: typeof phone === "string" ? phone : undefined,
+      message: typeof message === "string" ? message : undefined,
+      extras: [
+        ...(wantsCompany ? [{ label: "Company", value: String(company).trim() }] : []),
+        ...(hoursField ? [{ label: "Hours per year", value: hours ? String(hours) : "Not given" }] : []),
+      ],
+    },
+    reference,
+    generatedAt
+  );
+
   /* The lead itself, to the general inbox AND the people who run this
      programme. sendMail dedupes, so an overlap between the two costs
      nobody a second copy. A failure here fails the request. */
@@ -66,6 +91,9 @@ export async function POST(request: Request) {
     to: [TO_EMAIL, ...(found.recipients ?? [])],
     subject: `${found.label} enquiry — ${name}`,
     text,
+    attachments: [
+      { filename: `${found.slug}-enquiry-${reference}.pdf`, content: pdf.toString("base64") },
+    ],
     ...(typeof email === "string" && email.trim() ? { replyTo: email.trim() } : {}),
   });
   if (!notify.ok && !notify.skipped) {
