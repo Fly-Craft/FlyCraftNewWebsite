@@ -286,7 +286,7 @@ function buildHtml(name: string, lead: string, rows: SummaryRow[]): string {
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F6FAFC;padding:32px 16px;">
     <tr><td align="center">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#FFFFFF;border-radius:20px;padding:40px;">
-        <tr><td style="font:600 15px/1 Helvetica,Arial,sans-serif;letter-spacing:0.34em;color:${NAVY};padding-bottom:28px;">CRAFT</td></tr>
+        <tr><td align="center" style="font:600 15px/1 Helvetica,Arial,sans-serif;letter-spacing:0.34em;text-indent:0.17em;text-align:center;color:${NAVY};padding-bottom:28px;">CRAFT</td></tr>
 
         <tr><td style="font:300 26px/1.25 Helvetica,Arial,sans-serif;color:${NAVY};padding-bottom:14px;">We&rsquo;ve received your ${escapeHtml(lead)}.</td></tr>
 
@@ -308,7 +308,7 @@ function buildHtml(name: string, lead: string, rows: SummaryRow[]): string {
         <tr><td style="font:400 10px/1 Helvetica,Arial,sans-serif;letter-spacing:0.3em;text-transform:uppercase;color:${INK3};padding-bottom:14px;">In the meantime</td></tr>
         <tr><td><table role="presentation" cellpadding="0" cellspacing="0"><tr>${buttons}</tr></table></td></tr>
 
-        <tr><td style="padding-top:30px;border-top:1px solid ${BORDER};font:300 12px/1.6 Helvetica,Arial,sans-serif;color:${INK3};">
+        <tr><td align="center" style="padding-top:30px;border-top:1px solid ${BORDER};font:300 12px/1.6 Helvetica,Arial,sans-serif;text-align:center;color:${INK3};">
           CRAFT &middot; ${escapeHtml(siteConfig.address)}<br>
           This is an automated confirmation. Replying to it reaches our team.
         </td></tr>
@@ -402,3 +402,4 @@ export async function sendConfirmation(args: ConfirmationArgs): Promise<{
 
   return { email, sms };
 }
+
