@@ -82,7 +82,7 @@ export const PROGRAMS: Program[] = [
     titleLead: "Fleet",
     titleEmphasis: "Jet Card",
     label: "Fleet Jet Card",
-    body: "Fleet access at a discounted hourly rate, built for travel you can schedule. You book and communicate directly with the operator flying the aircraft, with no broker in between and no relay of information. Callouts run at least five days ahead, and that lead time is what makes the trip repeatable: the same fleet, the same process, the same standard every time. This is the card for people who plan their travel rather than chase it.",
+    body: "Fleet access at a discounted hourly rate, built for travel you can schedule. You book and communicate directly with the operator flying the aircraft, with no broker in between and no relay of information. Callouts run at least five days ahead, and that lead time is what makes the trip repeatable: the same fleet, the same process, the same standard every time. It's the card for travel that's already on the calendar, where five days' notice is all it takes.",
     points: [
       "Book and communicate directly with the operator flying the aircraft",
       "The same fleet and the same process on every trip",
@@ -104,15 +104,17 @@ export const PROGRAMS: Program[] = [
   },
   {
     slug: "corporate",
-    eyebrow: "For Teams",
+    eyebrow: "For Executive Teams",
     titleLead: "Corporate",
     titleEmphasis: "Program",
     label: "Corporate Program",
-    body: "Travel built around companies that move executives on their own schedule, with dedicated account management for the way corporations operate. We stay flexible around last-minute changes, and because you fly the same fleet, your team gets to know our crews well. That's one reason satisfaction runs so high among the companies already flying with us.",
+    body: "Built for the people who actually run executive travel. Schedules shift, board meetings get called, and sometimes three executives need to be in the same room by morning, so we don't cap you at one aircraft or one departure. Your assistant works with a dedicated account manager who knows your approval chain, your billing structure, and how your company books, rather than starting over with a new broker every trip. And because the aircraft never lands on your balance sheet, you get the access without the fixed cost, the crew payroll, or the depreciation drag.",
     points: [
-      "Dedicated account manager",
-      "Billing and reporting made easy for corporate structures",
-      "A concierge service for busy executive teams",
+      "A dedicated account manager who knows your team, your policy, and your approval chain",
+      "Multiple aircraft on the same day when the whole team has to be in one room",
+      "Short-notice and same-day requests, without the usual program restrictions",
+      "Billing, invoicing, and reporting built for corporate finance structures",
+      "Fleet access without an aircraft on the P&L, with no crew payroll, no depreciation, and no idle asset",
     ],
     fields: { company: true, hoursPerYear: {} },
     image: {
