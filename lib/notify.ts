@@ -123,6 +123,19 @@ function throttled(key: string): boolean {
   return false;
 }
 
+/**
+ * Who a lead goes to. CHARTER_TO_EMAIL may list several addresses separated
+ * by commas, which is how the site routes to more than one inbox during the
+ * review period without a code change.
+ */
+export function leadRecipients(): string[] {
+  const raw = process.env.CHARTER_TO_EMAIL ?? "nivtesler8@gmail.com";
+  return raw
+    .split(",")
+    .map((a) => a.trim())
+    .filter(Boolean);
+}
+
 /* ------------------------------------------------------------------ */
 /* Transport                                                           */
 /* ------------------------------------------------------------------ */

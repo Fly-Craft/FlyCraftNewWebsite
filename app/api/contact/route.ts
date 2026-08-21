@@ -1,10 +1,7 @@
 import { NextResponse } from "next/server";
-import { sendMail, sendConfirmation } from "@/lib/notify";
+import { sendMail, sendConfirmation, leadRecipients } from "@/lib/notify";
 import { renderEnquiryPdf } from "@/lib/pdf/render-enquiry-pdf";
 
-// Set CHARTER_TO_EMAIL=charter@flycraft.com in production; the fallback is
-// a personal inbox used while the site is being tested.
-const TO_EMAIL = process.env.CHARTER_TO_EMAIL ?? "nivtesler8@gmail.com";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -49,7 +46,7 @@ export async function POST(request: Request) {
   // The lead itself. A failure here fails the request, because the visitor
   // needs to know their message didn't land.
   const notify = await sendMail({
-    to: TO_EMAIL,
+    to: leadRecipients(),
     subject: `Contact form — ${name}`,
     text,
     attachments: [
