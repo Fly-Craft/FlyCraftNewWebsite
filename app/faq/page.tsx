@@ -44,7 +44,7 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "Is there a flight attendant on board?",
     answer:
-      "One can be added to any trip when you book. The attendant takes a cabin seat, so a flight with one on board seats eight passengers rather than nine.",
+      "Not as standard, but we can arrange one for your trip when you book. The attendant takes a cabin seat, so a flight with one on board seats eight passengers rather than nine.",
   },
   {
     question: "What food and drink are on board?",
@@ -60,12 +60,12 @@ const FAQ_ITEMS: FaqItem[] = [
     ),
   },
   {
-    question: "Can I get online during the flight?",
+    question: "Is there Wi-Fi on board?",
     answer:
-      "Yes. Every cabin has Starlink internet, along with Live TV and Apple TV, so the working day or the movie carries on at altitude.",
+      "Yes. Every aircraft in the fleet has Starlink. If you have not flown with it before, expect a pleasant surprise: streaming, video calls, and anything else you would do on the connection at home all work the same way at altitude. Every cabin also has Live TV and Apple TV.",
   },
   {
-    question: "Can my dog come with me?",
+    question: "Are pets allowed on board?",
     answer:
       "Pets are welcome. Add them when you book and tell us how many are coming, so the crew can set the cabin up for them.",
   },
