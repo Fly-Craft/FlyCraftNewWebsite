@@ -27,6 +27,16 @@ export type Program = {
   /** Opens in a new tab and gets the outbound arrow. Glidepath is a
       separate company on its own domain, so its card leaves the site. */
   externalHref?: true;
+  /**
+   * This programme's own Google appointment schedule, if it has one.
+   *
+   * The booked event's title is fixed by the schedule itself; Google ignores
+   * `title`, `text` and `summary` on the booking URL, which was tested rather
+   * than assumed. So a call that lands in the calendar as "Aircraft Leaseback
+   * Call" needs its own schedule, and this is where its URL goes. Absent, the
+   * card falls back to the general introductory call.
+   */
+  bookingUrl?: string;
   /** false hides the Contact Us button and blocks the enquiry route. */
   enquire?: false;
   /** Sits beside the enquiry form. Absent renders an empty slot. */

@@ -83,7 +83,7 @@ export default async function ProgramsPage({
               {p.enquire !== false ? (
                 <>
                   <ProgramEnquireButton slug={p.slug} />
-                  <BookCallButton />
+                  <BookCallButton url={p.bookingUrl} />
                 </>
               ) : null}
               {p.href && p.cta ? (

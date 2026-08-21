@@ -26,7 +26,7 @@ const useHydrated = () =>
     () => false
   );
 
-function BookCallDialog({ onClose }: { onClose: () => void }) {
+function BookCallDialog({ url, onClose }: { url: string; onClose: () => void }) {
   const panelRef = useRef<HTMLDivElement>(null);
   const close = useCallback(() => onClose(), [onClose]);
 
@@ -87,7 +87,7 @@ function BookCallDialog({ onClose }: { onClose: () => void }) {
         {/* The embed brings its own white page, so it gets the full panel
             below the close button rather than sitting on the glass. */}
         <iframe
-          src={siteConfig.bookingUrl}
+          src={url}
           title="Book a call with Natan Benchimol"
           className="h-full w-full flex-1 rounded-3xl border-0 bg-white pt-2"
         />
@@ -104,9 +104,12 @@ function BookCallDialog({ onClose }: { onClose: () => void }) {
 export default function BookCallButton({
   variant = "quiet",
   className = "",
+  url,
 }: {
   variant?: "quiet" | "solid";
   className?: string;
+  /** A programme's own schedule. Omitted on Natan's card, which stays general. */
+  url?: string;
 }) {
   const [open, setOpen] = useState(false);
   const hydrated = useHydrated();
@@ -128,7 +131,12 @@ export default function BookCallButton({
       >
         Book a Call
       </button>
-      {hydrated && open ? <BookCallDialog onClose={() => setOpen(false)} /> : null}
+      {hydrated && open ? (
+        <BookCallDialog
+          url={url ?? siteConfig.bookingUrl}
+          onClose={() => setOpen(false)}
+        />
+      ) : null}
     </>
   );
 }
