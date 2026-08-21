@@ -82,11 +82,12 @@ export const PROGRAMS: Program[] = [
     titleLead: "Fleet",
     titleEmphasis: "Jet Card",
     label: "Fleet Jet Card",
-    body: "Fleet access at a discounted hourly rate. It runs thousands of dollars an hour below what a broker charges, because there is no broker. You book and communicate directly with the operator flying the aircraft. In exchange, callouts run at least five days ahead. This is the card for people who plan their travel rather than chase it.",
+    body: "Fleet access at a discounted hourly rate, built for travel you can schedule. You book and communicate directly with the operator flying the aircraft, with no broker in between and no relay of information. Callouts run at least five days ahead, and that lead time is what makes the trip repeatable: the same fleet, the same process, the same standard every time. This is the card for people who plan their travel rather than chase it.",
     points: [
-      "Thousands per hour less than booking through a broker",
-      "Book and communicate directly with the operator",
+      "Book and communicate directly with the operator flying the aircraft",
+      "The same fleet and the same process on every trip",
       "Five-day minimum callout, built for planning ahead",
+      "A discounted hourly rate, because there is no broker in the middle",
       "Starting at 25 hours per year",
     ],
     // 25 is the programme's entry point, so the field can't take less.

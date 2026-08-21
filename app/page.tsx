@@ -168,8 +168,8 @@ export default function Home() {
 
         <div className="mx-auto w-full max-w-xl">
           <img
-            src="/programs/leaseback-1200.jpg"
-            alt="A CRAFT Challenger on the ramp at sunset"
+            src="/programs/pod61-1200.jpg"
+            alt="A CRAFT Challenger head-on at sunset with the airstair down"
             className="w-full rounded-3xl object-cover shadow-[0_24px_80px_rgba(12,29,61,0.18)]"
           />
         </div>
