@@ -21,7 +21,7 @@ const EXECS = [
   {
     /* Filename carries a hash of the image, so a browser holding the
        old portrait can't keep serving it after the swap. */
-    img: "/faces/natan-e3d3ae55.webp",
+    img: "/faces/natan-3c35c624.webp",
     mobileOrder: "max-lg:order-2",
     name: "Natan Benchimol",
     role: "Executive Vice President",

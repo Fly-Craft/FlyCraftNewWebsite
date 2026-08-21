@@ -1,5 +1,5 @@
 const NATAN = {
-  img: "/faces/natan-e3d3ae55.webp",
+  img: "/faces/natan-3c35c624.webp",
   name: "Natan Benchimol",
   role: "Executive Vice President",
   phone: "+13232159495",
