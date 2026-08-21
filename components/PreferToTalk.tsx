@@ -42,7 +42,7 @@ export default function PreferToTalk() {
         >
           {NATAN.email}
         </a>
-        <BookCallButton variant="solid" className="w-full" />
+        <BookCallButton variant="solid" className="self-start" />
       </div>
     </div>
   );
