@@ -62,7 +62,7 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "Is there Wi-Fi on board?",
     answer:
-      "Yes. Every aircraft in the fleet has Starlink. If you have not flown with it before, expect a pleasant surprise: streaming, video calls, and anything else you would do on the connection at home all work the same way at altitude. Every cabin also has Live TV and Apple TV.",
+      "Yes. Every aircraft in the fleet has Starlink. If you have not flown with it before, expect a pleasant surprise: streaming, video calls, and anything else you would do on the connection at home all work the same way at altitude.",
   },
   {
     question: "Are pets allowed on board?",
