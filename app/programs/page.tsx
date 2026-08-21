@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import PreferToTalk from "@/components/PreferToTalk";
+import BookCallButton from "@/components/BookCall";
 import {
   ProgramEnquiryProvider,
   ProgramEnquireButton,
@@ -80,7 +81,10 @@ export default async function ProgramsPage({
                 rather than to CRAFT's inbox. */}
             <div className="mt-auto flex flex-wrap items-center justify-center gap-3 pt-8">
               {p.enquire !== false ? (
-                <ProgramEnquireButton slug={p.slug} />
+                <>
+                  <ProgramEnquireButton slug={p.slug} />
+                  <BookCallButton />
+                </>
               ) : null}
               {p.href && p.cta ? (
                 p.externalHref ? (

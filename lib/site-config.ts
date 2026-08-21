@@ -20,6 +20,11 @@ export const siteConfig = {
   charterSalesPhone: "+13108483636",
   charterSalesPhoneDisplay: "+1 (310) 848-3636",
   glidepathUrl: "https://glidepath.ai",
+  /* Natan's Google Appointment Scheduling page. Opened in a dialog on
+     /programs, and the reason his direct line no longer appears on the
+     site: a booked slot beats a missed call. */
+  bookingUrl:
+    "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3XQ54AhhG64ugIqz4ernC-saXcJnk4JH8hHnNmPWfeOQdAw7Usm10cZqsg1OUl8OR9PwDqt4EK?gv=true",
   contactEmail: "charter@flycraft.com",
   careersEmail: "careers@flycraft.com",
   address: "14200 NW 42nd Ave, Opa-locka, Florida 33054",

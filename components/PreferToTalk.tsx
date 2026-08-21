@@ -1,9 +1,11 @@
+import BookCallButton from "@/components/BookCall";
+
+/* No direct line here on purpose: the scheduler books a slot Natan is
+   actually free for, which beats a number that rings while he's flying. */
 const NATAN = {
   img: "/faces/natan-3c35c624.webp",
   name: "Natan Benchimol",
   role: "Executive Vice President",
-  phone: "+13232159495",
-  phoneDisplay: "+1 (323) 215-9495",
   email: "natan@flycraft.com",
 };
 
@@ -33,19 +35,14 @@ export default function PreferToTalk() {
         </div>
       </div>
 
-      <div className="mt-5 flex flex-col gap-2 border-t border-border pt-4">
-        <a
-          href={`tel:${NATAN.phone}`}
-          className="text-[13px] font-light text-navy transition-opacity hover:opacity-60"
-        >
-          {NATAN.phoneDisplay}
-        </a>
+      <div className="mt-5 flex flex-col gap-4 border-t border-border pt-4">
         <a
           href={`mailto:${NATAN.email}`}
           className="text-[13px] font-light break-all text-navy transition-opacity hover:opacity-60"
         >
           {NATAN.email}
         </a>
+        <BookCallButton variant="solid" className="w-full" />
       </div>
     </div>
   );
