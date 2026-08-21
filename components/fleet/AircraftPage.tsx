@@ -18,7 +18,7 @@ const FOOTNOTES_300 = [
   "Standard crew does not include a flight attendant. Optional upon request (additional charges apply).",
   "Flight attendant on board reduces maximum passenger occupancy to 8.",
   "Use of the bed reduces passenger capacity to 7 or 8 passengers, depending if the bed is being used by 1 or 2 occupants.",
-  "The maximum cargo compartment allowable load is 750 pounds. If a client arrives with more luggage than the aircraft can accommodate, some items may need to be left behind and not loaded onto the aircraft.",
+  "The cargo compartment holds up to 700 pounds. If a client arrives with more luggage than the aircraft can accommodate, some items may need to be left behind and not loaded onto the aircraft.",
   "Max range displayed, real range may vary based on a variety of factors such as weight and weather.",
 ];
 
@@ -27,7 +27,7 @@ const FOOTNOTES_350 = [
   "Cruising speed shown is ground speed, assuming no wind.",
   "Standard crew does not include a flight attendant. Optional upon request (additional charges apply).",
   "Each bed reduces the maximum passenger occupancy by 1, for example if 1 bed is open the maximum passenger occupancy is 7.",
-  "The maximum cargo compartment allowable load is 750 pounds. If a client arrives with more luggage than the aircraft can accommodate, some items may need to be left behind and not loaded onto the aircraft.",
+  "The cargo compartment holds up to 700 pounds. If a client arrives with more luggage than the aircraft can accommodate, some items may need to be left behind and not loaded onto the aircraft.",
   "Available services include live TV (via YouTube TV), as well as Apple TV and Netflix.",
   "Max range displayed, real range may vary based on a variety of factors such as weight and weather.",
 ];
