@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 const linkCls = "text-navy underline underline-offset-4 hover:opacity-70";
 
-/* Safety first, then the practical shape of the day itself: when to turn
-   up, what to bring, and what's waiting in the cabin. */
+/* Safety first, then the day itself in the order it happens: when to turn
+   up, how to find the aircraft, what to bring, and what's in the cabin. */
 const FAQ_ITEMS: FaqItem[] = [
   {
     question: "What safety standards does CRAFT fly to?",
@@ -29,7 +29,12 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "How early do I need to be at the airport?",
     answer:
-      "Far less early than you're used to. Plan on about fifteen minutes before departure domestically, and closer to thirty for an international trip. You park steps from the aircraft, and there is no terminal to cross and no line to stand in. Your exact time comes with your itinerary.",
+      "Fifteen minutes before departure, whether you're flying domestically or internationally. That covers baggage loading, a short briefing from the crew, and an ID check. There is no terminal to cross and no line to stand in.",
+  },
+  {
+    question: "How will I find my airplane at the airport?",
+    answer:
+      "Your trip sheet has everything you need on it, including which FBO to head for and the tail number of your aircraft. The crew waits for you in the FBO lobby, and at most airports you can drive straight out to the ramp instead. The tail number is painted on the tail, and either our crew or the ground crew will take you out to it.",
   },
   {
     question: "Do I need to bring ID on a private flight?",
