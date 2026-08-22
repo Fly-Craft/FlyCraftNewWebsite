@@ -2,13 +2,19 @@
  * Display order: Izzy centered, Natan and Roy flanking him, Tania and
  * Shaked on the far ends.
  *
- * Every claim here is either supplied by CRAFT or carried over from the
- * bios these replaced. The one exception is the founder's flying history,
- * which is on the public record: the January 2018 engine failure and
+ * All five follow the same shape: where they came from, what they do here,
+ * what they're accountable for, and then anything personal they chose to
+ * share. Only Natan has that last line so far.
+ *
+ * Every claim is either supplied by CRAFT or carried over from the bios
+ * these replaced, with two things worth naming. The founder's flying
+ * history is on the public record: the January 2018 engine failure and
  * freeway landing were covered by NPR, KTLA, CBS, USC Today and AOPA, and
  * the certificates, hours and Wings of Rescue missions come from AOPA's
- * interview with him days afterwards. Nothing here is inferred. If a
- * detail can't be sourced to CRAFT or to print, it doesn't go in.
+ * interview with him days afterwards. And "Israeli" Air Force for Roy is
+ * an inference from El Al and the rest of the team, not something CRAFT
+ * said; it needs confirming. Otherwise, a detail that can't be sourced to
+ * CRAFT or to print doesn't go in.
  */
 const EXECS = [
   {
@@ -16,7 +22,7 @@ const EXECS = [
     mobileOrder: "max-lg:order-4",
     name: "Tania Ureta",
     role: "Accounting & Finance Lead",
-    bio: "Tania is a CPA who came to CRAFT from Univision and Big Language Solutions, and she leads finance and accounting across the company, from charter billing through the reporting a growing fleet runs on. CRAFT's newer programs are financial products as much as flying ones, which means the numbers underneath them have to be exact.",
+    bio: "Tania qualified as a CPA and came to CRAFT from Univision and Big Language Solutions, where she worked on the finances of businesses that answer to a lot of people. She leads finance and accounting across the company, running from charter billing through to the reporting a growing fleet depends on. CRAFT's newer programs are financial products as much as flying ones, which means the numbers underneath them have to be exact.",
   },
   {
     /* Filename carries a hash of the image, so a browser holding the
@@ -32,14 +38,14 @@ const EXECS = [
     mobileOrder: "max-lg:order-1",
     name: "Israel Slodowitz",
     role: "Founder & CEO",
-    bio: "Izzy soloed at sixteen and held commercial and airline transport certificates by twenty-three, with close to 2,000 hours behind him and a stretch flying rescue missions for Wings of Rescue. In January 2018 the engine of the Bonanza he was flying quit at 5,500 feet over the Pacific. After eight failed restarts he glided it down onto the 55 Freeway in Costa Mesa, passed under an overpass, dropped the gear at the last second, and stopped without touching a car. He has since described it as the night that settled what he wanted to build. A former IDF combat soldier and USC Marshall graduate, he started CRAFT in 2020.",
+    bio: "Izzy soloed at sixteen and held commercial and airline transport certificates by twenty-three, with close to 2,000 hours behind him and a stretch flying rescue missions for Wings of Rescue. In January 2018 the engine of the Bonanza he was flying quit at 5,500 feet over the Pacific. After eight failed restarts he glided it down onto the 55 Freeway in Costa Mesa, passed under an overpass, dropped the gear at the last second, and stopped without touching a car. He has since described it as the night that settled what he wanted to build. A former IDF combat soldier and USC Marshall graduate, he founded CRAFT in 2020 and leads it as CEO, setting the standard the fleet is held to and the direction the company grows in.",
   },
   {
     img: "/faces/roy.webp",
     mobileOrder: "max-lg:order-3",
     name: "Roy Naor",
     role: "Flight Operation Lead",
-    bio: "Roy runs flight operations across the fleet, which covers crews, scheduling, and dispatch. Every CRAFT trip is flown under Part 135, including owner trips where the rules would permit less, and Roy is the one holding that line day to day. When weather, duty limits, or a short runway make a trip harder than it looked on paper, his desk is where the call gets made.",
+    bio: "Roy flew for the Israeli Air Force as both a pilot and a commander, then flew the line at El Al, so he has spent his career in the cockpit and responsible for the people in it. He runs flight operations across the CRAFT fleet, which covers crews, scheduling, and dispatch. Every trip is flown under Part 135, including owner trips where the rules would permit less, and Roy is the one holding that line day to day. When weather, duty limits, or a short runway make a trip harder than it looked on paper, his desk is where the call gets made.",
   },
   {
     img: "/faces/shaked.webp",
