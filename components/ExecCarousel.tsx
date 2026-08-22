@@ -25,14 +25,14 @@ const EXECS = [
   {
     /* Filename carries a hash of the image, so a browser holding the
        old portrait can't keep serving it after the swap. */
-    img: "/faces/natan-3778c4e4.webp",
+    img: "/faces/natan-73089793.webp",
     mobileOrder: "max-lg:order-2",
     name: "Natan Benchimol",
     role: "Executive Vice President",
     bio: "Natan trained as an engineer at USC and began his career at Raytheon, in a discipline where tolerances aren't negotiable. He has helped run CRAFT since its earliest days and now works across strategic planning and partnerships while staying close to the day-to-day. He also leads CRAFT's programs: Corporate, Jet Card, and the structures behind how clients fly with us. Outside of work: new cities, good coffee, the gym, and family.",
   },
   {
-    img: "/faces/izzy.webp",
+    img: "/faces/izzy-98bee34a.webp",
     mobileOrder: "max-lg:order-1",
     name: "Israel Slodowitz",
     role: "Founder & CEO",
