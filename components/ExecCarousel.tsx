@@ -12,9 +12,7 @@
  * the freeway landing it's known for, came out on request, since the
  * company he built is the point of the entry rather than the hours.
  *
- * Roy's service is written as "the Air Force" without a country because
- * that is how CRAFT gave it. Shaked's names the Israeli Air Force because
- * his own bio always has. Neither is inferred, and nothing here should be.
+ * Neither Roy's service nor Shaked's names a country, at CRAFT's request.
  */
 const EXECS = [
   {
@@ -27,7 +25,7 @@ const EXECS = [
   {
     /* Filename carries a hash of the image, so a browser holding the
        old portrait can't keep serving it after the swap. */
-    img: "/faces/natan-3c35c624.webp",
+    img: "/faces/natan-3778c4e4.webp",
     mobileOrder: "max-lg:order-2",
     name: "Natan Benchimol",
     role: "Executive Vice President",
@@ -52,7 +50,7 @@ const EXECS = [
     mobileOrder: "max-lg:order-5",
     name: "Shaked Rogovsky",
     role: "Client Services Lead",
-    bio: "Shaked came to CRAFT from the Israeli Air Force and Israel's Ministry of Defense, where moving people on time carried a different kind of weight. He leads client services, the team that owns a trip from the first quote through touchdown. CRAFT sells direct, with no broker sitting in the middle, so the person who picks up is the person who can change the plan.",
+    bio: "Shaked came to CRAFT from the Air Force and the Ministry of Defense, where moving people on time carried a different kind of weight. He leads client services, the team that owns a trip from the first quote through touchdown. CRAFT sells direct, with no broker sitting in the middle, so the person who picks up is the person who can change the plan.",
   },
 ];
 
