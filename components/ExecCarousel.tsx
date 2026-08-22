@@ -34,7 +34,7 @@ const EXECS = [
     role: "Flight Operation Lead",
   },
   {
-    img: "/faces/shaked.webp",
+    img: "/faces/shaked-ebc45b79.webp",
     mobileOrder: "max-lg:order-5",
     name: "Shaked Rogovsky",
     role: "Client Services Lead",
