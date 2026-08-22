@@ -7,14 +7,14 @@
  * share. Only Natan has that last line so far.
  *
  * Every claim is either supplied by CRAFT or carried over from the bios
- * these replaced, with two things worth naming. The founder's flying
- * history is on the public record: the January 2018 engine failure and
- * freeway landing were covered by NPR, KTLA, CBS, USC Today and AOPA, and
- * the certificates, hours and Wings of Rescue missions come from AOPA's
- * interview with him days afterwards. And "Israeli" Air Force for Roy is
- * an inference from El Al and the rest of the team, not something CRAFT
- * said; it needs confirming. Otherwise, a detail that can't be sourced to
- * CRAFT or to print doesn't go in.
+ * these replaced. The founder's flying age and certificate come from
+ * AOPA's 2018 interview with him; the rest of that flying history, and
+ * the freeway landing it's known for, came out on request, since the
+ * company he built is the point of the entry rather than the hours.
+ *
+ * Roy's service is written as "the Air Force" without a country because
+ * that is how CRAFT gave it. Shaked's names the Israeli Air Force because
+ * his own bio always has. Neither is inferred, and nothing here should be.
  */
 const EXECS = [
   {
@@ -38,14 +38,14 @@ const EXECS = [
     mobileOrder: "max-lg:order-1",
     name: "Israel Slodowitz",
     role: "Founder & CEO",
-    bio: "Izzy soloed at sixteen and held commercial and airline transport certificates by twenty-three, with close to 2,000 hours behind him and a stretch flying rescue missions for Wings of Rescue. In January 2018 the engine of the Bonanza he was flying quit at 5,500 feet over the Pacific. After eight failed restarts he glided it down onto the 55 Freeway in Costa Mesa, passed under an overpass, dropped the gear at the last second, and stopped without touching a car. He has since described it as the night that settled what he wanted to build. A former IDF combat soldier and USC Marshall graduate, he founded CRAFT in 2020 and leads it as CEO, setting the standard the fleet is held to and the direction the company grows in.",
+    bio: "Izzy has flown since he was a teenager and held an airline transport certificate by twenty-three. A former IDF combat soldier and USC Marshall graduate, he founded CRAFT in 2020 and grew it from a single Challenger 300 into an all-Challenger fleet trusted by some of the biggest names in the industry. He leads the company as CEO, setting the standard the fleet is held to and the direction it grows in.",
   },
   {
     img: "/faces/roy.webp",
     mobileOrder: "max-lg:order-3",
     name: "Roy Naor",
     role: "Flight Operation Lead",
-    bio: "Roy flew for the Israeli Air Force as both a pilot and a commander, then flew the line at El Al, so he has spent his career in the cockpit and responsible for the people in it. He runs flight operations across the CRAFT fleet, which covers crews, scheduling, and dispatch. Every trip is flown under Part 135, including owner trips where the rules would permit less, and Roy is the one holding that line day to day. When weather, duty limits, or a short runway make a trip harder than it looked on paper, his desk is where the call gets made.",
+    bio: "Roy flew for the Air Force as both a pilot and a commander, then flew the line at El Al, so he has spent his career in the cockpit and responsible for the people in it. He runs flight operations across the CRAFT fleet, which covers crews, scheduling, and dispatch. Every trip is flown under Part 135, including owner trips where the rules would permit less, and Roy is the one holding that line day to day. When weather, duty limits, or a short runway make a trip harder than it looked on paper, his desk is where the call gets made.",
   },
   {
     img: "/faces/shaked.webp",
