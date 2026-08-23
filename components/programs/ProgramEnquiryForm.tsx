@@ -360,6 +360,15 @@ export default function ProgramEnquiryForm({
         {status === "sending" ? "Sending\u2026" : "Send"}
       </button>
 
+      <p className="text-[11px] font-light leading-relaxed text-ink-3">
+        By sending this you agree we may contact you about your request.
+        See our{" "}
+        <Link href="/legal#privacy" className="text-navy underline underline-offset-4">
+        privacy policy
+        </Link>
+        .
+      </p>
+
       {status === "error" && (
         <p className="text-[13px] text-red-600">
           Something went wrong. Please try again.

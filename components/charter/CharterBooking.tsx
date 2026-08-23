@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import type { Airport } from "@/lib/airports-data";
 import {
   dayShift,
@@ -1809,6 +1810,15 @@ export default function CharterBooking() {
             {siteConfig.charterSalesPhoneDisplay}.
           </p>
         )}
+
+        <p className="text-center text-[11px] font-light leading-relaxed text-ink-3">
+          By sending this you agree we may contact you about your request.
+          See our{" "}
+          <Link href="/legal#privacy" className="text-navy underline underline-offset-4">
+            privacy policy
+          </Link>
+          .
+        </p>
 
         <p className="text-center text-[11px] font-light text-ink-3">
           Prefer to talk?{" "}

@@ -71,7 +71,7 @@ with the charter desk after a quote is accepted.
 - [Company](${siteUrl}/company): history, leadership, safety record
 - [FAQ](${siteUrl}/faq): cancellations, diversions, de-icing, ID requirements
 - [Contact](${siteUrl}/contact): phone, email, address
-- [Legal](${siteUrl}/legal): terms and privacy
+- [Legal & Privacy](${siteUrl}/legal): website terms, privacy policy (#privacy), air carrier disclosure
 `;
 
   return new Response(body, {

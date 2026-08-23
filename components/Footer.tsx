@@ -113,6 +113,12 @@ export default function Footer() {
           Legal
         </Link>
         <Link
+          href="/legal#privacy"
+          className="text-[11px] font-medium tracking-[0.2em] text-ink-3 uppercase transition-colors hover:text-navy"
+        >
+          Privacy
+        </Link>
+        <Link
           href="/reviews"
           className="text-[11px] font-medium tracking-[0.2em] text-ink-3 uppercase transition-colors hover:text-navy"
         >
