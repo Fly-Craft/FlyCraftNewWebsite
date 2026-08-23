@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 /* Shown at the top of the page and referred to by the Changes paragraph.
    Update it whenever the text below changes in substance. */
-const LAST_UPDATED = "August 22, 2026";
+const LAST_UPDATED = "August 23, 2026";
 
 type Section = {
   /** Anchor, so the privacy policy can be linked as /legal#privacy. */
