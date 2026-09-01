@@ -22,7 +22,7 @@ const EXECS = [
     role: "Executive Vice President",
   },
   {
-    img: "/faces/izzy-626918b1.webp",
+    img: "/faces/izzy-f90aa409.webp",
     mobileOrder: "max-lg:order-1",
     name: "Israel Slodowitz",
     role: "Founder & CEO",
