@@ -28,7 +28,7 @@ const EXECS = [
     role: "Founder & CEO",
   },
   {
-    img: "/faces/roy.webp",
+    img: "/faces/roy-b25e26a1.webp",
     mobileOrder: "max-lg:order-3",
     name: "Roy Naor",
     role: "Flight Operation Lead",
