@@ -5,36 +5,40 @@
  * Photograph, name and title only. The bios that used to appear on hover
  * were removed at CRAFT's request; they're in the git history if they're
  * ever wanted back.
+ *
+ * All five portraits are aligned to each other rather than cropped by eye:
+ * eyes on a common line 39% down, centred horizontally, and matched for
+ * head size. Measured with a face detector, not judged. Every filename
+ * carries a content hash, so a browser holding an old portrait can't keep
+ * serving it after a swap.
  */
 const EXECS = [
   {
-    img: "/faces/tania.webp",
+    img: "/faces/tania-2215fc20.webp",
     mobileOrder: "max-lg:order-4",
     name: "Tania Ureta",
     role: "Accounting & Finance Lead",
   },
   {
-    /* Filename carries a hash of the image, so a browser holding the
-       old portrait can't keep serving it after the swap. */
-    img: "/faces/natan-73089793.webp",
+    img: "/faces/natan-e7beb534.webp",
     mobileOrder: "max-lg:order-2",
     name: "Natan Benchimol",
     role: "Executive Vice President",
   },
   {
-    img: "/faces/izzy-b3d9aeec.webp",
+    img: "/faces/izzy-bcf2e17b.webp",
     mobileOrder: "max-lg:order-1",
     name: "Israel Slodowitz",
     role: "Founder & CEO",
   },
   {
-    img: "/faces/roy-b25e26a1.webp",
+    img: "/faces/roy-fe13e7fc.webp",
     mobileOrder: "max-lg:order-3",
     name: "Roy Naor",
     role: "Flight Operation Lead",
   },
   {
-    img: "/faces/shaked-ebc45b79.webp",
+    img: "/faces/shaked-3d94e448.webp",
     mobileOrder: "max-lg:order-5",
     name: "Shaked Rogovsky",
     role: "Client Services Lead",

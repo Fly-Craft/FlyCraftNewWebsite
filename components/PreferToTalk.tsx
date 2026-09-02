@@ -3,7 +3,7 @@ import BookCallButton from "@/components/BookCall";
 /* No direct line here on purpose: the scheduler books a slot Natan is
    actually free for, which beats a number that rings while he's flying. */
 const NATAN = {
-  img: "/faces/natan-73089793.webp",
+  img: "/faces/natan-e7beb534.webp",
   name: "Natan Benchimol",
   role: "Executive Vice President",
   email: "natan@flycraft.com",
