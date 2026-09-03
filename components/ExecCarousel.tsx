@@ -14,19 +14,19 @@
  */
 const EXECS = [
   {
-    img: "/faces/tania-2215fc20.webp",
+    img: "/faces/tania-2b973efc.webp",
     mobileOrder: "max-lg:order-4",
     name: "Tania Ureta",
     role: "Accounting & Finance Lead",
   },
   {
-    img: "/faces/natan-e7beb534.webp",
+    img: "/faces/natan-47698f35.webp",
     mobileOrder: "max-lg:order-2",
     name: "Natan Benchimol",
     role: "Executive Vice President",
   },
   {
-    img: "/faces/izzy-bcf2e17b.webp",
+    img: "/faces/izzy-2a8d352d.webp",
     mobileOrder: "max-lg:order-1",
     name: "Israel Slodowitz",
     role: "Founder & CEO",
