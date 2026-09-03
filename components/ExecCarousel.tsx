@@ -14,31 +14,31 @@
  */
 const EXECS = [
   {
-    img: "/faces/tania-2b973efc.webp",
+    img: "/faces/tania-46dba008.webp",
     mobileOrder: "max-lg:order-4",
     name: "Tania Ureta",
     role: "Accounting & Finance Lead",
   },
   {
-    img: "/faces/natan-47698f35.webp",
+    img: "/faces/natan-272c223e.webp",
     mobileOrder: "max-lg:order-2",
     name: "Natan Benchimol",
     role: "Executive Vice President",
   },
   {
-    img: "/faces/izzy-2a8d352d.webp",
+    img: "/faces/izzy-9372f0a3.webp",
     mobileOrder: "max-lg:order-1",
     name: "Israel Slodowitz",
     role: "Founder & CEO",
   },
   {
-    img: "/faces/roy-fe13e7fc.webp",
+    img: "/faces/roy-ccbe8926.webp",
     mobileOrder: "max-lg:order-3",
     name: "Roy Naor",
     role: "Flight Operation Lead",
   },
   {
-    img: "/faces/shaked-3d94e448.webp",
+    img: "/faces/shaked-1810dbc2.webp",
     mobileOrder: "max-lg:order-5",
     name: "Shaked Rogovsky",
     role: "Client Services Lead",
