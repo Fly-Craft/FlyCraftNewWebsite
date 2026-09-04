@@ -1,87 +1,75 @@
-# Deploying to Vercel
+# Deploying
 
-Route: **GitHub → Vercel import**, so every future `git push` redeploys
-automatically and each branch gets its own preview URL.
+## Where things live
 
-Verified before writing this: production build passes (27 routes), all 36
-referenced assets exist in `public/`, no files large enough to trouble
-GitHub (largest is 2.2 MB), and no symlinks in `public/`.
+- **Code:** GitHub, `Fly-Craft/FlyCraftNewWebsite`. It moved there from
+  `nivteslercraft` on 4 September 2026; the old address redirects, but new
+  clones should use the new one.
+- **Hosting:** Vercel, project `craft-website` on the `craft-charter` team,
+  connected to the repo through Vercel's GitHub integration. Every push to
+  `main` builds and deploys to production on its own; any other branch gets
+  a preview URL.
+- **Production URL:** `craft-website-tau.vercel.app` until `flycraft.com`
+  is pointed at it (see Custom domain below).
 
----
-
-## ⚠️ Read this first: forms fail silently without an email key
-
-If `RESEND_API_KEY` is not set in Vercel, every form on the live site
-(charter request, contact, corporate, management) will show the visitor a
-success message and then **discard the submission**. The request is only
-written to the Vercel function log. The PDF-to-disk fallback is correctly
-skipped on Vercel, since serverless filesystems are read-only.
-
-So: set the env vars *before* sending anyone to the live URL.
-
-You need a [Resend](https://resend.com) account and an API key. Until
-`flycraft.com` is verified as a sending domain in Resend, leave
-`CHARTER_FROM_EMAIL` unset — the code falls back to Resend's shared
-`onboarding@resend.dev` sender, which works immediately for testing.
-
----
-
-## 1. Create the GitHub repo
-
-Make a new **private** repo at <https://github.com/new>. Don't let it add
-a README, .gitignore, or licence — this repo already has history.
-
-Then, with `<you>` and `<repo>` filled in:
+Fresh clone:
 
 ```bash
-git -C "/Users/nivtesler/Claude Code/craft-website" remote add origin git@github.com:<you>/<repo>.git
+git clone git@github.com:Fly-Craft/FlyCraftNewWebsite.git
 ```
+
+An existing clone that still points at the old owner:
 
 ```bash
-git -C "/Users/nivtesler/Claude Code/craft-website" push -u origin main --tags
+git remote set-url origin git@github.com:Fly-Craft/FlyCraftNewWebsite.git
 ```
 
-`--tags` carries the `design-v1` backup tag up with it, so the pre-redesign
-snapshot lives off this machine too.
+## Shipping a change
 
-## 2. Import into Vercel
+Build locally first, so type errors surface here rather than in a failed
+Vercel build, then commit and push `main`:
 
-At <https://vercel.com/new>, pick the repo. Vercel detects Next.js on its
-own — framework, build command, and output directory all need no changes.
+```bash
+npm run build
+```
 
-**Before clicking Deploy**, open *Environment Variables* and add:
+If more than one person pushes, run `git fetch` and check you are not
+behind `origin/main` before committing.
 
-| Name | Value | Notes |
-|---|---|---|
-| `RESEND_API_KEY` | your Resend key | Required, or forms silently discard |
-| `CHARTER_TO_EMAIL` | `nivtesler8@gmail.com` | Where submissions land |
-| `CHARTER_FROM_EMAIL` | *leave unset for now* | Set to `CRAFT <charter@flycraft.com>` once flycraft.com is verified in Resend |
+## Environment variables
 
-Apply them to Production, Preview, and Development.
+Set in Vercel under *Settings → Environment Variables*, for Production,
+Preview and Development.
 
-## 3. Verify the live site
+| Name | Purpose |
+|---|---|
+| `POSTMARK_SERVER_TOKEN` | Required. Without it every form shows the visitor a success screen and only writes the submission to the function log. |
+| `CHARTER_TO_EMAIL` | Comma-separated review list that receives every form. Trip requests and contact messages additionally go to `charter@flycraft.com`; that rule lives in code, `charterDeskRecipients()` in `lib/notify.ts`, not here. |
+| `CHARTER_FROM_EMAIL` | Optional. Defaults to `CRAFT <charter@flycraft.com>`; `flycraft.com` is verified in Postmark. |
+| `SITE_PUBLIC` | Set to `true` at launch. Until then every page is served with `noindex`, and programme enquiries go to the review list only. |
 
-Once the deploy finishes, on the `*.vercel.app` URL:
+SMS confirmations through Twilio exist in the code but are switched off.
+Do not set the Twilio variables until the forms carry an explicit consent
+checkbox; see the legal notes.
 
-- Submit a real charter request and confirm the email arrives with the
-  PDF attached. This is the only check that proves the env vars took.
-- Load `/fleet/menu` and confirm all snack images render.
-- Scroll the home hero on a phone — the plane, then the map with the
-  flight tally underneath.
-- Confirm the floating **Book Now** button appears on every page except
-  the landing page and `/charter`.
+## Verifying a deploy
 
-## 4. Custom domain
+- Submit the contact form on the live URL and confirm the email arrives on
+  the review list and at `charter@flycraft.com` with the PDF attached. This
+  is the only check that proves the mail variables took.
+- Scroll the home hero on a phone and with a mouse wheel: the plane, then
+  the map with the flight tally underneath, with no jumps.
+- Open the home page on a wide monitor: the content stays a centred
+  1536px column and the photos do not drift away from their text.
 
-Vercel → project → *Settings* → *Domains* → add `flycraft.com`, then
-create the DNS records Vercel shows you at your registrar. HTTPS is
-issued automatically once DNS resolves.
+## Custom domain
 
----
+Vercel → project → *Settings → Domains* → add `flycraft.com`, then create
+the DNS records Vercel shows you at the registrar. HTTPS is issued
+automatically once DNS resolves.
 
-## Switching the form recipient later
+## Changing the review list later
 
-It's an env var, not a code change: Vercel → *Settings* → *Environment
-Variables* → edit `CHARTER_TO_EMAIL` → redeploy. The address in the
-footer and on the contact page is separate — that one lives in
+Edit `CHARTER_TO_EMAIL` in Vercel and redeploy. The address shown in the
+footer and on the contact page is separate and lives in
 `lib/site-config.ts`.
