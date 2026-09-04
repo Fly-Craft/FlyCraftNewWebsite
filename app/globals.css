@@ -236,7 +236,18 @@ html {
    ============================================================ */
 .sky-backdrop {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* Not inset: 0. On iOS Safari a fixed layer sized by top and bottom is
+     the small viewport, the one with the toolbars showing, and it does
+     not grow when the toolbar collapses. The strip that appears at the
+     bottom then shows the body colour instead of the sky, which is where
+     the footer sits when you reach the end of a page. lvh is the large
+     viewport; vh is the same thing on iOS and stands in where lvh is
+     unsupported. */
+  height: 100vh;
+  height: 100lvh;
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
@@ -264,6 +275,21 @@ html {
 @media (max-width: 640px) {
   .sky-backdrop-cloud--alt {
     display: none;
+  }
+
+  /* On phones the wash is nearly flat. The desktop ramp ends in a clear
+     sky blue at the bottom of the screen, which on a tall laptop is a
+     thin band but on a phone is the whole lower third, so the footer,
+     which always sits there, read as a different colour from the page
+     above it. This ramp ends close to the site's base gradient, so the
+     bottom of the screen matches the top. The clouds stay. */
+  .sky-backdrop-wash {
+    background: linear-gradient(
+      180deg,
+      #f7fbfd 0%,
+      #f1f7fb 55%,
+      #ecf3f9 100%
+    );
   }
 }
 
@@ -342,10 +368,28 @@ body {
 body::before {
   content: "";
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* Large viewport, not inset: 0; see .sky-backdrop for why. */
+  height: 100vh;
+  height: 100lvh;
   z-index: -2;
   pointer-events: none;
   background: var(--sky-gradient);
+}
+
+/* One flat tone on phones. The gradient is fixed to the screen, not the
+   page, so its paler top and bluer bottom are always in the same places
+   no matter how far you have scrolled, and on a phone the footer always
+   lands in the bluer bottom third and read as a different colour from
+   the page above it. The tone is the gradient's own midpoint, which is
+   also the body colour behind the overscroll bounce, so nothing changes
+   colour at the end of a page either. */
+@media (max-width: 640px) {
+  body::before {
+    background: #f6fafc;
+  }
 }
 
 /* ============================================================

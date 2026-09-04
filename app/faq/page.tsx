@@ -9,8 +9,9 @@ export const metadata: Metadata = {
 
 const linkCls = "text-navy underline underline-offset-4 hover:opacity-70";
 
-/* Safety first, then the day itself in the order it happens: when to turn
-   up, how to find the aircraft, what to bring, and what's in the cabin. */
+/* Safety first, then Wi-Fi, which is the question people ask most, then
+   the day itself in the order it happens: when to turn up, how to find the
+   aircraft, what to bring, and what's in the cabin. */
 const FAQ_ITEMS: FaqItem[] = [
   {
     question: "What safety standards does CRAFT fly to?",
@@ -25,6 +26,11 @@ const FAQ_ITEMS: FaqItem[] = [
         .
       </>
     ),
+  },
+  {
+    question: "Is there Wi-Fi on board?",
+    answer:
+      "Yes. Every aircraft in the fleet has Starlink. If you have not flown with it before, expect a pleasant surprise: streaming, video calls, and anything else you would do on the connection at home all work the same way at altitude.",
   },
   {
     question: "How early do I need to be at the airport?",
@@ -58,11 +64,6 @@ const FAQ_ITEMS: FaqItem[] = [
         . Catering beyond that can be arranged with your trip.
       </>
     ),
-  },
-  {
-    question: "Is there Wi-Fi on board?",
-    answer:
-      "Yes. Every aircraft in the fleet has Starlink. If you have not flown with it before, expect a pleasant surprise: streaming, video calls, and anything else you would do on the connection at home all work the same way at altitude.",
   },
   {
     question: "Are pets allowed on board?",

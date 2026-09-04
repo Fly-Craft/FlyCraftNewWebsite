@@ -9,6 +9,9 @@ const card =
   "rounded-3xl glass p-8 sm:p-10";
 const heroBtn =
   "glass-capsule glass-btn rounded-full px-7 py-3.5 text-[11px] font-medium tracking-[0.24em] text-navy uppercase";
+/* Phone-only sizing for the two capsules that share a row under Book. */
+const phoneHalf =
+  "max-sm:flex-1 max-sm:basis-0 max-sm:px-3 max-sm:text-center max-sm:tracking-[0.14em] max-[359px]:w-auto max-[359px]:flex-none whitespace-nowrap";
 const cardLabel =
   "mb-6 block text-center text-[11px] font-normal tracking-[0.35em] text-ink-3 uppercase";
 
@@ -90,30 +93,42 @@ export default function AircraftPage({ a }: { a: Aircraft }) {
         </p>
         {/* Glass capsules rather than underlined text: as links these read
             as fine print under a display-size title and were being missed. */}
-        <div className="mt-9 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          <a
-            href={a.tour}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={heroBtn}
-          >
-            3D Virtual Tour
-          </a>
-          {/* Request a Quote sits centre of the three — it's the primary
-              action, and the filled capsule reads strongest there rather
-              than trailing at the end of the row. */}
+        {/* Book is the primary action and the filled capsule, so it takes
+            the strongest position on both layouts: on phones it stands
+            alone on the top row, centred, with the two quieter capsules
+            in a row beneath; from sm up all three share one row with Book
+            in the middle. The inner wrapper only exists for the phone
+            row; sm:contents dissolves it so the order-* classes place the
+            three as siblings on wider screens. */}
+        <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-4">
           <Link
             href="/charter"
-            className="glass-selected rounded-full px-7 py-3.5 text-[11px] font-medium tracking-[0.24em] text-white uppercase transition-transform duration-300 hover:-translate-y-0.5"
+            className="glass-selected rounded-full px-7 py-3.5 text-[11px] font-medium tracking-[0.24em] text-white uppercase transition-transform duration-300 hover:-translate-y-0.5 sm:order-2"
           >
-            Request a Quote
+            Book
           </Link>
-          {/* ?from carries the aircraft so the menu can offer a way back to
-              it — the menu is also reachable from the FAQ and directly, where
-              there is no aircraft to return to. */}
-          <Link href={`/fleet/menu?from=${a.slug}`} className={heroBtn}>
-            Inflight Menu
-          </Link>
+          {/* On phones the two quieter capsules split the row equally,
+              with tighter padding and tracking so both labels fit side by
+              side down to a 375px screen; narrower than that they stack. */}
+          <div className="flex w-full items-center justify-center gap-3 max-[359px]:flex-col sm:contents">
+            <a
+              href={a.tour}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${heroBtn} ${phoneHalf} sm:order-1`}
+            >
+              3D Virtual Tour
+            </a>
+            {/* ?from carries the aircraft so the menu can offer a way back
+                to it; the menu is also reachable from the FAQ and directly,
+                where there is no aircraft to return to. */}
+            <Link
+              href={`/fleet/menu?from=${a.slug}`}
+              className={`${heroBtn} ${phoneHalf} sm:order-3`}
+            >
+              Inflight Menu
+            </Link>
+          </div>
         </div>
       </section>
 
