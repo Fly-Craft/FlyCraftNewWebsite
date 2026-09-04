@@ -3,7 +3,7 @@ import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { renderCharterRequestPdf } from "@/lib/pdf/render-charter-request-pdf";
 import type { LegPayload } from "@/lib/charter-request";
-import { sendMail, sendConfirmation, leadRecipients } from "@/lib/notify";
+import { sendMail, sendConfirmation, charterDeskRecipients } from "@/lib/notify";
 
 
 export async function POST(request: Request) {
@@ -97,7 +97,7 @@ export async function POST(request: Request) {
 
   // The lead itself. A failure here fails the request.
   const notify = await sendMail({
-    to: leadRecipients(),
+    to: charterDeskRecipients(),
     subject: `Charter request — ${name}`,
     text,
     attachments,

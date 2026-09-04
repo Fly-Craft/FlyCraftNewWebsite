@@ -11,7 +11,7 @@ import {
   dayShift,
 } from "@/lib/flight";
 import { siteConfig, siteUrl } from "@/lib/site-config";
-import { sendMail } from "@/lib/notify";
+import { sendMail, charterDeskRecipients } from "@/lib/notify";
 
 /** Matches the booking form: 9 seats, one must stay free if a crew member rides. */
 const MAX_PAX = 9;
@@ -247,7 +247,7 @@ export async function POST(request: Request) {
      call the mail provider itself, which meant the provider was configured
      in two places and only one of them got changed at a time. */
   const delivery = await sendMail({
-    to: process.env.CHARTER_TO_EMAIL ?? siteConfig.contactEmail,
+    to: charterDeskRecipients(),
     subject: `Charter request (agent) — ${name}`,
     text,
     ...(email ? { replyTo: email } : {}),

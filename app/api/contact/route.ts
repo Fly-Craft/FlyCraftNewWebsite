@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { sendMail, sendConfirmation, leadRecipients } from "@/lib/notify";
+import { sendMail, sendConfirmation, charterDeskRecipients } from "@/lib/notify";
 import { renderEnquiryPdf } from "@/lib/pdf/render-enquiry-pdf";
 
 
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
   // The lead itself. A failure here fails the request, because the visitor
   // needs to know their message didn't land.
   const notify = await sendMail({
-    to: leadRecipients(),
+    to: charterDeskRecipients(),
     subject: `Contact form — ${name}`,
     text,
     attachments: [

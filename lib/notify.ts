@@ -136,6 +136,17 @@ export function leadRecipients(): string[] {
     .filter(Boolean);
 }
 
+/**
+ * Where a trip request or a contact-form message goes: the review list plus
+ * the charter desk itself, which is the inbox that actually works those
+ * requests. sendMail dedupes, so listing the desk in CHARTER_TO_EMAIL as
+ * well never produces a second copy. Programme enquiries stay on
+ * leadRecipients(): each programme has its own staff once the site is public.
+ */
+export function charterDeskRecipients(): string[] {
+  return [...leadRecipients(), siteConfig.contactEmail];
+}
+
 /* ------------------------------------------------------------------ */
 /* Transport                                                           */
 /* ------------------------------------------------------------------ */
