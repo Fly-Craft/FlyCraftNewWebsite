@@ -175,7 +175,6 @@ export default function HeroFlight() {
     let lastVisible = 0;
     let lastCount = -1;
     let lastMonthText = "";
-    let ticking = false;
     let planeFlying = false;
     let planeHidden = false;
     let lastMapTransform = "";
@@ -207,11 +206,7 @@ export default function HeroFlight() {
       map.style.transform = "rotateX(38deg) scale(1.04)";
     }
 
-    function apply() {
-      ticking = false;
-      const rect = section!.getBoundingClientRect();
-      const total = rect.height - vh;
-      const p = Math.min(1, Math.max(0, -rect.top / total));
+    function render(p: number) {
       const ip = Math.min(1, p / INTRO_END); // intro-phase progress
 
       // Sky wash clears as the map comes up — it's fully gone by the time
@@ -420,24 +415,81 @@ export default function HeroFlight() {
       }
     }
 
-    function onScroll() {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(apply);
+    // ── Input smoothing ────────────────────────────────────────────
+    // Everything above is a pure function of progress, and it used to be fed
+    // the raw scroll position on every scroll event. That is why the device
+    // mattered: a trackpad delivers 2–10px deltas at 60–120Hz and reads as
+    // continuous, but one mouse-wheel notch jumps ~100px (about 3.5% of this
+    // section) in a single event, a touch fling front-loads 30–60px per
+    // frame, and Page Down moves most of a viewport at once. Rendered 1:1,
+    // each of those is a visible jump.
+    //
+    // So scroll no longer draws. It only updates `target`, and a short rAF
+    // loop eases `shown` toward it with frame-rate-independent exponential
+    // smoothing. A notch now glides over ~350ms; a trackpad is barely
+    // changed. Native scrolling is untouched — nothing here intercepts input
+    // or moves the page — and the loop stops itself once converged, so the
+    // hero still costs nothing at rest.
+    const TAU = 120; // ms — time constant of the follow
+    const EPS = 0.0005; // ≈ 1px of section travel; below this, snap and stop
+    let target = 0;
+    let shown = 0;
+    let running = false;
+    let lastT = 0;
+    let raf = 0;
+
+    function readTarget() {
+      const rect = section!.getBoundingClientRect();
+      const total = rect.height - vh;
+      target = total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 0;
+    }
+
+    function tick(now: number) {
+      // Clamp dt so a tab coming back from the background converges over a
+      // few frames rather than by one huge step; a genuine 60Hz frame is ~17.
+      const dt = lastT ? Math.min(now - lastT, 100) : 16.7;
+      lastT = now;
+      shown += (target - shown) * (1 - Math.exp(-dt / TAU));
+      if (Math.abs(target - shown) < EPS) {
+        shown = target; // land exactly, so end states are exact
+        render(shown);
+        running = false;
+        lastT = 0;
+        return;
       }
+      render(shown);
+      raf = requestAnimationFrame(tick);
+    }
+
+    function kick() {
+      if (running) return;
+      running = true;
+      lastT = 0;
+      raf = requestAnimationFrame(tick);
+    }
+
+    function onScroll() {
+      readTarget();
+      kick();
     }
 
     function onResize() {
       vh = window.innerHeight;
-      onScroll();
+      readTarget();
+      kick();
     }
 
-    apply();
+    // First paint snaps rather than glides: a reload mid-section must not
+    // replay the intro from the top.
+    readTarget();
+    shown = target;
+    render(shown);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
+      cancelAnimationFrame(raf);
     };
   }, []);
 
