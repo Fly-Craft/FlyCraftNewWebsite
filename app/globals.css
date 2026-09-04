@@ -190,21 +190,24 @@
 }
 
 /* ============================================================
-   PAGE WIDTH — the layout is designed around 16:9. Beyond that
-   the content stops widening and centres, so ultrawide monitors
-   get bands of page background either side instead of a
-   stretched layout.
+   PAGE WIDTH — the layout is designed for a laptop-to-desktop
+   window and stops widening at 1536px. Anything wider (1080p and
+   1440p monitors, 21:9 and 32:9 ultrawides) gets exactly the
+   1536px layout, centred, with page background either side. So a
+   two-column section keeps its photo and its text the same
+   distance apart on every screen, instead of parking each in the
+   middle of an ever-wider half.
 
-   The threshold is 2:1 rather than 16:9 (1.78) on purpose: the
-   viewport is always shorter than the screen once browser chrome
-   is subtracted, so a 16:9 *monitor* presents a viewport nearer
-   2:1. Cutting at exactly 16:9 would band real 16:9 displays,
-   which is what we're trying to avoid. 21:9 (2.33) and 32:9
-   (3.56) still land well past it.
+   An earlier version capped by aspect ratio (2:1) so that 16:9
+   monitors would never see side bands. It kept the bands away but
+   still let a 2560px 16:9, and every ultrawide, spread the layout
+   far past what it was drawn for. Fixed width is the only rule
+   that makes "looks like it does on a normal monitor" literally
+   true.
    ============================================================ */
 .site-main {
   width: 100%;
-  max-width: max(1280px, calc(100vh * 2));
+  max-width: 1536px;
   margin-inline: auto;
 }
 
@@ -213,6 +216,16 @@
    so no `width: 100vw` can add a horizontal scrollbar. */
 .site-main .full-bleed {
   margin-inline: calc(50% - 50vw);
+}
+
+/* `vw` includes a classic scrollbar's width on Windows, so on a scrolling
+   page the full-bleed margins above reach a few pixels past the viewport.
+   That was rare while the cap only bit past a 2:1 aspect; at a fixed
+   1536px every 1080p desktop takes this path. Clip rather than hide:
+   clip never turns the root into a scroll container, so position: sticky
+   in the hero keeps the viewport as its scroller. */
+html {
+  overflow-x: clip;
 }
 
 /* ============================================================
